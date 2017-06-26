@@ -90,13 +90,13 @@ public class SolutionController extends BaseController {
 
             //下面response返回的json格式是editor.md所限制的，规范输出就OK
             Map<String,Object> map = new HashMap<String,Object>();
-            map.put("success",1);
+            map.put("login",1);
             map.put("message","上传成功");
             map.put("url","http://localhost/image/"+attach.getOriginalFilename());
             response.getWriter().write(JSON.toJSONString(map));
         } catch (Exception e) {
             try {
-                response.getWriter().write("{\"success\":0}");
+                response.getWriter().write("{\"login\":0}");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

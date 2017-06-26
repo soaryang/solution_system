@@ -144,7 +144,7 @@ public class HttpClientUtil {
    // 判断响应状态
    if (response.getStatusLine().getStatusCode() >= 300) {
     throw new Exception(
-            "HTTP Request is not success, Response code is " + response.getStatusLine().getStatusCode());
+            "HTTP Request is not login, Response code is " + response.getStatusLine().getStatusCode());
    }
 
    if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
@@ -203,7 +203,7 @@ public class HttpClientUtil {
    // 判断响应状态
    if (response.getStatusLine().getStatusCode() >= 300) {
     throw new Exception(
-            "HTTP Request is not success, Response code is " + response.getStatusLine().getStatusCode());
+            "HTTP Request is not login, Response code is " + response.getStatusLine().getStatusCode());
    }
 
    if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {

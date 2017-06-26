@@ -11,7 +11,6 @@ bower_components/
 danmu_java_client/DmFile/
 solution_api/build/classes/main/generated/
 solution_api/build/tmp/compileJava/
-solution_api/src/main/java/cn/yangtengfei/api/filter/
 solution_api/src/test/
 solution_db_model/build/classes/main/generated/
 solution_db_model/build/tmp/compileJava/

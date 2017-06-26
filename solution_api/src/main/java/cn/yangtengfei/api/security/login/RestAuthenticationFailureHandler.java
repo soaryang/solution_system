@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.security;
+package cn.yangtengfei.api.security.login;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
