@@ -22,9 +22,7 @@ subprojects{
     [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
 
     repositories {
-        mavenLocal()
         mavenCentral()
-        maven { url "http://mirrors.ibiblio.org/pub/mirrors/maven2" }
     }
     dependencies {
         //classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")

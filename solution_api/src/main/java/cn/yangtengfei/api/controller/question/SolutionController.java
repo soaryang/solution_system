@@ -8,6 +8,8 @@ import cn.yangtengfei.api.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/v1/api/admin/solution")
 public class SolutionController extends BaseController {
+
+    private static final Logger logger = LoggerFactory.getLogger(SolutionController.class);
 
     @Autowired
     private ApiSolutionService apiSolutionService;
@@ -52,7 +56,7 @@ public class SolutionController extends BaseController {
         //return  null;
         Result result = new Result();
         apiSolutionService.del(id);
-        result.setCode(200);
+        result.setCode("200");
         return result;
     }
 
@@ -62,7 +66,7 @@ public class SolutionController extends BaseController {
         //return  null;
         Result result = new Result();
         SolutionView solutionView = apiSolutionService.findSolutionViewById(id);
-        result.setCode(200);
+        result.setCode("200");
         result.setData(solutionView);
         return result;
     }

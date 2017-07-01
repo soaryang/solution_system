@@ -68,7 +68,7 @@ public class TagController extends BaseController {
     public Result del(@PathVariable("id") String id){
         Result result = new Result();
         apiTagService.del(id);
-        result.setCode(200);
+        result.setCode("200");
         result.setMessage("OK");
         return  result;
     }
@@ -100,7 +100,7 @@ public class TagController extends BaseController {
 
             }
         }).start();
-        result.setCode(200);
+        result.setCode("200");
         result.setMessage("OK");
         return  result;
     }

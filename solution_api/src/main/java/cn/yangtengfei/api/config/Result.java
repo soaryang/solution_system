@@ -15,17 +15,17 @@ public class Result implements Serializable {
 
     private static final long serialVersionUID = -332320156501537998L;
 
-    private int code;
+    private String code;
 
     private String message;
 
     private Object data;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

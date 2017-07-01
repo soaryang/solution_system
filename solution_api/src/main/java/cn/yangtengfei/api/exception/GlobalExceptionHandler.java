@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-
     @ExceptionHandler(value = CommonException.class)
     @ResponseBody
     public Result jsonErrorHandler(HttpServletRequest req, CommonException e) throws Exception {

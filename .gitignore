@@ -8,6 +8,7 @@ bower_components/
 .settings
 *.log
 *.iml
+*.jar
 danmu_java_client/DmFile/
 solution_api/build/classes/main/generated/
 solution_api/build/tmp/compileJava/

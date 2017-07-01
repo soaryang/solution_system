@@ -36,7 +36,7 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(@ModelAttribute QuestionView questionView, HttpServletRequest request){
         Result result = new Result();
-        result.setCode(200);
+        result.setCode("200");
         result.setMessage("OK");
         apiQuestionService.save(questionView);
         return result;
@@ -46,7 +46,7 @@ public class QuestionController extends BaseController {
     public Result del(@PathVariable("id") String id){
         apiQuestionService.del(id);
         Result result = new Result();
-        result.setCode(200);
+        result.setCode("200");
         result.setMessage("OK");
         return result;
 
