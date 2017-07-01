@@ -36,8 +36,11 @@ public class UserDetailsServiceImple implements UserDetailsService {
         //authorities.add(new SimpleGrantedAuthority("USER"));
         final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
-        return new org.springframework.security.core.userdetails.User("user", "a3caed36f0fe5a01e5f144db8927235e", authorities);
-        //return  userDetails;
+        return new org.springframework.security.core.userdetails.User("user", "a3caed36f0fe5a01e5f144db8927235e",
+                true,
+                true,
+                true,
+                true,authorities);
     }
 
 }
