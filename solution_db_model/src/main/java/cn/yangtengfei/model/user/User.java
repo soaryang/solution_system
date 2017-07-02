@@ -24,6 +24,4 @@ public class User extends BaseModel {
 
     private String password;
 
-    private Set<String> roleIds;
-
 }

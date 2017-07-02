@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compile project(":solution_db_model")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.2.5.RELEASE")
+
+
     //compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.4.2'
 }

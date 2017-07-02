@@ -4,6 +4,8 @@ import cn.yangtengfei.baseModel.BaseModel;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/6/24 0024.
  */
@@ -14,5 +16,5 @@ public class UserRole  extends BaseModel {
 
     private String id;
 
-    private String name;
+    private List<String> roleIdList;
 }

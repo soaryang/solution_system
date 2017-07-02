@@ -3,6 +3,7 @@ package cn.yangtengfei.service.user;
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,5 +19,15 @@ public class UserService {
 
     public User findByName(String name){
         return userRepository.findByName(name);
+    }
+
+    public User findById(String id){
+        return userRepository.findOne(id);
+    }
+
+
+
+    public User save(User user){
+        return userRepository.save(user);
     }
 }
