@@ -8,8 +8,10 @@ import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class TagController extends BaseController {
     private JavaMailSender mailSender;
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public PageResultModel findAll(Integer pageNumber , Integer pageSize){
+    public PageResultModel findAll(HttpServletRequest request,Integer pageNumber , Integer pageSize){
 //        SimpleMailMessage message = new SimpleMailMessage();
 //        message.setFrom("759620299@qq.com");
 //        message.setTo("252276549@qq.com");
@@ -42,8 +44,20 @@ public class TagController extends BaseController {
 //        message.setText("测试邮件内容");
 //        mailSender.send(message);
 
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        int start = pageNumber-1;
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Tag> questionTypes = apiTagService.findAllPage(pageNumber-1,pageSize);
+        Page<Tag> questionTypes = null;
+        if(StringUtils.isEmpty(id) && StringUtils.isEmpty(name)){
+            questionTypes = apiTagService.findAllPage(start,pageSize);
+        }else  if(!StringUtils.isEmpty(id) && StringUtils.isEmpty(name)){
+            questionTypes = apiTagService.findById(id,start,pageSize);
+        }else  if(StringUtils.isEmpty(id) && !StringUtils.isEmpty(name)){
+            questionTypes = apiTagService.findByNameLike(name,start,pageSize);
+        }else {
+            questionTypes = apiTagService.findByIdAndNameLike(id,name,start,pageSize);
+        }
         pageResultModel.setTotal(questionTypes.getTotalElements());
         pageResultModel.setRows(questionTypes.getContent());
         return  pageResultModel;
@@ -52,7 +66,7 @@ public class TagController extends BaseController {
     @RequestMapping(value = "/page/{tagName}", method = RequestMethod.GET)
     public PageResultModel findAllByTagName(@PathVariable("tagName") String tagName){
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Tag> questionTypes = apiTagService.findAllPageByName(tagName,0,10);
+        Page<Tag> questionTypes = apiTagService.findByNameLike(tagName,0,10);
         pageResultModel.setTotal(questionTypes.getTotalElements());
         pageResultModel.setRows(questionTypes.getContent());
         return  pageResultModel;

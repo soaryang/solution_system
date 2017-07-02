@@ -22,7 +22,7 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
+    /*@RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
     private Result saveUser(){
         User user = new User();
         String password = BCrypt.hashpw("***20121226NOTFORGET",BCrypt.gensalt());
@@ -32,5 +32,5 @@ public class UserController extends BaseController {
         Result result = new Result();
         result.setCode("200");
         return result;
-    }
+    }*/
 }

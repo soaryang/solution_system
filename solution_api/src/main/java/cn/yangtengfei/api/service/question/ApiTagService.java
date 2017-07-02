@@ -6,6 +6,8 @@ import cn.yangtengfei.service.question.TagService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,8 +40,16 @@ public class ApiTagService {
     public Page<Tag> findAllPage(int page, int pageSize) {
         return tagService.findAllPage(page,pageSize);
     }
-    public Page<Tag> findAllPageByName(String name,int page, int pageSize) {
-        return tagService.findAllPageByName(name,page,pageSize);
+    public Page<Tag> findByNameLike(String name,int page, int pageSize) {
+        return tagService.findByNameLike(name,page,pageSize);
+    }
+
+    public Page<Tag> findById(String id,int page, int pageSize) {
+        return tagService.findById(id,page,pageSize);
+    }
+
+    public Page<Tag> findByIdAndNameLike(String id,String name,int page, int pageSize) {
+        return tagService.findByIdAndNameLike(id,name,page,pageSize);
     }
 
     public Tag findByName(String name){

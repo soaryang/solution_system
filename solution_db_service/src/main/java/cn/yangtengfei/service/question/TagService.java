@@ -33,11 +33,24 @@ public class TagService {
         return tagRepository.findAll(pageRequest);
     }
 
-    public Page<Tag> findAllPageByName(String name,int page, int pageSize) {
+    public Page<Tag> findByNameLike(String name,int page, int pageSize) {
         Sort sort = new Sort(Sort.Direction.ASC, "createTime");
         PageRequest pageRequest = new PageRequest(page, pageSize, sort);
         return tagRepository.findByNameLike(name, pageRequest);
     }
+
+    public Page<Tag> findById(String id,int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        return tagRepository.findById(id, pageRequest);
+    }
+
+    public Page<Tag> findByIdAndNameLike(String id,String name,int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        return tagRepository.findByIdAndNameLike(id,name ,pageRequest);
+    }
+
 
 
     public Tag findByName(String name){

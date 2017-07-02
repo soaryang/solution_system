@@ -12,4 +12,8 @@ public interface TagRepository extends MongoRepository<Tag,String> {
     public Tag findByName(String name);
 
     Page<Tag> findByNameLike(String name, Pageable pageable);
+
+    Page<Tag> findByIdAndNameLike(String id, String name, Pageable pageable);
+
+    Page<Tag> findById(String name, Pageable pageable);
 }
