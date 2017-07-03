@@ -9,6 +9,7 @@ import java.util.Date;
  * Created by liuwei on 16/6/13.
  */
 
+@Data
 public class BaseModel implements Serializable{
 
     private static final long serialVersionUID = -6248673946677888658L;

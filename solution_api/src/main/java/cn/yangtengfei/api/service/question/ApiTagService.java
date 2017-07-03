@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2017/5/28 0028.
  */
@@ -33,23 +35,39 @@ public class ApiTagService {
         tagService.save(tag);
     }
 
+
+    public void updateUseStatus(String id, Integer status,String userId){
+        Tag tag = tagService.findById(id);
+        if(tag!=null){
+            tag.setUseStatus(status);
+            tag.setUpdateUserId(userId);
+            tag.setUpdateTime(new Date());
+        }
+        tagService.save(tag);
+    }
+
     public void del(String id){
         tagService.del(id);
     }
 
-    public Page<Tag> findAllPage(int page, int pageSize) {
-        return tagService.findAllPage(page,pageSize);
+    public Page<Tag> findByUseStatus(int status,int page, int pageSize) {
+        return tagService.findByUseStatus(status,page,pageSize);
     }
+
+    public Page<Tag> findByUseStatusAndNameLike(int status,String name,int page, int pageSize) {
+        return tagService.findByUseStatusAndNameLike(status,name,page,pageSize);
+    }
+
+    public Page<Tag> findByUseStatusAndId(int status,String id,int page, int pageSize) {
+        return tagService.findByUseStatusAndId(status,id,page,pageSize);
+    }
+
+    public Page<Tag> findByUseStatusAndIdAndNameLike(int status,String id,String name,int page, int pageSize) {
+        return tagService.findByUseStatusAndIdAndNameLike(status,id,name,page,pageSize);
+    }
+
     public Page<Tag> findByNameLike(String name,int page, int pageSize) {
         return tagService.findByNameLike(name,page,pageSize);
-    }
-
-    public Page<Tag> findById(String id,int page, int pageSize) {
-        return tagService.findById(id,page,pageSize);
-    }
-
-    public Page<Tag> findByIdAndNameLike(String id,String name,int page, int pageSize) {
-        return tagService.findByIdAndNameLike(id,name,page,pageSize);
     }
 
     public Tag findByName(String name){

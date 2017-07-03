@@ -11,9 +11,13 @@ public interface TagRepository extends MongoRepository<Tag,String> {
 
     public Tag findByName(String name);
 
+    Page<Tag> findByUseStatus(Integer useStatus, Pageable pageable);
+
+    Page<Tag> findByUseStatusAndNameLike(Integer useStatus,String name, Pageable pageable);
+
+    Page<Tag> findByUseStatusAndIdAndNameLike(Integer useStatus,String id, String name, Pageable pageable);
+
+    Page<Tag> findByUseStatusAndId(Integer useStatus,String name, Pageable pageable);
+
     Page<Tag> findByNameLike(String name, Pageable pageable);
-
-    Page<Tag> findByIdAndNameLike(String id, String name, Pageable pageable);
-
-    Page<Tag> findById(String name, Pageable pageable);
 }

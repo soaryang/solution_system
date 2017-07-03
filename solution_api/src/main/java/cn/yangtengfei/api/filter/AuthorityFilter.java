@@ -1,9 +1,12 @@
 package cn.yangtengfei.api.filter;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
+import cn.yangtengfei.api.cacheService.user.UserCacheService;
+import cn.yangtengfei.api.controller.base.BaseController;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.util.ErrorCode;
 import cn.yangtengfei.api.util.UserTokenConst;
+import cn.yangtengfei.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,16 +24,20 @@ public class AuthorityFilter  implements HandlerInterceptor {
 
     @Autowired
     private AuthorityCacheService authorityCacheService;
+
+    @Autowired
+    private UserCacheService userCacheService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if( handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             //Method method = handlerMethod.getMethod();
+            String cookieValue = "";
             String url = request.getRequestURI();;
             if( url.indexOf("/v1/api/admin") != -1){
                 Cookie[] cookies =request.getCookies();
                 if(cookies!=null && cookies.length!=0){
-                    String cookieValue = "";
+
                     for (Cookie cookie : cookies) {
                         if (UserTokenConst.COOKIE_USER_KEY.equals(cookie.getName())) {
                             cookieValue = cookie.getValue();
@@ -54,6 +61,11 @@ public class AuthorityFilter  implements HandlerInterceptor {
                     response.setStatus(401);
                     return false;
                 }
+            }
+            User  user = authorityCacheService.getUer(cookieValue);
+            if( handlerMethod.getBean() instanceof BaseController){
+                BaseController baseAdminController = (BaseController) handlerMethod.getBean();
+                baseAdminController.setUser(user);
             }
         }
         return true;

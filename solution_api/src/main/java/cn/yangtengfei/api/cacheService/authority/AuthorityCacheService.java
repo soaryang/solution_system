@@ -1,9 +1,11 @@
 package cn.yangtengfei.api.cacheService.authority;
 
 
+import cn.yangtengfei.api.cacheService.user.UserCacheService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.UserTokenConst;
 import cn.yangtengfei.model.user.User;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,12 +25,16 @@ public class AuthorityCacheService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private UserCacheService userCacheService;
+
+
     public static final String  AUTHORITY_KEY_PREFIX="authKey:";
 
     public String createAuthKey(String id,long time){
         String key = BCrypt.hashpw(id,BCrypt.gensalt());
         String authKey = AUTHORITY_KEY_PREFIX+key;
-        redisTemplate.opsForValue().set(authKey,key);
+        redisTemplate.opsForValue().set(authKey,id);
         redisTemplate.expire(authKey,time, TimeUnit.SECONDS);
         return key;
     }
@@ -36,6 +42,15 @@ public class AuthorityCacheService {
     public boolean chekAuthKeyIsExist(String key){
         String authKey = "authKey:"+key;
         return redisTemplate.hasKey(authKey);
+    }
+
+    public User getUer(String key){
+        String authKey = AUTHORITY_KEY_PREFIX+key;
+        Object object = redisTemplate.opsForValue().get(authKey);
+        if(object!=null){
+           return userCacheService.findUserById(String.valueOf(object));
+        }
+        return null;
     }
 
     public void setUserInfoIntoCookie(HttpServletResponse response,User user) throws UnsupportedEncodingException {

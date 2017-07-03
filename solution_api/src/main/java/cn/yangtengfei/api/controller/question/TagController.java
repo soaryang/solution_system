@@ -46,17 +46,18 @@ public class TagController extends BaseController {
 
         String id = request.getParameter("id");
         String name = request.getParameter("name");
+        int useStatus = Integer.parseInt(request.getParameter("useStatus"));
         int start = pageNumber-1;
         PageResultModel pageResultModel = new PageResultModel();
         Page<Tag> questionTypes = null;
         if(StringUtils.isEmpty(id) && StringUtils.isEmpty(name)){
-            questionTypes = apiTagService.findAllPage(start,pageSize);
+            questionTypes = apiTagService.findByUseStatus(useStatus,start,pageSize);
         }else  if(!StringUtils.isEmpty(id) && StringUtils.isEmpty(name)){
-            questionTypes = apiTagService.findById(id,start,pageSize);
+            questionTypes = apiTagService.findByUseStatusAndId(useStatus,id,start,pageSize);
         }else  if(StringUtils.isEmpty(id) && !StringUtils.isEmpty(name)){
-            questionTypes = apiTagService.findByNameLike(name,start,pageSize);
+            questionTypes = apiTagService.findByUseStatusAndNameLike(useStatus,name,start,pageSize);
         }else {
-            questionTypes = apiTagService.findByIdAndNameLike(id,name,start,pageSize);
+            questionTypes = apiTagService.findByUseStatusAndIdAndNameLike(useStatus,id,name,start,pageSize);
         }
         pageResultModel.setTotal(questionTypes.getTotalElements());
         pageResultModel.setRows(questionTypes.getContent());
@@ -77,6 +78,17 @@ public class TagController extends BaseController {
     public Result save(@ModelAttribute TagView tagView, HttpServletRequest request){
         return null;
     }
+
+
+    @RequestMapping(value = "/tagUse", method = RequestMethod.GET)
+    public Result tagUse(String id,Integer status, HttpServletRequest request){
+        apiTagService.updateUseStatus(id,status,getUser().getId());
+        Result result = new Result();
+        result.setCode("200");
+        result.setMessage("OK");
+        return result;
+    }
+
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
     public Result del(@PathVariable("id") String id){

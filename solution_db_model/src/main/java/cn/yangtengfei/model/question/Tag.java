@@ -16,4 +16,7 @@ public class Tag extends BaseModel {
     private String id;
 
     private String name;
+
+    /**使用：1 禁用：0/空*/
+    private Integer useStatus;
 }

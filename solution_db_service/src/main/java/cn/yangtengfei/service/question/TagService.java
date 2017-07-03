@@ -27,11 +27,30 @@ public class TagService {
         tagRepository.delete(id);
     }
 
-    public Page<Tag> findAllPage(int page, int pageSize) {
+    public Page<Tag> findByUseStatus(int useStatus,int page, int pageSize) {
         Sort sort = new Sort(Sort.Direction.ASC, "createTime");
         PageRequest pageRequest = new PageRequest(page, pageSize, sort);
-        return tagRepository.findAll(pageRequest);
+        return tagRepository.findByUseStatus(useStatus,pageRequest);
     }
+
+    public Page<Tag> findByUseStatusAndNameLike(int useStatus,String name,int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        return tagRepository.findByUseStatusAndNameLike(useStatus,name, pageRequest);
+    }
+
+    public Page<Tag> findByUseStatusAndId(int useStatus,String id,int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        return tagRepository.findByUseStatusAndId(useStatus,id, pageRequest);
+    }
+
+    public Page<Tag> findByUseStatusAndIdAndNameLike(int useStatus,String id,String name,int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        return tagRepository.findByUseStatusAndIdAndNameLike(useStatus,id,name ,pageRequest);
+    }
+
 
     public Page<Tag> findByNameLike(String name,int page, int pageSize) {
         Sort sort = new Sort(Sort.Direction.ASC, "createTime");
@@ -39,19 +58,7 @@ public class TagService {
         return tagRepository.findByNameLike(name, pageRequest);
     }
 
-    public Page<Tag> findById(String id,int page, int pageSize) {
-        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
-        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
-        return tagRepository.findById(id, pageRequest);
-    }
-
-    public Page<Tag> findByIdAndNameLike(String id,String name,int page, int pageSize) {
-        Sort sort = new Sort(Sort.Direction.ASC, "createTime");
-        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
-        return tagRepository.findByIdAndNameLike(id,name ,pageRequest);
-    }
-
-
+    public Tag findById(String id){ return tagRepository.findOne(id);}
 
     public Tag findByName(String name){
         return tagRepository.findByName(name);
