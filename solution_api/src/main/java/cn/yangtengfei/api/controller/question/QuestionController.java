@@ -7,6 +7,7 @@ import cn.yangtengfei.api.service.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,14 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize, String tagId){
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Question> questionTypes = apiQuestionService.findAllPageByTagId(pageNumber-1,pageSize,tagId);
+        Page<Question> questionTypes = null;
+        if(StringUtils.isEmpty(tagId)){
+            questionTypes = apiQuestionService.findAll(pageNumber-1,pageSize);
+        }else{
+            questionTypes = apiQuestionService.findAllPageByTagId(pageNumber-1,pageSize,tagId);
+        }
         pageResultModel.setTotal(questionTypes.getTotalElements());
-        pageResultModel.setRows(questionTypes.getContent());
+        pageResultModel.setRows(apiQuestionService.findQuestionListWithTags(questionTypes.getContent()));
         return  pageResultModel;
     }
 

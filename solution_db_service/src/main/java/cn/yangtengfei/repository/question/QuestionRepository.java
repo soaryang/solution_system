@@ -11,8 +11,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(mongoTemplateRef = "questionMongoTemplate")
 public interface QuestionRepository extends MongoRepository<Question,String> {
 
-
     Page<Question> findByTagId(String tagId, Pageable pageable);
 
+
+    Page<Question> findByNameLike(String Name, Pageable pageable);
 
 }

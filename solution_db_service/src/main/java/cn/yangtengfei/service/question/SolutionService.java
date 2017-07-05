@@ -36,4 +36,11 @@ public class SolutionService {
         return solutionRepository.findAll(pageRequest);
     }
 
+    public Page<Solution> findAllByQuestionId(int page, int pageSize,String questionId) {
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+        return solutionRepository.findByQuestionIdOrderByUpdateTimeDesc(questionId,pageRequest);
+    }
+
+
+
 }

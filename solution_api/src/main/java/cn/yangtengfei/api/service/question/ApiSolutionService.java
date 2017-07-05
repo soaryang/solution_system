@@ -41,4 +41,10 @@ public class ApiSolutionService {
         return solutionService.findAllPage(page,pageSize);
     }
 
+    public Page<Solution> findAllByQuestionId(int page, int pageSize,String questionId) {
+        return solutionService.findAllByQuestionId(page,pageSize,questionId);
+    }
+
+
+
 }

@@ -6,18 +6,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.util.List;
+
 @EnableMongoRepositories(mongoTemplateRef = "questionMongoTemplate")
 public interface TagRepository extends MongoRepository<Tag,String> {
 
-    public Tag findByName(String name);
+    public Tag findByNameOrderByUpdateTimeDesc(String name);
 
-    Page<Tag> findByUseStatus(Integer useStatus, Pageable pageable);
+    Page<Tag> findByUseStatusOrderByUpdateTimeDesc(Integer useStatus, Pageable pageable);
 
-    Page<Tag> findByUseStatusAndNameLike(Integer useStatus,String name, Pageable pageable);
+    Page<Tag> findByUseStatusAndNameLikeOrderByUpdateTimeDesc(Integer useStatus,String name, Pageable pageable);
 
-    Page<Tag> findByUseStatusAndIdAndNameLike(Integer useStatus,String id, String name, Pageable pageable);
+    Page<Tag> findByUseStatusAndIdAndNameLikeOrderByUpdateTimeDesc(Integer useStatus,String id, String name, Pageable pageable);
 
-    Page<Tag> findByUseStatusAndId(Integer useStatus,String name, Pageable pageable);
+    Page<Tag> findByUseStatusAndIdOrderByUpdateTimeDesc(Integer useStatus,String name, Pageable pageable);
 
-    Page<Tag> findByNameLike(String name, Pageable pageable);
+    Page<Tag> findByNameLikeOrderByUpdateTimeDesc(String name, Pageable pageable);
+
+    List<Tag> findByIdInOrderByUpdateTimeDesc(List<String> ids);
 }

@@ -38,7 +38,7 @@ public class SolutionController extends BaseController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize, String questionId){
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Solution> solutionPage =  apiSolutionService.findAllPage(pageNumber-1,pageSize);
+        Page<Solution> solutionPage =  apiSolutionService.findAllByQuestionId(pageNumber-1,pageSize,questionId);
         pageResultModel.setTotal(solutionPage.getTotalElements());
         pageResultModel.setRows(solutionPage.getContent());
         return pageResultModel;

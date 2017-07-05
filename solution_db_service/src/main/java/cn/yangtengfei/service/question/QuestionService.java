@@ -40,6 +40,16 @@ public class QuestionService {
     public Page<Question> findPageByTagId(int page, int pageSize,String typeId) {
         Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
         PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        //return questionRepository.findByTagId(typeId,pageRequest);
         return questionRepository.findByTagId(typeId,pageRequest);
+        //return questionRepository.findByNameLike("防火墙",pageRequest);
+    }
+
+    public Page<Question> findAll(int page, int pageSize) {
+        Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
+        PageRequest pageRequest = new PageRequest(page, pageSize, sort);
+        //return questionRepository.findByTagId(typeId,pageRequest);
+        return questionRepository.findAll(pageRequest);
+        //return questionRepository.findByNameLike("防火墙",pageRequest);
     }
 }
