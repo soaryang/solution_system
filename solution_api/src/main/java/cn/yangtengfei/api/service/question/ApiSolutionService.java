@@ -3,6 +3,7 @@ package cn.yangtengfei.api.service.question;
 import cn.yangtengfei.api.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.service.question.SolutionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,20 @@ public class ApiSolutionService {
     private SolutionService solutionService;
 
     public SolutionView save(SolutionView solutionView){
+
+        String id = solutionView.getId();
         Solution solution = new Solution();
-        BeanUtils.copyProperties(solutionView,solution);
-        solution = solutionService.save(solution);
-        solutionView.setId(solution.getId());
+        if(StringUtils.isEmpty(id)){
+
+            BeanUtils.copyProperties(solutionView,solution);
+            solution = solutionService.save(solution);
+            solutionView.setId(solution.getId());
+        }else{
+            SolutionView tempSolutionVirew = findSolutionViewById(id);
+            solutionView.setQuestionId(tempSolutionVirew.getQuestionId());
+            BeanUtils.copyProperties(solutionView,solution);
+            solutionService.save(solution);
+        }
         return solutionView;
     }
 

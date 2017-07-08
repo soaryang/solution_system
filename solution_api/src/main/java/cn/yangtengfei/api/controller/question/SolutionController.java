@@ -51,6 +51,15 @@ public class SolutionController extends BaseController {
         return null;
     }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public Result edit(@ModelAttribute SolutionView solutionView, HttpServletRequest request){
+        //return  null;
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(apiSolutionService.save(solutionView));
+        return result;
+    }
+
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Result del(String id){
         //return  null;
@@ -61,7 +70,7 @@ public class SolutionController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/findById", method = RequestMethod.POST)
+    @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public Result findById(String id){
         //return  null;
         Result result = new Result();
