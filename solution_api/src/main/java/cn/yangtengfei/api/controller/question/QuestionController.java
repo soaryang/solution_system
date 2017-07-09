@@ -47,6 +47,16 @@ public class QuestionController extends BaseController {
         apiQuestionService.save(questionView);
         return result;
     }
+    @RequestMapping(value = "/findById", method = RequestMethod.GET)
+    public Result findById(String id){
+        Result result = new Result();
+        result.setCode("200");
+        result.setMessage("OK");
+        result.setData(apiQuestionService.findQuestionViewById(id));
+        return result;
+    }
+
+
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
     public Result del(@PathVariable("id") String id){

@@ -8,6 +8,7 @@ import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,14 @@ public class TagController extends BaseController {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @RequestMapping(value = "/findById", method = RequestMethod.GET)
+    public Result findAll(String id){
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(apiTagService.findById(id));
+        return result;
+    }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(HttpServletRequest request,Integer pageNumber , Integer pageSize){

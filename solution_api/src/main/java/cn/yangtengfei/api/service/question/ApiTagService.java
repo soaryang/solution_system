@@ -74,4 +74,11 @@ public class ApiTagService {
         return tagService.findByName(name);
     }
 
+    public TagView findById(String id){
+        TagView tagView = new TagView();
+        Tag tag =   tagService.findById(id);
+        BeanUtils.copyProperties(tag,tagView);
+        return tagView;
+    }
+
 }

@@ -5,6 +5,7 @@ import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,19 @@ public class ApiQuestionService {
         questionView.setId(question.getId());
         return questionView;
     }
+
+    public QuestionView findQuestionViewById(String id){
+        Question question = questionService.findQuestionById(id);
+        QuestionView questionView = new QuestionView();
+        if(question!=null){
+            String tagId = question.getTagId();
+            Tag  tag = tagService.findById(tagId);
+            BeanUtils.copyProperties(question,questionView);
+            questionView.setTagName(tag.getName());
+        }
+        return questionView;
+    }
+
 
     public void del(String id){
         questionService.del(id);

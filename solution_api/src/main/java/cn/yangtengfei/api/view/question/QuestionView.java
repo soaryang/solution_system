@@ -18,4 +18,6 @@ public class QuestionView implements Serializable {
 
     private String tagId;
 
+    private String tagName;
+
 }
