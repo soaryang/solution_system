@@ -82,12 +82,12 @@ public class WeChatController {
         log.info("valid get message-----POST");
 
 
-        String myOpenId = request.getParameter("o3QMVwI1DrAj4y3TE9VD1I4HqOFE");
+        String myOpenId = request.getParameter("openid");
 
 
-        String id = getAccessToken();
-        String ulr ="https://api.weixin.qq.com/cgi-bin/user/info?access_token="+id+"&openid="+myOpenId+"&lang=zh_CN";
-        logger.info("当前用户信息："+HttpUtil.sendGet(ulr,null));
+        //String id = getAccessToken();
+        //String ulr ="https://api.weixin.qq.com/cgi-bin/user/info?access_token="+id+"&openid="+myOpenId+"&lang=zh_CN";
+        //logger.info("当前用户信息："+HttpUtil.sendGet(ulr,null));
 
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");
@@ -104,7 +104,7 @@ public class WeChatController {
         String result = "";
 
         TextMessage text = new TextMessage();
-        text.setToUserName(id);
+        text.setToUserName(myOpenId);
         text.setFromUserName("gh_3716fa56e7f0");
         text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
         text.setCreateTime(new Date().getTime());
