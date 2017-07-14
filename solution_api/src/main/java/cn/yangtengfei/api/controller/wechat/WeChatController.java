@@ -11,9 +11,12 @@ import cn.yangtengfei.api.wechat.message.TextMessage;
 import cn.yangtengfei.api.wechat.process.FormatXmlProcess;
 import cn.yangtengfei.api.wechat.process.ReceiveXmlProcess;
 import cn.yangtengfei.api.wechat.util.MessageUtil;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisServer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,15 +36,22 @@ public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
 
+
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
     public Result findById(String id){
-        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx35f3ce44a3e1ad2e&secret=b1f21e4d4b15be963dd58571b040515c";
+
 
         Result result = new Result();
         result.setCode("200");
-        logger.info("url:"+url);
-        result.setData(HttpUtil.sendGet(url,null));
+        result.setData(getAccessToken());
         return result;
+    }
+
+    private String getAccessToken(){
+        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx35f3ce44a3e1ad2e&secret=b1f21e4d4b15be963dd58571b040515c";
+        String result = HttpUtil.sendGet(url,null);
+        Map<String,Object> map = (Map<String,Object>) JSON.parseObject(result);
+        return String.valueOf(map.get("access_token"));
     }
 
     @RequestMapping(value = "/valid", method = RequestMethod.GET)
@@ -74,7 +84,9 @@ public class WeChatController {
 
         String myOpenId = request.getParameter("o3QMVwI1DrAj4y3TE9VD1I4HqOFE");
 
-        String ulr ="https://api.weixin.qq.com/cgi-bin/user/info?access_token=BTmIrnrTBeaGrB2po5gH21WWJlMeB&openid="+myOpenId+"&lang=zh_CN";
+
+
+        String ulr ="https://api.weixin.qq.com/cgi-bin/user/info?access_token="+getAccessToken()+"&openid="+myOpenId+"&lang=zh_CN";
         logger.info("当前用户信息："+HttpUtil.sendGet(ulr,null));
 
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
