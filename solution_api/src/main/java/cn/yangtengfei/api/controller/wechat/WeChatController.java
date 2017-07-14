@@ -71,6 +71,12 @@ public class WeChatController {
     public String processWechatMag(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("valid get message-----POST");
 
+
+        String myOpenId = request.getParameter("o3QMVwI1DrAj4y3TE9VD1I4HqOFE");
+
+        String ulr ="https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+        logger.info("当前用户信息："+HttpUtil.sendGet(ulr,null));
+
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
