@@ -1,10 +1,12 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
