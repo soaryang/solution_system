@@ -110,6 +110,8 @@
             <version>2.8.3</version>
         </dependency>
 
+
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -132,11 +134,25 @@
             <version>1.5.4.RELEASE</version>
         </dependency>
 
+
+
         <dependency>
             <groupId>cn.yangtengfei</groupId>
             <artifactId>solution_webCrawler</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>

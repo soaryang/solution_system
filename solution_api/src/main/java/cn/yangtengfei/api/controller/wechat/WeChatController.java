@@ -3,6 +3,15 @@ package cn.yangtengfei.api.controller.wechat;
 
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.util.HttpUtil;
+import cn.yangtengfei.api.util.WeChatUtil;
+import cn.yangtengfei.api.wechat.Words;
+import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
+import cn.yangtengfei.api.wechat.entity.WeixinMessage;
+import cn.yangtengfei.api.wechat.message.TextMessage;
+import cn.yangtengfei.api.wechat.process.FormatXmlProcess;
+import cn.yangtengfei.api.wechat.process.ReceiveXmlProcess;
+import cn.yangtengfei.api.wechat.util.MessageUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -12,12 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/wechChat")
+@Slf4j
 public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
@@ -48,66 +59,102 @@ public class WeChatController {
         if (StringUtils.isEmpty(token)) {
             token = "BTmIrnrTBeaGrB2po5gH21WWJlMeB";
         }
-
         // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
-        if (checkSignature(signature, timestamp, nonce, token)) {
+        if (WeChatUtil.checkSignature(signature, timestamp, nonce, token)) {
             return echostr;
         }
         return null;
     }
 
-    public static boolean checkSignature(String signature, String timestamp, String nonce,String token) {
-        String[] arr = new String[] { token, timestamp, nonce };
-        // 将token、timestamp、nonce三个参数进行字典序排序
-        Arrays.sort(arr);
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            content.append(arr[i]);
+
+    @RequestMapping(value = "/valid", method = RequestMethod.POST)
+    public String processWechatMag(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("valid get message-----POST");
+
+        // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        /** 解析xml数据 */
+        ReceiveXmlEntity xmlEntity = new ReceiveXmlProcess().getMsgEntity(request);
+        log.info("valid post:" + xmlEntity.toString());
+        //按照touserName 得到公众帐号信息
+        String wechatId = xmlEntity.getToUserName();
+        String openId = xmlEntity.getFromUserName();
+
+
+        String result = "";
+        //消息类型为event
+        if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(xmlEntity.getMsgType())) {
+            logger.info("event------->"+xmlEntity.getEvent());
+            //当用户同意允许公众账号获取地理位置时，每次打开微信公众账号，都会收到此消息
+            if (MessageUtil.REQ_MESSAGE_TYPE_LOCATION.equals(xmlEntity.getEvent())) {
+                log.info("REQ_MESSAGE_TYPE_LOCATION" + xmlEntity.getContent());
+                //关注微信
+            } else if (MessageUtil.EVENT_TYPE_SUBSCRIBE.equals(xmlEntity.getEvent())) {
+                log.info("EVENT_TYPE_SUBSCRIBE" + xmlEntity.getContent());
+                TextMessage text = new TextMessage();
+                text.setToUserName(xmlEntity.getFromUserName());
+                text.setFromUserName(xmlEntity.getToUserName());
+                text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+                text.setCreateTime(new Date().getTime());
+                text.setFuncFlag(0);
+                text.setContent(Words.WELCOME);
+                result = FormatXmlProcess.textMessageToXml(text);
+                //取消关注
+            } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {
+                log.info("EVENT_TYPE_UNSUBSCRIBE" + xmlEntity.getContent());
+                //CLICK事件推送
+            } else if (MessageUtil.EVENT_TYPE_CLICK.equals(xmlEntity.getEvent())) {
+
+                String eventKey = xmlEntity.getEventKey();
+                if (!StringUtils.isEmpty(eventKey)) {
+                    if (eventKey.equals("VOICE_DAN_MU")) {
+
+                    } else if (eventKey.equals("MONEY")) {
+
+                    } else if (eventKey.equals("CONTECT_US")) {
+
+                    }
+
+                }
+                log.info("EVENT_TYPE_CLICK" + eventKey);
+                return result;
+
+                //view事件推送
+            } else if (MessageUtil.EVENT_TYPE_VIEW.equals(xmlEntity.getEvent())) {
+                String eventKey = xmlEntity.getEventKey();
+                //处理view事件推送,主要记录用户点击事件
+                String url = xmlEntity.getUrl();
+                log.info("EVENT_TYPE_VIEW" + eventKey);
+            }
+        } else if (MessageUtil.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
+            String content = xmlEntity.getContent();
+            if (!StringUtils.isEmpty(content)) {
+                log.info("RESP_MESSAGE_TYPE_TEXT" + content);
+            }
+
+        }else if (MessageUtil.REQ_MESSAGE_TYPE_VOICE.equals(xmlEntity.getMsgType())) {
+            String recognition = xmlEntity.getRecognition();
+
+            TextMessage text = new TextMessage();
+            text.setToUserName(xmlEntity.getFromUserName());
+            text.setFromUserName(xmlEntity.getToUserName());
+            text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+            text.setCreateTime(new Date().getTime());
+            text.setFuncFlag(0);
+            if (!StringUtils.isEmpty(recognition)) {
+                log.info("REQ_MESSAGE_TYPE_VOICE" + recognition);
+                if (recognition.indexOf("!") != -1) {
+
+                }
+                text.setContent("弹幕：“" + recognition + "”发送");
+                result = FormatXmlProcess.textMessageToXml(text);
+            }
+
+        } else if(MessageUtil.SHAKE_AROUND_USER_SHAKE.equals(xmlEntity.getMsgType())){
+
         }
-        MessageDigest md = null;
-        String tmpStr = null;
-
-        try {
-            md = MessageDigest.getInstance("SHA-1");
-            // 将三个参数字符串拼接成一个字符串进行sha1加密
-            byte[] digest = md.digest(content.toString().getBytes());
-            tmpStr = byteToStr(digest);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        content = null;
-        // 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
-        return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
-    }
-
-    /**
-     * 将字节数组转换为十六进制字符串
-     *
-     * @param byteArray
-     * @return
-     */
-    private static String byteToStr(byte[] byteArray) {
-        String strDigest = "";
-        for (int i = 0; i < byteArray.length; i++) {
-            strDigest += byteToHexStr(byteArray[i]);
-        }
-        return strDigest;
-    }
-
-    /**
-     * 将字节转换为十六进制字符串
-     *
-     * @param mByte
-     * @return
-     */
-    private static String byteToHexStr(byte mByte) {
-        char[] Digit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-        char[] tempArr = new char[2];
-        tempArr[0] = Digit[(mByte >>> 4) & 0X0F];
-        tempArr[1] = Digit[mByte & 0X0F];
-
-        String s = new String(tempArr);
-        return s;
+        return result;
     }
 }
