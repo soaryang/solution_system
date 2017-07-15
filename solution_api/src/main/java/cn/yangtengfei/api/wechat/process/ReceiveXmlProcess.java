@@ -72,7 +72,7 @@ public class ReceiveXmlProcess {
 				//获取set方法，field.getType())获取它的参数数据类型
 				Method method = c.getDeclaredMethod("set"+ele.getName(), field.getType());
 				//调用set方法
-				//logger.info(ele.getName()+":"+ele.getText());
+				logger.info(ele.getName()+":"+ele.getText());
 				method.invoke(msg, ele.getText());
 			}
 		} catch (Exception e) {

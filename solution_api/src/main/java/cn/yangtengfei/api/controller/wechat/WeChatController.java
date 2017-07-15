@@ -94,12 +94,10 @@ public class WeChatController {
         response.setCharacterEncoding("UTF-8");
         /** 解析xml数据 */
         ReceiveXmlEntity xmlEntity = new ReceiveXmlProcess().getMsgEntity(request);
-        log.info("valid post:" + xmlEntity.toString());
+        log.info("valid post:" + JSON.toJSONString(xmlEntity));
         //按照touserName 得到公众帐号信息
         String wechatId = xmlEntity.getToUserName();
         String openId = xmlEntity.getFromUserName();
-
-
         String result = "";
 
         TextMessage text = new TextMessage();
