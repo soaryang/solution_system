@@ -92,6 +92,7 @@ public class WeChatController {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        logger.info("request:=============================================");
         logger.info("request:============="+JSON.toJSONString(request));
         /** 解析xml数据 */
         ReceiveXmlEntity xmlEntity = new ReceiveXmlProcess().getMsgEntity(request);
