@@ -5,6 +5,7 @@ import cn.yangtengfei.api.wechat.entity.PayNotifyXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveGroupRedPackXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveUnifiedOrderXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -61,7 +62,7 @@ public class ReceiveXmlProcess {
 			//获取该实体的元类型
 			Class<?> c = Class.forName("cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity");
 			msg = (ReceiveXmlEntity)c.newInstance();//创建这个实体的对象
-			
+			logger.info("msg=================:"+ JSON.toJSONString(msg));
 			while(iter.hasNext()){
 				Element ele = (Element)iter.next();
 				//获取set方法中的参数字段（实体类的属性）
