@@ -63,8 +63,8 @@ public class ReceiveXmlProcess {
 			Class<?> c = Class.forName("cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity");
 			msg = (ReceiveXmlEntity)c.newInstance();//创建这个实体的对象
 			logger.info("msg=================:"+ JSON.toJSONString(msg));
-			logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-			logger.info("root=================:"+ JSON.toJSONString(root));
+			//logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+			//logger.info("root=================:"+ JSON.toJSONString(root));
 			while(iter.hasNext()){
 				Element ele = (Element)iter.next();
 				//获取set方法中的参数字段（实体类的属性）
@@ -72,6 +72,7 @@ public class ReceiveXmlProcess {
 				//获取set方法，field.getType())获取它的参数数据类型
 				Method method = c.getDeclaredMethod("set"+ele.getName(), field.getType());
 				//调用set方法
+				logger.info(ele.getName()+":"+ele.getText());
 				method.invoke(msg, ele.getText());
 			}
 		} catch (Exception e) {
