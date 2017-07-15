@@ -103,14 +103,14 @@ public class WeChatController {
 
         String result = "";
 
-        TextMessage text = new TextMessage();
+        /*TextMessage text = new TextMessage();
         text.setToUserName(myOpenId);
         text.setFromUserName("gh_3716fa56e7f0");
         text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
         text.setCreateTime(new Date().getTime());
         text.setFuncFlag(0);
         text.setContent(Words.WELCOME);
-        result = FormatXmlProcess.textMessageToXml(text);
+        result = FormatXmlProcess.textMessageToXml(text);*/
         return result;
         //消息类型为event
        /* if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(xmlEntity.getMsgType())) {
