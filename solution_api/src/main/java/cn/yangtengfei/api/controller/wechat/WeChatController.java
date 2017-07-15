@@ -118,6 +118,15 @@ public class WeChatController {
                 //关注微信
             } else if (MessageUtil.EVENT_TYPE_SUBSCRIBE.equals(xmlEntity.getEvent())) {
                 log.info("subscribe" + xmlEntity.getContent());
+
+                TextMessage text = new TextMessage();
+                text.setToUserName(myOpenId);
+                text.setFromUserName("gh_3716fa56e7f0");
+                text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+                text.setCreateTime(new Date().getTime());
+                text.setFuncFlag(0);
+                text.setContent("<a href='http://www.baidu.com'>百度</a>");
+                result = FormatXmlProcess.textMessageToXml(text);
                 //取消关注
             } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {
                 log.info("unsubscribe" + xmlEntity.getContent());
