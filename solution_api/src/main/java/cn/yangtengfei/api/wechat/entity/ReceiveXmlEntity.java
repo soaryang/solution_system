@@ -27,6 +27,7 @@ public class ReceiveXmlEntity {
 	private String Content="";
 	private String Format="";
 	private String Recognition="";
+	private String Encrypt;
 	
 	public String getRecognition() {
 		return Recognition;
@@ -167,32 +168,11 @@ public class ReceiveXmlEntity {
 		MsgType = msgType;
 	}
 
-    @Override
-    public String toString() {
-        return "ReceiveXmlEntity{" +
-                "ToUserName='" + ToUserName + '\'' +
-                ", FromUserName='" + FromUserName + '\'' +
-                ", CreateTime='" + CreateTime + '\'' +
-                ", MsgType='" + MsgType + '\'' +
-                ", MsgId='" + MsgId + '\'' +
-                ", Event='" + Event + '\'' +
-                ", EventKey='" + EventKey + '\'' +
-                ", Ticket='" + Ticket + '\'' +
-                ", Latitude='" + Latitude + '\'' +
-                ", Longitude='" + Longitude + '\'' +
-                ", Precision='" + Precision + '\'' +
-                ", PicUrl='" + PicUrl + '\'' +
-                ", MediaId='" + MediaId + '\'' +
-                ", Title='" + Title + '\'' +
-                ", Description='" + Description + '\'' +
-                ", Url='" + Url + '\'' +
-                ", Location_X='" + Location_X + '\'' +
-                ", Location_Y='" + Location_Y + '\'' +
-                ", Scale='" + Scale + '\'' +
-                ", Label='" + Label + '\'' +
-                ", Content='" + Content + '\'' +
-                ", Format='" + Format + '\'' +
-                ", Recognition='" + Recognition + '\'' +
-                '}';
-    }
+	public String getEncrypt() {
+		return Encrypt;
+	}
+
+	public void setEncrypt(String encrypt) {
+		Encrypt = encrypt;
+	}
 }
