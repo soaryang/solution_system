@@ -100,7 +100,7 @@ public class WeChatController {
         String openId = xmlEntity.getFromUserName();
         String result = "";
 
-        TextMessage text = new TextMessage();
+        /*TextMessage text = new TextMessage();
         text.setToUserName(myOpenId);
         text.setFromUserName("gh_3716fa56e7f0");
         text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
@@ -108,78 +108,38 @@ public class WeChatController {
         text.setFuncFlag(0);
         text.setContent(Words.WELCOME);
         result = FormatXmlProcess.textMessageToXml(text);
-        return result;
+        return result;*/
         //消息类型为event
-       /* if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(xmlEntity.getMsgType())) {
+       if (MessageUtil.REQ_MESSAGE_TYPE_EVENT.equals(xmlEntity.getMsgType())) {
             logger.info("event------->"+xmlEntity.getEvent());
             //当用户同意允许公众账号获取地理位置时，每次打开微信公众账号，都会收到此消息
             if (MessageUtil.REQ_MESSAGE_TYPE_LOCATION.equals(xmlEntity.getEvent())) {
-                log.info("REQ_MESSAGE_TYPE_LOCATION" + xmlEntity.getContent());
+                log.info("LOCATION" + xmlEntity.getContent());
                 //关注微信
             } else if (MessageUtil.EVENT_TYPE_SUBSCRIBE.equals(xmlEntity.getEvent())) {
-                log.info("EVENT_TYPE_SUBSCRIBE" + xmlEntity.getContent());
-                TextMessage text = new TextMessage();
-                text.setToUserName(xmlEntity.getFromUserName());
-                text.setFromUserName(xmlEntity.getToUserName());
-                text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-                text.setCreateTime(new Date().getTime());
-                text.setFuncFlag(0);
-                text.setContent(Words.WELCOME);
-                result = FormatXmlProcess.textMessageToXml(text);
+                log.info("subscribe" + xmlEntity.getContent());
                 //取消关注
             } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {
-                log.info("EVENT_TYPE_UNSUBSCRIBE" + xmlEntity.getContent());
+                log.info("unsubscribe" + xmlEntity.getContent());
                 //CLICK事件推送
             } else if (MessageUtil.EVENT_TYPE_CLICK.equals(xmlEntity.getEvent())) {
-
-                String eventKey = xmlEntity.getEventKey();
-                if (!StringUtils.isEmpty(eventKey)) {
-                    if (eventKey.equals("VOICE_DAN_MU")) {
-
-                    } else if (eventKey.equals("MONEY")) {
-
-                    } else if (eventKey.equals("CONTECT_US")) {
-
-                    }
-
-                }
-                log.info("EVENT_TYPE_CLICK" + eventKey);
-                return result;
-
+                log.info("CLICK" + xmlEntity.getContent());
                 //view事件推送
             } else if (MessageUtil.EVENT_TYPE_VIEW.equals(xmlEntity.getEvent())) {
-                String eventKey = xmlEntity.getEventKey();
-                //处理view事件推送,主要记录用户点击事件
-                String url = xmlEntity.getUrl();
-                log.info("EVENT_TYPE_VIEW" + eventKey);
+                log.info("VIEW" + xmlEntity.getContent());
             }
         } else if (MessageUtil.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
             String content = xmlEntity.getContent();
             if (!StringUtils.isEmpty(content)) {
-                log.info("RESP_MESSAGE_TYPE_TEXT" + content);
+                log.info("text" + content);
             }
-
         }else if (MessageUtil.REQ_MESSAGE_TYPE_VOICE.equals(xmlEntity.getMsgType())) {
-            String recognition = xmlEntity.getRecognition();
-
-            TextMessage text = new TextMessage();
-            text.setToUserName(xmlEntity.getFromUserName());
-            text.setFromUserName(xmlEntity.getToUserName());
-            text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-            text.setCreateTime(new Date().getTime());
-            text.setFuncFlag(0);
-            if (!StringUtils.isEmpty(recognition)) {
-                log.info("REQ_MESSAGE_TYPE_VOICE" + recognition);
-                if (recognition.indexOf("!") != -1) {
-
-                }
-                text.setContent("弹幕：“" + recognition + "”发送");
-                result = FormatXmlProcess.textMessageToXml(text);
-            }
+           log.info("voice" + xmlEntity.getContent());
 
         } else if(MessageUtil.SHAKE_AROUND_USER_SHAKE.equals(xmlEntity.getMsgType())){
+           log.info("ShakearoundUserShake" + xmlEntity.getContent());
 
         }
-        return result;*/
+        return result;
     }
 }
