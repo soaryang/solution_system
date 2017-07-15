@@ -1,5 +1,6 @@
 package cn.yangtengfei.api.wechat.process;
 
+import cn.yangtengfei.api.controller.wechat.WeChatController;
 import cn.yangtengfei.api.wechat.entity.PayNotifyXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveGroupRedPackXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveUnifiedOrderXmlEntity;
@@ -9,6 +10,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
@@ -23,6 +26,7 @@ import java.util.Iterator;
 @Slf4j
 public class ReceiveXmlProcess {
 
+	private static final Logger logger = LoggerFactory.getLogger(ReceiveXmlProcess.class);
 	/**
 	 * 解析微信xml消息
 	 * @param request
@@ -55,7 +59,7 @@ public class ReceiveXmlProcess {
 			msg = new ReceiveXmlEntity();
 			//利用反射机制，调用set方法
 			//获取该实体的元类型
-			Class<?> c = Class.forName("cn.partytime.wechat.entity.ReceiveXmlEntity");
+			Class<?> c = Class.forName("cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity");
 			msg = (ReceiveXmlEntity)c.newInstance();//创建这个实体的对象
 			
 			while(iter.hasNext()){
