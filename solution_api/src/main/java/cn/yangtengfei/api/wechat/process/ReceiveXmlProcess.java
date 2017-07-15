@@ -63,7 +63,7 @@ public class ReceiveXmlProcess {
 			Class<?> c = Class.forName("cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity");
 			msg = (ReceiveXmlEntity)c.newInstance();//创建这个实体的对象
 			logger.info("msg=================:"+ JSON.toJSONString(msg));
-
+			logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			logger.info("root=================:"+ JSON.toJSONString(root));
 			while(iter.hasNext()){
 				Element ele = (Element)iter.next();
