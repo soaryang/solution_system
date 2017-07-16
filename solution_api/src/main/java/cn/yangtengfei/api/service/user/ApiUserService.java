@@ -12,6 +12,7 @@ import cn.yangtengfei.service.wechat.WechatUserService;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,15 @@ public class ApiUserService {
     private UserRoleService userRoleService;
 
 
+    public UserView findUserByName(String name){
+        User user = userService.findByName(name);
+        if(user!=null){
+            UserView userView = new UserView();
+            BeanUtils.copyProperties(user,userView);
+            return userView;
+        }
+        return null;
+    }
     public UserView finUserInfo(String id){
         WechatUser wechatUser =  wechatUserService.findByUserId(id);
         logger.info("获取用户信息:{}",JSON.toJSONString(wechatUser));
@@ -71,13 +81,6 @@ public class ApiUserService {
                 userRoleService.save(userRole);
             }
         }
-    }
-
-    public UserView findByOpenId(String openId){
-        WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
-        UserView userView = new UserView();
-        BeanUtils.copyProperties(wechatUser,userView);
-        return userView;
     }
 
     public void saveUser(UserView userView){

@@ -1,10 +1,13 @@
 package cn.yangtengfei.api.controller.wechat;
 
 
+import cn.yangtengfei.api.config.RedisService;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.service.user.ApiUserService;
+import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.HttpUtil;
 import cn.yangtengfei.api.util.WeChatUtil;
+import cn.yangtengfei.api.util.cont.cacheConst.UserCacheConst;
 import cn.yangtengfei.api.view.user.UserView;
 import cn.yangtengfei.api.wechat.Words;
 import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
@@ -42,6 +45,9 @@ public class WeChatController {
 
     @Autowired
     private ApiUserService apiUserService;
+
+    @Autowired
+    private RedisService redisService;
 
 
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
@@ -156,7 +162,22 @@ public class WeChatController {
         } else if (MessageUtil.REQ_MESSAGE_TYPE_TEXT.equals(xmlEntity.getMsgType())) {
             String content = xmlEntity.getContent();
             if (!StringUtils.isEmpty(content)) {
-                log.info("text" + content);
+                log.info("text:" + content);
+                if("wori".equals(content) && "o3QMVwI1DrAj4y3TE9VD1I4HqOFE".equals(openId)){
+                    String password = BCrypt.hashpw(openId, BCrypt.gensalt());
+
+                    String key = UserCacheConst.USER_PASSWORD_CACHE_KEY+openId;
+                    redisService.set(key,password);
+                    redisService.expire(key,60*5);
+                    TextMessage text = new TextMessage();
+                    text.setToUserName(openId);
+                    text.setFromUserName(wechatId);
+                    text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+                    text.setCreateTime(new Date().getTime());
+                    text.setFuncFlag(0);
+                    text.setContent("密码是:"+password+",有效时间是5分钟");
+                    result = FormatXmlProcess.textMessageToXml(text);
+                }
             }
         }else if (MessageUtil.REQ_MESSAGE_TYPE_VOICE.equals(xmlEntity.getMsgType())) {
            log.info("voice" + xmlEntity.getContent());

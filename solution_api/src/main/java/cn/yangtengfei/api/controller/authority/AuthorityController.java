@@ -30,7 +30,7 @@ public class AuthorityController extends BaseController {
 
     @Autowired
     private AuthorityService authorityService;
-
+    
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Result findAll(HttpServletRequest request,HttpServletResponse response) throws Exception {
         String userName = request.getParameter("userName");

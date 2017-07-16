@@ -4,11 +4,9 @@ package cn.yangtengfei.api.cacheService.authority;
 import cn.yangtengfei.api.cacheService.user.UserCacheService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.UserTokenConst;
+import cn.yangtengfei.api.util.cont.cacheConst.AuthorityCacheConst;
 import cn.yangtengfei.model.user.User;
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +27,10 @@ public class AuthorityCacheService {
     private UserCacheService userCacheService;
 
 
-    public static final String  AUTHORITY_KEY_PREFIX="authKey:";
 
     public String createAuthKey(String id,long time){
         String key = BCrypt.hashpw(id,BCrypt.gensalt());
-        String authKey = AUTHORITY_KEY_PREFIX+key;
+        String authKey = AuthorityCacheConst.AUTHORITY_KEY_PREFIX+key;
         redisTemplate.opsForValue().set(authKey,id);
         redisTemplate.expire(authKey,time, TimeUnit.SECONDS);
         return key;
@@ -45,7 +42,7 @@ public class AuthorityCacheService {
     }
 
     public User getUer(String key){
-        String authKey = AUTHORITY_KEY_PREFIX+key;
+        String authKey = AuthorityCacheConst.AUTHORITY_KEY_PREFIX+key;
         Object object = redisTemplate.opsForValue().get(authKey);
         if(object!=null){
            return userCacheService.findUserById(String.valueOf(object));
@@ -61,7 +58,7 @@ public class AuthorityCacheService {
 
     public void addSessionTime(String key,HttpServletResponse response){
         int time = 3600*3;
-        String authKey = AUTHORITY_KEY_PREFIX+key;
+        String authKey = AuthorityCacheConst.AUTHORITY_KEY_PREFIX+key;
         redisTemplate.expire(authKey,time, TimeUnit.SECONDS);
         setAuthKeyIntoCookie(response,key,time);;
     }
