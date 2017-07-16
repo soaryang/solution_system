@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MasterMongoConfig {
 
     @Bean(name = "masterMongoProperties")
-    @ConfigurationProperties(prefix = "spring.data.mongodb.question")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.master")
     public MongoProperties danmuMongoProperties() {
         return new MongoProperties();
     }

@@ -1,4 +1,4 @@
-package cn.yangtengfei.repository.wechat;
+package cn.yangtengfei.repository.user;
 
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.model.wechat.WechatUser;
@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(mongoTemplateRef = "userMongoTemplate")
 public interface WechatRepostitory extends MongoRepository<WechatUser,String> {
 
-    Page<WechatUser> findBysubScribeStateAndDeleteFlgOrderByUpdateTimeDesc(int subscribeState,int deleteFlg, Pageable pageable);
+    Page<WechatUser> findBySubscribeStateAndDeleteFlgOrderByUpdateTimeDesc(int subscribeState,int deleteFlg, Pageable pageable);
 }
