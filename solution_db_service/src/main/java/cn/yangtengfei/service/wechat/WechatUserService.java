@@ -25,8 +25,8 @@ public class WechatUserService {
        return wechatRepostitory.save(wechatUser);
     }
 
-    public WechatUser findByUserId(String openId){
-        return wechatRepostitory.findByUserId(openId);
+    public WechatUser findByUserId(String userId){
+        return wechatRepostitory.findByUserId(userId);
     }
 
 

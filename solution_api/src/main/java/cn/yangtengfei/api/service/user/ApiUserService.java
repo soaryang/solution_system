@@ -47,6 +47,7 @@ public class ApiUserService {
 
     public UserView finUserInfo(String id){
         WechatUser wechatUser =  wechatUserService.findByUserId(id);
+        logger.info("获取用户信息:{}",JSON.toJSONString(wechatUser));
         UserView userView = new UserView();
         userView.setOpenId(wechatUser.getOpenId());
         userView.setId(wechatUser.getUserId());
@@ -104,6 +105,7 @@ public class ApiUserService {
             logger.info("微信用户存在：{}",JSON.toJSONString(userView));
             wechatUser.setSubscribeState(userView.getSubscribeState());
             wechatUser.setUpdateTime(currentDate);
+            logger.info("保存微信信息:{}",JSON.toJSONString(wechatUser));
             wechatUserService.save(wechatUser);
         }
     }
