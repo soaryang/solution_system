@@ -142,6 +142,10 @@ public class WeChatController {
                 //取消关注
             } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {
                 log.info("unsubscribe" + xmlEntity.getContent());
+                UserView wechatUser = new UserView();
+                wechatUser.setOpenId(openId);
+                wechatUser.setSubscribeState(1);
+                apiUserService.saveWechatUser(wechatUser);
                 //CLICK事件推送
             } else if (MessageUtil.EVENT_TYPE_CLICK.equals(xmlEntity.getEvent())) {
                 log.info("CLICK" + xmlEntity.getContent());
