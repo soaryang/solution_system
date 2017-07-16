@@ -162,8 +162,9 @@ public class WeChatController {
             if (!StringUtils.isEmpty(content)) {
                 log.info("text:" + content);
                 if("wori".equals(content) && "o3QMVwI1DrAj4y3TE9VD1I4HqOFE".equals(openId)){
-                    //String password = BCrypt.hashpw(openId, BCrypt.gensalt());
-                    String password = getCode();
+                    //
+                    String code = getCode();
+                    String password = BCrypt.hashpw(code, BCrypt.gensalt());
 
                     String key = UserCacheConst.USER_PASSWORD_CACHE_KEY+openId;
                     redisService.set(key,password);
@@ -174,7 +175,7 @@ public class WeChatController {
                     text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
                     text.setCreateTime(new Date().getTime());
                     text.setFuncFlag(0);
-                    text.setContent("密码是:"+password+",有效时间是5分钟");
+                    text.setContent("密码是:"+code+",有效时间是5分钟");
                     result = FormatXmlProcess.textMessageToXml(text);
                 }
             }
