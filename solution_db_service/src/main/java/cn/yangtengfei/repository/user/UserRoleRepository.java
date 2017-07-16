@@ -9,5 +9,5 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(mongoTemplateRef = "userMongoTemplate")
 public interface UserRoleRepository extends MongoRepository<UserRole,String> {
 
-    public UserRole findByUserIdAndRoleId(String userId,String roleId);
+    public UserRole findByUserId(String userId);
 }

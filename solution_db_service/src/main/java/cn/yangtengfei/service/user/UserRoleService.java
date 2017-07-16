@@ -12,8 +12,8 @@ public class UserRoleService {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-    public UserRole findUserRoleByUserIdAndRoleId(String userId,String roleId){
-        return userRoleRepository.findByUserIdAndRoleId(userId,roleId);
+    public UserRole findUserRoleByUserId(String userId){
+        return userRoleRepository.findByUserId(userId);
     }
 
     public UserRole save(UserRole userRole){
