@@ -3,6 +3,7 @@ package cn.yangtengfei.api.service.authority;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
 import cn.yangtengfei.api.cacheService.user.UserCacheService;
+import cn.yangtengfei.api.config.RedisService;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.service.user.ApiUserService;
@@ -38,7 +39,7 @@ public class AuthorityService {
     private AuthorityCacheService authorityCacheService;
 
     @Autowired
-    private RedisServer redisServer;
+    private RedisService redisService;
 
 
     public User userLogin(String userName,String password,HttpServletResponse response) throws Exception {
@@ -48,7 +49,7 @@ public class AuthorityService {
         }
         UserView userView = apiUserService.finUserInfo(user.getId());
 
-        Object object = redisServer.get(UserCacheConst.USER_PASSWORD_CACHE_KEY+userView.getOpenId());
+        Object object = redisService.get(UserCacheConst.USER_PASSWORD_CACHE_KEY+userView.getOpenId());
 
         if(object!=null){
             String cachePassword = String.valueOf(object);
