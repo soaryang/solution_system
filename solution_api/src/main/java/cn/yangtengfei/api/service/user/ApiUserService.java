@@ -1,6 +1,7 @@
 package cn.yangtengfei.api.service.user;
 
 import cn.yangtengfei.api.config.PageResultModel;
+import cn.yangtengfei.api.view.user.RoleView;
 import cn.yangtengfei.api.view.user.UserView;
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.model.wechat.WechatUser;
@@ -32,6 +33,9 @@ public class ApiUserService {
 
     @Autowired
     private WechatUserService wechatUserService;
+
+    @Autowired
+    private ApiRoleService apiRoleService;
 
     public UserView findByOpenId(String openId){
         WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
@@ -72,6 +76,7 @@ public class ApiUserService {
         List<String> ids = new ArrayList<>();
         List<UserView> userViewList = new ArrayList<UserView>();
         if(ListUtils.checkListIsNotNull(wechatUserList)){
+            List<RoleView> roleViewList = apiRoleService.findAll(0);
             for(WechatUser wechatUser:wechatUserList){
                 ids.add(wechatUser.getUserId());
             }
@@ -90,6 +95,7 @@ public class ApiUserService {
                 userView.setId(userId);
                 userView.setSubscribeState(wechatUser.getSubscribeState());
                 userView.setOpenId(wechatUser.getOpenId());
+                userView.setRoleViewList(roleViewList);
                 userViewList.add(userView);
             }
         }
