@@ -45,7 +45,7 @@ public class ApiUserService {
 
     public void setRole(String userId,String roleId){
         UserRole userRole =  userRoleService.findUserRoleByUserIdAndRoleId(userId,roleId);
-        if(userRole!=null){
+        if(userRole==null){
             userRole = new UserRole();
             userRole.setRoleId(roleId);
             userRole.setUserId(userId);
