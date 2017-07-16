@@ -89,6 +89,7 @@ public class ApiUserService {
             BeanUtils.copyProperties(wechatUser,user);
             user.setCreateTime(currentDate);
             user.setUpdateTime(currentDate);
+            logger.info("保存用户信息:{}",JSON.toJSONString(user));
             user = userService.save(user);
 
             wechatUser = new WechatUser();
@@ -97,6 +98,7 @@ public class ApiUserService {
             wechatUser.setSubscribeState(userView.getSubscribeState());
             wechatUser.setCreateTime(currentDate);
             wechatUser.setUpdateTime(currentDate);
+            logger.info("保存微信信息:{}",JSON.toJSONString(wechatUser));
             wechatUserService.save(wechatUser);
         }else{
             logger.info("微信用户存在：{}",JSON.toJSONString(userView));
