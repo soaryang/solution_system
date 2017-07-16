@@ -86,7 +86,7 @@ public class ApiUserService {
         Date currentDate =  DateUtils.getCurrentDate();
         if(wechatUser==null){
             logger.info("微信用户不存在：{}",JSON.toJSONString(userView));
-            BeanUtils.copyProperties(wechatUser,user);
+            BeanUtils.copyProperties(userView,user);
             user.setCreateTime(currentDate);
             user.setUpdateTime(currentDate);
             logger.info("保存用户信息:{}",JSON.toJSONString(user));
