@@ -11,6 +11,7 @@ import cn.yangtengfei.service.user.UserService;
 import cn.yangtengfei.service.wechat.WechatUserService;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +111,7 @@ public class ApiUserService {
                     userRoleHashMap.put(userRole.getUserId(),userRole);
                 }
             }
+            logger.info("userRoleHashMap:{}", JSON.toJSONString(userRoleHashMap));
 
             List<User> userList = userService.findInids(ids);
             Map<String,User> stringUserMap = new HashMap<String,User>();
