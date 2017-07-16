@@ -2,8 +2,10 @@ package cn.yangtengfei.api.controller.wechat;
 
 
 import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.service.user.ApiUserService;
 import cn.yangtengfei.api.util.HttpUtil;
 import cn.yangtengfei.api.util.WeChatUtil;
+import cn.yangtengfei.api.view.user.UserView;
 import cn.yangtengfei.api.wechat.Words;
 import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
 import cn.yangtengfei.api.wechat.entity.WeixinMessage;
@@ -11,6 +13,7 @@ import cn.yangtengfei.api.wechat.message.TextMessage;
 import cn.yangtengfei.api.wechat.process.FormatXmlProcess;
 import cn.yangtengfei.api.wechat.process.ReceiveXmlProcess;
 import cn.yangtengfei.api.wechat.util.MessageUtil;
+import cn.yangtengfei.model.wechat.WechatUser;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -36,6 +39,9 @@ public class WeChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WeChatController.class);
 
+
+    @Autowired
+    private ApiUserService apiUserService;
 
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
     public Result findById(String id){
@@ -82,7 +88,7 @@ public class WeChatController {
         log.info("valid get message-----POST");
 
 
-        String myOpenId = request.getParameter("openid");
+        //String myOpenId = request.getParameter("openid");
 
 
         //String id = getAccessToken();
@@ -119,13 +125,17 @@ public class WeChatController {
             } else if (MessageUtil.EVENT_TYPE_SUBSCRIBE.equals(xmlEntity.getEvent())) {
                 log.info("subscribe" + xmlEntity.getContent());
 
+                UserView wechatUser = new UserView();
+                wechatUser.setOpenId(openId);
+                apiUserService.saveWechatUser(wechatUser);
+
                 TextMessage text = new TextMessage();
-                text.setToUserName(myOpenId);
-                text.setFromUserName("gh_3716fa56e7f0");
+                text.setToUserName(openId);
+                text.setFromUserName(wechatId);
                 text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
                 text.setCreateTime(new Date().getTime());
                 text.setFuncFlag(0);
-                text.setContent("<a href='http://www.baidu.com'>百度</a>");
+                text.setContent("订阅成功,<a href='http://47.94.18.12'>QMS</a>");
                 result = FormatXmlProcess.textMessageToXml(text);
                 //取消关注
             } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {

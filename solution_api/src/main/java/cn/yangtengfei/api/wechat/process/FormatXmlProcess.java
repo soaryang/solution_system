@@ -1,9 +1,7 @@
 package cn.yangtengfei.api.wechat.process;
 
-import cn.yangtengfei.api.wechat.entity.SendGroupRedPackXmlEntity;
-import cn.yangtengfei.api.wechat.message.*;
-import cn.yangtengfei.api.wechat.pojo.Hongbao;
-import cn.yangtengfei.api.wechat.pojo.UnifiedorderRequest;
+import cn.yangtengfei.api.wechat.message.TextMessage;
+import cn.yangtengfei.api.wechat.message.VoiceMessage;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -36,46 +34,6 @@ public class FormatXmlProcess {
         xstream.alias("xml", voiceMessage.getClass());
         return xstream.toXML(voiceMessage);
     }
-
-    /**
-     * 音乐消息对象转换成xml
-     *
-     * @param musicMessage 音乐消息对象
-     * @return xml
-     */
-    public static String musicMessageToXml(MusicMessage musicMessage) {
-        xstream.alias("xml", musicMessage.getClass());
-        return xstream.toXML(musicMessage);
-    }
-
-    /**
-     * 图文消息对象转换成xml
-     *
-     * @param newsMessage 图文消息对象
-     * @return xml
-     */
-    public static String newsMessageToXml(NewsMessage newsMessage) {
-        xstream.alias("xml", newsMessage.getClass());
-        xstream.alias("item", new Article().getClass());
-        return xstream.toXML(newsMessage);
-    }
-
-    public static String unifiedorderRequestToXml(UnifiedorderRequest unifiedorderRequest) {
-        xstream.alias("xml", unifiedorderRequest.getClass());
-        return xstream.toXML(unifiedorderRequest);
-    }
-
-    public static String hongbaoToXml(Hongbao hongbao) {
-        xstream.alias("xml", hongbao.getClass());
-        return xstream.toXML(hongbao);
-    }
-
-    public static String sendGroupRedPackToXml(SendGroupRedPackXmlEntity sendGroupRedPackXmlEntity) {
-        xstream.alias("xml", sendGroupRedPackXmlEntity.getClass());
-
-        return xstream.toXML(sendGroupRedPackXmlEntity);
-    }
-
     /**
      * 扩展xstream，使其支持CDATA块
      *

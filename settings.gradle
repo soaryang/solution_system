@@ -4,4 +4,4 @@ include 'solution_db_service'
 include 'solution_api'
 include 'solution_webCrawler'
 include 'solution_search_es'
-
+include 'solution_comm_util'

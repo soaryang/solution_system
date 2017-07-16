@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class WeixinMessage  {
 
-    @Field("_id")
     private String id;
 
     @Indexed

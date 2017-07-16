@@ -20,6 +20,7 @@ repositories {
 dependencies {
     compile  project(':solution_db_service')
     compile project(':solution_webCrawler')
+    compile project(':solution_comm_util')
 
     //compile("org.springframework.boot:spring-boot-starter-web:1.5.3.RELEASE")
     //testCompile("org.springframework.boot:spring-boot-starter-test:1.5.3.RELEASE")

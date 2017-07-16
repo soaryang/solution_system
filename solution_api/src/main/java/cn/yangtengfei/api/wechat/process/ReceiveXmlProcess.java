@@ -1,14 +1,9 @@
 package cn.yangtengfei.api.wechat.process;
 
-import cn.yangtengfei.api.controller.wechat.WeChatController;
-import cn.yangtengfei.api.wechat.entity.PayNotifyXmlEntity;
-import cn.yangtengfei.api.wechat.entity.ReceiveGroupRedPackXmlEntity;
-import cn.yangtengfei.api.wechat.entity.ReceiveUnifiedOrderXmlEntity;
 import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;

@@ -1,7 +1,9 @@
 package cn.yangtengfei.api.controller.user;
 
+import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.service.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.service.user.UserService;
@@ -16,11 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(value = "/v1/api/user")
+@RequestMapping(value = "/v1/api/admin/user")
 public class UserController extends BaseController {
 
     @Autowired
-    private UserService userService;
+    private ApiUserService apiUserService;
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public PageResultModel findAll(Integer pageNumber , Integer pageSize){
+        return apiUserService.findPage(0,pageNumber-1,pageSize);
+    }
 
     /*@RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
     private Result saveUser(){
