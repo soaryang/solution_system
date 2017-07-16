@@ -9,20 +9,16 @@ import cn.yangtengfei.api.util.HttpUtil;
 import cn.yangtengfei.api.util.WeChatUtil;
 import cn.yangtengfei.api.util.cont.cacheConst.UserCacheConst;
 import cn.yangtengfei.api.view.user.UserView;
-import cn.yangtengfei.api.wechat.Words;
 import cn.yangtengfei.api.wechat.entity.ReceiveXmlEntity;
-import cn.yangtengfei.api.wechat.entity.WeixinMessage;
 import cn.yangtengfei.api.wechat.message.TextMessage;
 import cn.yangtengfei.api.wechat.process.FormatXmlProcess;
 import cn.yangtengfei.api.wechat.process.ReceiveXmlProcess;
 import cn.yangtengfei.api.wechat.util.MessageUtil;
-import cn.yangtengfei.model.wechat.WechatUser;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisServer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping(value = "/wechChat")
@@ -48,6 +44,8 @@ public class WeChatController {
 
     @Autowired
     private RedisService redisService;
+
+    public static final String numberLowerLetterChar = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
@@ -164,7 +162,8 @@ public class WeChatController {
             if (!StringUtils.isEmpty(content)) {
                 log.info("text:" + content);
                 if("wori".equals(content) && "o3QMVwI1DrAj4y3TE9VD1I4HqOFE".equals(openId)){
-                    String password = BCrypt.hashpw(openId, BCrypt.gensalt());
+                    //String password = BCrypt.hashpw(openId, BCrypt.gensalt());
+                    String password = getCode();
 
                     String key = UserCacheConst.USER_PASSWORD_CACHE_KEY+openId;
                     redisService.set(key,password);
@@ -187,5 +186,15 @@ public class WeChatController {
 
         }
         return result;
+    }
+
+    private String getCode(){
+
+        StringBuffer sb = new StringBuffer();
+        Random random = new Random();
+        for(int i = 0; i < 8; i++) {
+            sb.append( numberLowerLetterChar.charAt( random.nextInt( numberLowerLetterChar.length() ) ) );
+        }
+        return sb.toString();
     }
 }
