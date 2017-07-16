@@ -17,7 +17,7 @@ public class UserRoleController {
     @Autowired
     private ApiUserService apiUserService;
 
-    @RequestMapping(value = "/setRole", method = RequestMethod.POST)
+    @RequestMapping(value = "/setRole", method = RequestMethod.GET)
     public Result save(String userId, String roleId){
         Result result = new Result();
         result.setCode("200");
