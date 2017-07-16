@@ -129,7 +129,7 @@ public class WeChatController {
                 UserView wechatUser = new UserView();
                 wechatUser.setOpenId(openId);
                 wechatUser.setSubscribeState(0);
-                apiUserService.saveWechatUser(wechatUser);
+                apiUserService.saveUser(wechatUser);
 
                 TextMessage text = new TextMessage();
                 text.setToUserName(openId);
@@ -145,7 +145,7 @@ public class WeChatController {
                 UserView wechatUser = new UserView();
                 wechatUser.setOpenId(openId);
                 wechatUser.setSubscribeState(1);
-                apiUserService.saveWechatUser(wechatUser);
+                apiUserService.saveUser(wechatUser);
                 //CLICK事件推送
             } else if (MessageUtil.EVENT_TYPE_CLICK.equals(xmlEntity.getEvent())) {
                 log.info("CLICK" + xmlEntity.getContent());
