@@ -20,12 +20,10 @@ public class WechatUserService {
 
     public Page<WechatUser> findWechatUserPage(int subscribeState,int deleteFlg, int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
-       // return wechatRepostitory.findBysubScribeStateAndDeleteFlgOrderByUpdateTimeDesc(subscribeState,deleteFlg,pageRequest);
-        return null;
+       return wechatRepostitory.findBySubscribeStateAndDeleteFlgOrderByUpdateTimeDesc(subscribeState,deleteFlg,pageRequest);
     }
 
     public WechatUser save(WechatUser wechatUser){
-       // return wechatRepostitory.save(wechatUser);
-        return null;
+       return wechatRepostitory.save(wechatUser);
     }
 }
