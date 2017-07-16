@@ -79,6 +79,17 @@ public class ApiUserService {
     }
 
     public void saveUser(UserView userView){
+        String openId = userView.getOpenId();
+        WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
+        User user = new User();
+        Date currentDate =  DateUtils.getCurrentDate();
+        if(wechatUser!=null){
+            user.setName(userView.getName());
+            user.setUpdateTime(currentDate);
+            userService.save(user);
+        }
+    }
+    public void saveUserAndWechatUser(UserView userView){
 
         String openId = userView.getOpenId();
 
