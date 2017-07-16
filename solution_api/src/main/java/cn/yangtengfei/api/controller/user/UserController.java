@@ -40,6 +40,16 @@ public class UserController extends BaseController {
         return apiUserService.findPage(0,subscribeState,pageNumber-1,pageSize);
     }
 
+    @RequestMapping(value = "/findUserInfo", method = RequestMethod.GET)
+    public Result findUserInfo(String id){
+
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(apiUserService.finUserInfo(id));
+        return result;
+    }
+
+
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     public Result save(@ModelAttribute UserView userView){
 

@@ -13,4 +13,7 @@ public interface WechatRepostitory extends MongoRepository<WechatUser,String> {
     Page<WechatUser> findBySubscribeStateAndDeleteFlgOrderByUpdateTimeDesc(int subscribeState,int deleteFlg, Pageable pageable);
 
     WechatUser findByOpenId(String openId);
+
+    WechatUser findByUserId(String id);
+
 }

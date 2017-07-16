@@ -44,6 +44,15 @@ public class ApiUserService {
     @Autowired
     private UserRoleService userRoleService;
 
+
+    public UserView finUserInfo(String id){
+        WechatUser wechatUser =  wechatUserService.findByUserId(id);
+        UserView userView = new UserView();
+        userView.setOpenId(wechatUser.getOpenId());
+        userView.setId(wechatUser.getUserId());
+        return userView;
+    }
+
     public void setRole(String userId,String roleId){
         UserRole userRole =  userRoleService.findUserRoleByUserId(userId);
         if(userRole==null){
