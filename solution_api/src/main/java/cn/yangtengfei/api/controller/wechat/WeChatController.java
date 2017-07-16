@@ -3,6 +3,7 @@ package cn.yangtengfei.api.controller.wechat;
 
 import cn.yangtengfei.api.config.RedisService;
 import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.service.common.MessageService;
 import cn.yangtengfei.api.service.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.HttpUtil;
@@ -44,6 +45,9 @@ public class WeChatController {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private MessageService messageService;
 
     public static final String numberLowerLetterChar = "0123456789abcdefghijklmnopqrstuvwxyz";
 
@@ -135,14 +139,15 @@ public class WeChatController {
                 wechatUser.setSubscribeState(0);
                 apiUserService.saveUserAndWechatUser(wechatUser);
 
-                TextMessage text = new TextMessage();
+               /* TextMessage text = new TextMessage();
                 text.setToUserName(openId);
                 text.setFromUserName(wechatId);
                 text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
                 text.setCreateTime(new Date().getTime());
                 text.setFuncFlag(0);
                 text.setContent("订阅成功,<a href='http://47.94.18.12'>QMS</a>");
-                result = FormatXmlProcess.textMessageToXml(text);
+                result = FormatXmlProcess.textMessageToXml(text);*/
+               result = messageService.welcomCallBackMessage(openId,wechatId);
                 //取消关注
             } else if (MessageUtil.EVENT_TYPE_UNSUBSCRIBE.equals(xmlEntity.getEvent())) {
                 log.info("unsubscribe" + xmlEntity.getContent());

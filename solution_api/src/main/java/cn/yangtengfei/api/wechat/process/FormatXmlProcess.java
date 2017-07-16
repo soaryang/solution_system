@@ -1,5 +1,7 @@
 package cn.yangtengfei.api.wechat.process;
 
+import cn.yangtengfei.api.wechat.message.Article;
+import cn.yangtengfei.api.wechat.message.NewsMessage;
 import cn.yangtengfei.api.wechat.message.TextMessage;
 import cn.yangtengfei.api.wechat.message.VoiceMessage;
 import com.thoughtworks.xstream.XStream;
@@ -33,6 +35,12 @@ public class FormatXmlProcess {
     public static String voiceMessageToXml(VoiceMessage voiceMessage) {
         xstream.alias("xml", voiceMessage.getClass());
         return xstream.toXML(voiceMessage);
+    }
+
+    public static String newsMessageToXml(NewsMessage newsMessage) {
+        xstream.alias("xml", newsMessage.getClass());
+        xstream.alias("item", new Article().getClass());
+        return xstream.toXML(newsMessage);
     }
     /**
      * 扩展xstream，使其支持CDATA块
