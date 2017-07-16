@@ -88,6 +88,7 @@ public class ApiUserService {
                 User user = stringUserMap.get(userId);
                 BeanUtils.copyProperties(user,userView);
                 userView.setId(userId);
+                userView.setSubscribeState(wechatUser.getSubscribeState());
                 userView.setOpenId(wechatUser.getOpenId());
                 userViewList.add(userView);
             }
