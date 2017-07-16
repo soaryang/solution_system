@@ -32,7 +32,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer subscribeState,Integer pageNumber , Integer pageSize){
 
-        logger.info("pageNumber:{},pageSize:{}",pageNumber,pageSize);
+        logger.info("subscribeState:{},pageNumber:{},pageSize:{}",subscribeState,pageNumber,pageSize);
         return apiUserService.findPage(0,subscribeState,pageNumber-1,pageSize);
     }
 
