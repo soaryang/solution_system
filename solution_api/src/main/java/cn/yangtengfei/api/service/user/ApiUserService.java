@@ -145,7 +145,10 @@ public class ApiUserService {
                 userView.setSubscribeState(wechatUser.getSubscribeState());
                 userView.setOpenId(wechatUser.getOpenId());
                 userView.setRoleViewList(roleViewList);
-                userView.setRoleId(userRoleHashMap.get(userId).getRoleId());
+                UserRole userRole = userRoleHashMap.get(userId);
+                if(userRole!=null){
+                    userView.setRoleId(userRole.getRoleId());
+                }
                 userViewList.add(userView);
             }
         }
