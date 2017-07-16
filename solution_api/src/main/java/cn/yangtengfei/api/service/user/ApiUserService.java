@@ -51,6 +51,8 @@ public class ApiUserService {
         UserView userView = new UserView();
         userView.setOpenId(wechatUser.getOpenId());
         userView.setId(wechatUser.getUserId());
+        User user = userService.findById(id);
+        userView.setName(user.getName());
         return userView;
     }
 
