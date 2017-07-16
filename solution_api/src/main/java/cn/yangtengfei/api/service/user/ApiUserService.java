@@ -4,11 +4,14 @@ import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.view.user.RoleView;
 import cn.yangtengfei.api.view.user.UserView;
 import cn.yangtengfei.model.user.User;
+import cn.yangtengfei.model.user.UserRole;
 import cn.yangtengfei.model.wechat.WechatUser;
+import cn.yangtengfei.service.user.UserRoleService;
 import cn.yangtengfei.service.user.UserService;
 import cn.yangtengfei.service.wechat.WechatUserService;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +39,26 @@ public class ApiUserService {
 
     @Autowired
     private ApiRoleService apiRoleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    public void setRole(String userId,String roleId){
+        UserRole userRole =  userRoleService.findUserRoleByUserIdAndRoleId(userId,roleId);
+        if(userRole!=null){
+            userRole = new UserRole();
+            userRole.setRoleId(roleId);
+            userRole.setUserId(userId);
+            userRoleService.save(userRole);
+        }else{
+            if(StringUtils.isEmpty(roleId)){
+                userRoleService.del(userRole);
+            }else{
+                userRole.setRoleId(roleId);
+                userRoleService.save(userRole);
+            }
+        }
+    }
 
     public UserView findByOpenId(String openId){
         WechatUser wechatUser =  wechatUserService.findByOpenId(openId);

@@ -8,5 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "role")
 public class Role extends BaseModel {
     private String id;
+
     private String name;
+
 }

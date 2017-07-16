@@ -17,5 +17,7 @@ public class UserRole  extends BaseModel {
 
     private String id;
 
-    private Map<String,String> operateMap;
+    private String userId;
+
+    private String roleId;
 }
