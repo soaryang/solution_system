@@ -13,8 +13,6 @@ public class WechatUserService {
 
    // @Autowired
    // private WechatRepostitory wechatRepostitory;
-
-
     @Autowired
     private WechatRepostitory wechatRepostitory;
 
@@ -26,4 +24,10 @@ public class WechatUserService {
     public WechatUser save(WechatUser wechatUser){
        return wechatRepostitory.save(wechatUser);
     }
+
+    public WechatUser findByOpenId(String openId){
+        return wechatRepostitory.findByOpenId(openId);
+    }
+
+
 }

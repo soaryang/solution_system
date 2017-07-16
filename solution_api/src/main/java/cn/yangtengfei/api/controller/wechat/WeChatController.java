@@ -43,6 +43,7 @@ public class WeChatController {
     @Autowired
     private ApiUserService apiUserService;
 
+
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
     public Result findById(String id){
 

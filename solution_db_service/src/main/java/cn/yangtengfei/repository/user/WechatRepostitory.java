@@ -11,4 +11,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public interface WechatRepostitory extends MongoRepository<WechatUser,String> {
 
     Page<WechatUser> findBySubscribeStateAndDeleteFlgOrderByUpdateTimeDesc(int subscribeState,int deleteFlg, Pageable pageable);
+
+    WechatUser findByOpenId(String openId);
 }

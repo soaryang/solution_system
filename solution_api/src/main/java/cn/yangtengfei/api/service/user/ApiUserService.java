@@ -32,19 +32,36 @@ public class ApiUserService {
 
     @Autowired
     private WechatUserService wechatUserService;
+
+    public UserView findByOpenId(String openId){
+        WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
+        UserView userView = new UserView();
+        BeanUtils.copyProperties(wechatUser,userView);
+        return userView;
+    }
+
     public void saveWechatUser(UserView userView){
-        Date currentDate =  DateUtils.getCurrentDate();
+        String openId = userView.getOpenId();
+        WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
         User user = new User();
-        user.setCreateTime(currentDate);
-        user.setUpdateTime(currentDate);
-        user = userService.save(user);
-        WechatUser wechatUser = new WechatUser();
-        wechatUser.setUserId(user.getId());
-        wechatUser.setOpenId(userView.getOpenId());
-        wechatUser.setSubscribeState(userView.getSubscribeState());
-        wechatUser.setCreateTime(currentDate);
-        wechatUser.setUpdateTime(currentDate);
-        wechatUserService.save(wechatUser);
+        Date currentDate =  DateUtils.getCurrentDate();
+        if(wechatUser==null){
+            user.setCreateTime(currentDate);
+            user.setUpdateTime(currentDate);
+            user = userService.save(user);
+
+            wechatUser = new WechatUser();
+            wechatUser.setUserId(user.getId());
+            wechatUser.setOpenId(openId);
+            wechatUser.setSubscribeState(userView.getSubscribeState());
+            wechatUser.setCreateTime(currentDate);
+            wechatUser.setUpdateTime(currentDate);
+            wechatUserService.save(wechatUser);
+        }else{
+            wechatUser.setSubscribeState(userView.getSubscribeState());
+            wechatUser.setUpdateTime(currentDate);
+            wechatUserService.save(wechatUser);
+        }
     }
 
     public PageResultModel<UserView> findPage(int deleteFlg,int index,int pageSize){
