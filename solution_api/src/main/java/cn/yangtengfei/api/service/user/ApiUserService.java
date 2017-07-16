@@ -78,12 +78,14 @@ public class ApiUserService {
     }
 
     public void saveUser(UserView userView){
+
         String openId = userView.getOpenId();
+
         WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
         User user = new User();
         Date currentDate =  DateUtils.getCurrentDate();
         if(wechatUser==null){
-
+            logger.info("微信用户不存在：{}",JSON.toJSONString(userView));
             BeanUtils.copyProperties(wechatUser,user);
             user.setCreateTime(currentDate);
             user.setUpdateTime(currentDate);
@@ -97,6 +99,7 @@ public class ApiUserService {
             wechatUser.setUpdateTime(currentDate);
             wechatUserService.save(wechatUser);
         }else{
+            logger.info("微信用户存在：{}",JSON.toJSONString(userView));
             wechatUser.setSubscribeState(userView.getSubscribeState());
             wechatUser.setUpdateTime(currentDate);
             wechatUserService.save(wechatUser);
