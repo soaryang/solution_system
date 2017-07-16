@@ -28,6 +28,8 @@ public class UserView implements Serializable {
 
     private Integer subscribeState;
 
+    private String roleId;
+
 
     private List<RoleView> roleViewList;
 

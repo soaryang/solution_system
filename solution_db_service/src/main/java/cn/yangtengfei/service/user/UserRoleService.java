@@ -6,6 +6,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserRoleService {
 
@@ -15,6 +17,12 @@ public class UserRoleService {
     public UserRole findUserRoleByUserId(String userId){
         return userRoleRepository.findByUserId(userId);
     }
+
+    public List<UserRole> findUserRoleList(List<String> ids){
+        return userRoleRepository.findByUserIdIn(ids);
+    }
+
+
 
     public UserRole save(UserRole userRole){
         return userRoleRepository.save(userRole);

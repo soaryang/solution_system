@@ -103,6 +103,14 @@ public class ApiUserService {
             for(WechatUser wechatUser:wechatUserList){
                 ids.add(wechatUser.getUserId());
             }
+            List<UserRole>  userRoleList = userRoleService.findUserRoleList(ids);
+            Map<String,UserRole> userRoleHashMap = new HashMap<String,UserRole>();
+            if(ListUtils.checkListIsNotNull(userRoleList)){
+                for(UserRole userRole:userRoleList){
+                    userRoleHashMap.put(userRole.getUserId(),userRole);
+                }
+            }
+
             List<User> userList = userService.findInids(ids);
             Map<String,User> stringUserMap = new HashMap<String,User>();
             if(ListUtils.checkListIsNotNull(userList)){
@@ -119,6 +127,7 @@ public class ApiUserService {
                 userView.setSubscribeState(wechatUser.getSubscribeState());
                 userView.setOpenId(wechatUser.getOpenId());
                 userView.setRoleViewList(roleViewList);
+                userView.setRoleId(userRoleHashMap.get(wechatUser).getRoleId());
                 userViewList.add(userView);
             }
         }
