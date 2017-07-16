@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -21,5 +23,9 @@ public class RoleService {
     public Page<Role> findByDeleteFlgOrderByUpdateTimeDesc(int deleteFlg, int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return roleRepository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
+    }
+
+    public List<Role> findAllByDeleteFlgOrderByUpdateTimeDesc(int deleteFlg){
+        return roleRepository.findAllByDeleteFlgOrderByUpdateTimeDesc(deleteFlg);
     }
 }

@@ -31,6 +31,15 @@ public class RoleController {
     }
 
 
+    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    public Result findAll(){
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(apiRoleService.findAll(0));
+        return result;
+    }
+
+
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize){
         logger.info("pageNumber:{},pageSize:{}",pageNumber,pageSize);

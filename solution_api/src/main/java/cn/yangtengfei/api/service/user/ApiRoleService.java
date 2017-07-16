@@ -33,6 +33,19 @@ public class ApiRoleService {
         return roleView;
     }
 
+    public  List<RoleView> findAll(int deleteFlg){
+        List<Role> roleList = roleService.findAllByDeleteFlgOrderByUpdateTimeDesc(deleteFlg);
+        List<RoleView> roleViewList = new ArrayList<>();
+        if(ListUtils.checkListIsNotNull(roleList)){
+            for(Role role:roleList){
+                RoleView roleView = new RoleView();
+                BeanUtils.copyProperties(role,roleView);
+                roleViewList.add(roleView);
+            }
+        }
+        return roleViewList;
+
+    }
     public PageResultModel<RoleView> findAll(int deleteFlg, int page, int pageSize){
 
         PageResultModel<RoleView> roleViewPageResultModel = new PageResultModel<RoleView>();
