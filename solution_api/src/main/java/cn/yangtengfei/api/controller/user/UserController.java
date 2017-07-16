@@ -3,10 +3,13 @@ package cn.yangtengfei.api.controller.user;
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.wechat.WeChatController;
 import cn.yangtengfei.api.service.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.service.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/v1/api/admin/user")
 public class UserController extends BaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private ApiUserService apiUserService;
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize){
+
+        logger.info("pageNumber:{},pageSize:{}",pageNumber,pageSize);
         return apiUserService.findPage(0,pageNumber-1,pageSize);
     }
 

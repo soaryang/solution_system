@@ -24,5 +24,7 @@ public class UserView implements Serializable {
 
     private String openId;
 
+    private Integer subscribeState;
+
 
 }

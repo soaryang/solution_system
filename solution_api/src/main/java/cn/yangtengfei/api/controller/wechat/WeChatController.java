@@ -127,6 +127,7 @@ public class WeChatController {
 
                 UserView wechatUser = new UserView();
                 wechatUser.setOpenId(openId);
+                wechatUser.setSubscribeState(0);
                 apiUserService.saveWechatUser(wechatUser);
 
                 TextMessage text = new TextMessage();

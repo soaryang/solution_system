@@ -8,6 +8,8 @@ import cn.yangtengfei.service.user.UserService;
 import cn.yangtengfei.service.wechat.WechatUserService;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,9 @@ import java.util.*;
 
 @Service
 public class ApiUserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ApiUserService.class);
+
 
     @Autowired
     private UserService userService;
@@ -36,6 +41,7 @@ public class ApiUserService {
         WechatUser wechatUser = new WechatUser();
         wechatUser.setUserId(user.getId());
         wechatUser.setOpenId(userView.getOpenId());
+        wechatUser.setSubscribeState(userView.getSubscribeState());
         wechatUser.setCreateTime(currentDate);
         wechatUser.setUpdateTime(currentDate);
         wechatUserService.save(wechatUser);
