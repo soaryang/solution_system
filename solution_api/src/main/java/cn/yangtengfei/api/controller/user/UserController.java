@@ -36,6 +36,7 @@ public class UserController extends BaseController {
         return apiUserService.findPage(0,subscribeState,pageNumber-1,pageSize);
     }
 
+
     /*@RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
     private Result saveUser(){
         User user = new User();
