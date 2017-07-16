@@ -30,10 +30,10 @@ public class UserController extends BaseController {
     private ApiUserService apiUserService;
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public PageResultModel findAll(Integer pageNumber , Integer pageSize){
+    public PageResultModel findAll(Integer subscribeState,Integer pageNumber , Integer pageSize){
 
         logger.info("pageNumber:{},pageSize:{}",pageNumber,pageSize);
-        return apiUserService.findPage(0,pageNumber-1,pageSize);
+        return apiUserService.findPage(0,subscribeState,pageNumber-1,pageSize);
     }
 
     /*@RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})

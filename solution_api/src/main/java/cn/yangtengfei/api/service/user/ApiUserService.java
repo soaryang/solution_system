@@ -64,9 +64,9 @@ public class ApiUserService {
         }
     }
 
-    public PageResultModel<UserView> findPage(int deleteFlg,int index,int pageSize){
+    public PageResultModel<UserView> findPage(int deleteFlg,int subscribeState,int index,int pageSize){
         PageResultModel<UserView> userViewPageResultModel = new PageResultModel<UserView>();
-        Page<WechatUser> wechatUserPage = wechatUserService.findWechatUserPage(0,0,index,pageSize);
+        Page<WechatUser> wechatUserPage = wechatUserService.findWechatUserPage(0,subscribeState,index,pageSize);
         List<WechatUser> wechatUserList = wechatUserPage.getContent();
         long count  = wechatUserPage.getTotalElements();
         List<String> ids = new ArrayList<>();
