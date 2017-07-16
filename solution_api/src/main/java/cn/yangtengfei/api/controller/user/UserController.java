@@ -50,7 +50,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(@ModelAttribute UserView userView){
 
         Result result = new Result();
