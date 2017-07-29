@@ -15,7 +15,5 @@ public class TagView implements Serializable {
 
     private String id;
 
-    private Integer type;
-
     private String name;
 }
