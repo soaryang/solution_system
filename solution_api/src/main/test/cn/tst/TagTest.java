@@ -3,6 +3,7 @@ package cn.tst;
 import cn.yangtengfei.Application;
 import cn.yangtengfei.api.service.question.ApiTagService;
 import cn.yangtengfei.api.view.question.TagView;
+import cn.yangtengfei.model.question.Tag;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +30,11 @@ public class TagTest {
         tagView.setName("springboo22222t");
         tagView = apiTagService.save(tagView);
         System.out.println("================="+ JSON.toJSONString(tagView));
+    }
+
+    @Test
+    public void updateTag(){
+       Tag tag =apiTagService.updateUseStatus("591e5c6c54815a0ea114ff23",0,"asdasdasdasd");
+        System.out.println("================="+ JSON.toJSONString(tag));
     }
 }

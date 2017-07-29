@@ -3,6 +3,7 @@ package cn.yangtengfei.api.service.question;
 import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.TagService;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,15 @@ public class ApiTagService {
     private TagService tagService;
 
     public TagView save(TagView tagView){
-        Tag Tag = new Tag();
+        Tag tag = new Tag();
         String name = tagView.getName();
         Tag tagTemp = findByName(name);
         if(tagTemp==null){
             log.info("tag不存在，执行保存");
-            BeanUtils.copyProperties(tagView,Tag);
-            tagTemp.setUseStatus(0);
-            Tag = tagService.save(Tag);
-            tagView.setId(Tag.getId());
+            BeanUtils.copyProperties(tagView,tag);
+            tag.setUseStatus(0);
+            tag = tagService.save(tag);
+            tagView.setId(tag.getId());
             return tagView;
         }else{
             log.info("tag存在,直接返回");
@@ -48,14 +49,17 @@ public class ApiTagService {
     }
 
 
-    public void updateUseStatus(String id, Integer status,String userId){
+    public Tag updateUseStatus(String id, Integer status,String userId){
         Tag tag = tagService.findById(id);
-        if(tag!=null){
-            tag.setUseStatus(status);
-            tag.setUpdateUserId(userId);
-            tag.setUpdateTime(new Date());
+        log.info("要更新的tag{}", JSON.toJSONString(tag));
+        if(tag==null){
+            return null;
         }
-        tagService.save(tag);
+        tag.setUseStatus(status);
+        tag.setUpdateUserId(userId);
+        tag.setUpdateTime(new Date());
+        tag =tagService.save(tag);
+        return tag;
     }
 
     public void del(String id){
