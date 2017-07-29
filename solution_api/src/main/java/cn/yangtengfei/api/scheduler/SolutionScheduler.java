@@ -35,10 +35,10 @@ public class SolutionScheduler {
     @Value("${file.questionCachePath}")
     private String questionCachePath;
 
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron = "0 0/10 * * * *")
     public void createQuestionCache() {
         logger.info("createQuestionCache------------start");
-        Page<Question> questionPage =  apiQuestionService.findAll(0,20);
+        Page<Question> questionPage =  apiQuestionService.findAll(0,10);
         logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
             List<Question> questionList = questionPage.getContent();
