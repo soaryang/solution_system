@@ -20,4 +20,6 @@ public class QuestionView implements Serializable {
 
     private String tagName;
 
+    private Long solutionCount;
+
 }

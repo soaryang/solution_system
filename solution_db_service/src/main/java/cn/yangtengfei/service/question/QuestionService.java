@@ -23,11 +23,11 @@ public class QuestionService {
     }
 
     public void del(String id){
-        Question question = findQuestionById(id);
+        Question question = findById(id);
         questionRepository.delete(question);
     }
 
-    public Question  findQuestionById(String id){
+    public Question  findById(String id){
         return questionRepository.findOne(id);
     }
 

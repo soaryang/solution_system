@@ -1,11 +1,11 @@
 package cn.yangtengfei.api.service.question;
 
+import cn.yangtengfei.api.cacheService.question.QuestionCacheService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.TagService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,11 @@ public class ApiQuestionService {
     private QuestionService questionService;
 
     @Autowired
+    private QuestionCacheService questionCacheService;
+
+    @Autowired
     private TagService tagService;
+
 
     public QuestionView save(QuestionView questionView){
         Question question = new Question();
@@ -38,7 +42,7 @@ public class ApiQuestionService {
     }
 
     public QuestionView findQuestionViewById(String id){
-        Question question = questionService.findQuestionById(id);
+        Question question = questionCacheService.findById(id);
         QuestionView questionView = new QuestionView();
         if(question!=null){
             String tagId = question.getTagId();
@@ -84,6 +88,7 @@ public class ApiQuestionService {
         for(Question question:questionList){
             QuestionView questionView = new QuestionView();
             BeanUtils.copyProperties(question,questionView);
+            questionView.setSolutionCount(questionCacheService.findSolutionCountByQuestionId(question.getId()));
             questionView.setTagName(tagMap.get(question.getTagId()));
             questionViewList.add(questionView);
         }

@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -53,6 +54,22 @@ public class RedisConfig extends CachingConfigurerSupport {
         };
     }
 
+    /**
+     * 统计
+     * @param redisTemplate
+     * @return
+     */
+    @Bean(name = "countCacheManager")
+    public CacheManager countCacheManager(RedisTemplate redisTemplate){
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
+        redisCacheManager.setDefaultExpiration(60*10);
+        // return new RedisCacheManager(redisTemplate);
+        return redisCacheManager;
+    }
+
+
+
+    @Primary
    @Bean
     public CacheManager cacheManager(
             @SuppressWarnings("rawtypes") RedisTemplate redisTemplate) {
