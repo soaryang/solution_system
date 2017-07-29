@@ -62,7 +62,9 @@ public class ApiQuestionService {
         return questionService.findAll(page,pageSize);
     }
 
-    public List<Question> findQuestionListWithTags(List<Question> questionList){
+    public List<QuestionView> findQuestionListWithTags(List<Question> questionList){
+
+        List<QuestionView> questionViewList = new ArrayList<QuestionView>();
         if(questionList==null || questionList.size()==0){
             return null;
         }
@@ -76,8 +78,11 @@ public class ApiQuestionService {
             tagMap.put(tag.getId(),tag.getName());
         }
         for(Question question:questionList){
-            question.setTagName(tagMap.get(question.getTagId()));
+            QuestionView questionView = new QuestionView();
+            BeanUtils.copyProperties(question,questionView);
+            questionView.setTagName(tagMap.get(question.getTagId()));
+            questionViewList.add(questionView);
         }
-        return questionList;
+        return questionViewList;
     }
 }

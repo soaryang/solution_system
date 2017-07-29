@@ -19,5 +19,4 @@ public class Question extends BaseModel{
 
     private String tagId;
 
-    private String tagName;
 }

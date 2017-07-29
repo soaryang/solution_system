@@ -35,21 +35,14 @@ public class SolutionScheduler {
     @Value("${file.questionCachePath}")
     private String questionCachePath;
 
-    @Scheduled(cron = "0 0/10 * * * *")
+    @Scheduled(cron = "0/60 * * * * *")
     public void createQuestionCache() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,10);
         logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
-            List<Question> questionList = questionPage.getContent();
-            List<QuestionView> questionViews = new ArrayList<QuestionView>();
-            for(Question question:questionList){
-                QuestionView questionView = new QuestionView();
-                BeanUtils.copyProperties(question,questionView);
-                questionViews.add(questionView);
-            }
             File file = new File(questionCachePath);
-            String fileContent = JSON.toJSONString(questionViews);
+            String fileContent = JSON.toJSONString(apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
             logger.info("fileContent:{}",fileContent);
             try {
                 org.apache.commons.io.FileUtils.writeStringToFile(file, fileContent, "UTF-8");
