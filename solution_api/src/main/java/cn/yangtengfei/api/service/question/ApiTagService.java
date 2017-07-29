@@ -24,14 +24,15 @@ public class ApiTagService {
     private TagService tagService;
 
     public TagView save(TagView tagView){
-        Tag questionType = new Tag();
+        Tag Tag = new Tag();
         String name = tagView.getName();
         Tag tagTemp = findByName(name);
         if(tagTemp==null){
             log.info("tag不存在，执行保存");
-            BeanUtils.copyProperties(tagView,questionType);
-            questionType = tagService.save(questionType);
-            tagView.setId(questionType.getId());
+            BeanUtils.copyProperties(tagView,Tag);
+            tagTemp.setUseStatus(0);
+            Tag = tagService.save(Tag);
+            tagView.setId(Tag.getId());
             return tagView;
         }else{
             log.info("tag存在,直接返回");
