@@ -41,6 +41,13 @@ public class SolutionService {
         return solutionRepository.findByQuestionIdOrderByUpdateTimeDesc(questionId,pageRequest);
     }
 
+    public long findSolutionCountByQuestionId(String questionId){
+        return solutionRepository.countByQuestionId(questionId);
+    }
+    public long findAllCount(){
+        return solutionRepository.count();
+    }
+
 
 
 }

@@ -23,9 +23,16 @@ public class ApiTagService {
 
     public TagView save(TagView tagView){
         Tag questionType = new Tag();
-        BeanUtils.copyProperties(tagView,questionType);
-        questionType = tagService.save(questionType);
-        tagView.setId(questionType.getId());
+        String name = tagView.getName();
+        Tag tagTemp = findByName(name);
+        if(tagTemp==null){
+            BeanUtils.copyProperties(tagView,questionType);
+            questionType = tagService.save(questionType);
+            tagView.setId(questionType.getId());
+            return tagView;
+        }else{
+            BeanUtils.copyProperties(tagTemp,tagView);
+        }
         return tagView;
     }
 

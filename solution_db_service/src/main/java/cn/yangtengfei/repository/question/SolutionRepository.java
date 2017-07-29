@@ -12,4 +12,6 @@ public interface SolutionRepository extends MongoRepository<Solution,String> {
 
     Page<Solution> findByQuestionIdOrderByUpdateTimeDesc(String questionId, Pageable pageable);
 
+    long countByQuestionId(String questionId);
+
 }

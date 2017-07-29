@@ -36,6 +36,8 @@ public class TagController extends BaseController {
     @Autowired
     private JavaMailSender mailSender;
 
+
+
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public Result findAll(String id){
         Result result = new Result();
@@ -85,7 +87,12 @@ public class TagController extends BaseController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(@ModelAttribute TagView tagView, HttpServletRequest request){
-        return null;
+
+        Result result = new Result();
+        tagView = apiTagService.save(tagView);
+        result.setCode("200");
+        result.setData(tagView);
+        return result;
     }
 
 

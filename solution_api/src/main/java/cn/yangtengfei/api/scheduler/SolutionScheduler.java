@@ -37,7 +37,7 @@ public class SolutionScheduler {
     @Value("${file.questionCachePath}")
     private String questionCachePath;
 
-    @Scheduled(cron = "0/60 * * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     public void createQuestionCache() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,50);
