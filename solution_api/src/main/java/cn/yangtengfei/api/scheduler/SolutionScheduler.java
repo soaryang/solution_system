@@ -40,7 +40,7 @@ public class SolutionScheduler {
     @Scheduled(cron = "0/60 * * * * *")
     public void createQuestionCache() {
         logger.info("createQuestionCache------------start");
-        Page<Question> questionPage =  apiQuestionService.findAll(0,10);
+        Page<Question> questionPage =  apiQuestionService.findAll(0,50);
         logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
             File file = new File(questionCachePath);
