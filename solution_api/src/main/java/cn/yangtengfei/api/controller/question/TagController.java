@@ -8,7 +8,9 @@ import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
+import com.alibaba.fastjson.JSON;
 import com.sun.org.apache.regexp.internal.RE;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/v1/api/admin/tag")
+@Slf4j
 public class TagController extends BaseController {
 
     @Autowired
@@ -87,7 +90,7 @@ public class TagController extends BaseController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(@ModelAttribute TagView tagView, HttpServletRequest request){
-
+        log.info("保存tag:{}",JSON.toJSONString(tagView));
         Result result = new Result();
         tagView = apiTagService.save(tagView);
         result.setCode("200");

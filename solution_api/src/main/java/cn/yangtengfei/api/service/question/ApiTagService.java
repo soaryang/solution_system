@@ -3,6 +3,7 @@ package cn.yangtengfei.api.service.question;
 import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.Date;
  * Created by Administrator on 2017/5/28 0028.
  */
 @Service
+@Slf4j
 public class ApiTagService {
 
     @Autowired
@@ -26,11 +28,13 @@ public class ApiTagService {
         String name = tagView.getName();
         Tag tagTemp = findByName(name);
         if(tagTemp==null){
+            log.info("tag不存在，执行保存");
             BeanUtils.copyProperties(tagView,questionType);
             questionType = tagService.save(questionType);
             tagView.setId(questionType.getId());
             return tagView;
         }else{
+            log.info("tag存在,直接返回");
             BeanUtils.copyProperties(tagTemp,tagView);
         }
         return tagView;

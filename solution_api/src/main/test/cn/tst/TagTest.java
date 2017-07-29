@@ -26,7 +26,7 @@ public class TagTest {
     @Test
     public void findParty(){
         TagView tagView = new TagView();
-        tagView.setName("springboot");
+        tagView.setName("springboo22222t");
         tagView = apiTagService.save(tagView);
         System.out.println("================="+ JSON.toJSONString(tagView));
     }
