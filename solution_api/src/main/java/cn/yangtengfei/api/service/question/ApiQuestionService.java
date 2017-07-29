@@ -62,6 +62,10 @@ public class ApiQuestionService {
         return questionService.findAll(page,pageSize);
     }
 
+    public long findAllCount(){
+        return questionService.findAllCount();
+    }
+
     public List<QuestionView> findQuestionListWithTags(List<Question> questionList){
 
         List<QuestionView> questionViewList = new ArrayList<QuestionView>();

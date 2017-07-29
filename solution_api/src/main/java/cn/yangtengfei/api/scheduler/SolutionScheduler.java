@@ -20,7 +20,9 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Configuration
@@ -42,7 +44,10 @@ public class SolutionScheduler {
         logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
             File file = new File(questionCachePath);
-            String fileContent = JSON.toJSONString(apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
+            Map<String,Object> dataMap = new HashMap<String,Object>();
+            dataMap.put("count",apiQuestionService.findAllCount());
+            dataMap.put("questionList",apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
+            String fileContent = JSON.toJSONString(dataMap);
             logger.info("fileContent:{}",fileContent);
             try {
                 org.apache.commons.io.FileUtils.writeStringToFile(file, fileContent, "UTF-8");

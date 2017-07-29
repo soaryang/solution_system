@@ -52,4 +52,8 @@ public class QuestionService {
         return questionRepository.findAll(pageRequest);
         //return questionRepository.findByNameLike("防火墙",pageRequest);
     }
+
+    public long findAllCount(){
+        return questionRepository.count();
+    }
 }
