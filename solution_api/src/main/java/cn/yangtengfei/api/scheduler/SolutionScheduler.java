@@ -1,9 +1,13 @@
 package cn.yangtengfei.api.scheduler;
 
+import cn.yangtengfei.api.controller.question.SolutionController;
 import cn.yangtengfei.api.service.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +27,8 @@ import java.util.List;
 @EnableScheduling
 public class SolutionScheduler {
 
+    private static final Logger logger = LoggerFactory.getLogger(SolutionController.class);
+
     @Autowired
     private ApiQuestionService apiQuestionService;
 
@@ -30,8 +36,10 @@ public class SolutionScheduler {
     private String questionCachePath;
 
     @Scheduled(cron = "0/30 * * * * *")
-    public void reportCurrentByCron() {
+    public void createQuestionCache() {
+        logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,20);
+        logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
             List<Question> questionList = questionPage.getContent();
             List<QuestionView> questionViews = new ArrayList<QuestionView>();
@@ -41,7 +49,8 @@ public class SolutionScheduler {
                 questionViews.add(questionView);
             }
             File file = new File(questionCachePath);
-            String fileContent = "";
+            String fileContent = JSON.toJSONString(questionViews);
+            logger.info("fileContent:{}",fileContent);
             try {
                 org.apache.commons.io.FileUtils.writeStringToFile(file, fileContent, "UTF-8");
             } catch (IOException e) {
