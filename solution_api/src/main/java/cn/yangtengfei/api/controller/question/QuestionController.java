@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @RestController
-@RequestMapping(value = "/v1/api/question")
+@RequestMapping(value = "/v1/api/admin/question")
 public class QuestionController extends BaseController {
 
     @Autowired
