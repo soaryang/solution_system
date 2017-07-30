@@ -59,7 +59,7 @@ public class TagService {
     public Tag findById(String id){ return tagRepository.findOne(id);}
 
     public Tag findByName(String name){
-        return tagRepository.findByNameOrderByUpdateTimeDesc(name);
+        return tagRepository.findByName(name);
     }
 
     public List<Tag> findByIdIn(List<String> ids){

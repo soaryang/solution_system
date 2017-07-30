@@ -20,6 +20,7 @@
         <module>solution_db_service</module>
         <module>solution_webCrawler</module>
         <module>solution_comm_util</module>
+        <module>solution_common</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

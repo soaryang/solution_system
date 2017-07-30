@@ -1,5 +1,7 @@
 package cn.yangtengfei.api.cacheService.question;
 
+import cn.yangtengfei.cacheKey.question.QuestionCacheKey;
+import cn.yangtengfei.cacheKey.question.TagCacheKey;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.SolutionService;
@@ -15,47 +17,47 @@ public class QuestionCacheService {
     @Autowired
     private QuestionService questionService;
 
-    @Autowired
-    private SolutionService solutionService;
-
     /**
      * 查询问题信息
      * @param id
      * @return
      */
-    @Cacheable(cacheNames ="questions",value="questions",key = "'question_'+#id")
+    @Cacheable(value=QuestionCacheKey.QUESTION_KEY,key = "'"+ QuestionCacheKey.QUESTION_INFO_ID_KEY +"'+#id")
     public Question findById(String id){
         return  questionService.findById(id);
     }
 
-    /**
-     * 查询问题解决方案的数量
-     * @param id
-     * @return
-     */
-    @Cacheable(cacheNames ="questions",value="questions",key = "'question_solutions_'+#id",cacheManager = "countCacheManager")
-    public long findSolutionCountByQuestionId(String id){
-        return solutionService.findSolutionCountByQuestionId(id);
-    }
-
-    /**
-     * TODO:等待消息队列
-     * 重置解决方案的数量
-     * @param id
-     * @return
-     */
-    @CachePut(cacheNames ="questions",value="questions",key = "'question_solutions_'+#id",cacheManager = "countCacheManager")
-    public long resetSolutionCountByQuestionId(String id){
-        return solutionService.findSolutionCountByQuestionId(id);
-    }
 
     @Caching(put = {
-            @CachePut(value = "questions", key = "'question_'+#question.id"),
-            @CachePut(value = "questions", key = "'question_'+#question.name")
+            @CachePut(value = QuestionCacheKey.QUESTION_KEY, key = "'"+QuestionCacheKey.QUESTION_INFO_ID_KEY+"'+#question.id"),
+            @CachePut(value = QuestionCacheKey.QUESTION_KEY, key = "'"+QuestionCacheKey.QUESTION_INFO_NAME_KEY+"'+#question.name")
     })
     public Question save(Question question) {
         question =questionService.save(question);
         return question;
+    }
+
+    /**
+     * tag下问题的数量
+     * @param id
+     * @param deleteFlg
+     * @return
+     */
+    @Cacheable(value=QuestionCacheKey.QUESTION_KEY,key = "'"+ TagCacheKey.TAG_QUESTION_COUNT_KEY +"'+#id")
+    public long findAllCountByTagId(String id,String deleteFlg){
+        return questionService.countByTagIdAndDeleteFlg(id,deleteFlg);
+    }
+
+    /**
+     * TODO:等待消息队列
+     * tag下问题的数量
+     * @param id
+     * @param deleteFlg
+     * @return
+     */
+    @CachePut(value=QuestionCacheKey.QUESTION_KEY,key = "'"+ TagCacheKey.TAG_QUESTION_COUNT_KEY +"'+#id")
+    public long resetAllCountByTagId(String id,String deleteFlg){
+        return questionService.countByTagIdAndDeleteFlg(id,deleteFlg);
     }
 
 }

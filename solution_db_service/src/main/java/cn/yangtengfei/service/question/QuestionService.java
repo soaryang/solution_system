@@ -56,4 +56,13 @@ public class QuestionService {
     public long findAllCount(){
         return questionRepository.count();
     }
+
+    /**
+     * 通过tagId获取问题的数量
+     * @param tagId
+     * @return
+     */
+    public long countByTagIdAndDeleteFlg(String tagId,String deleteFlg){
+        return questionRepository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
+    }
 }

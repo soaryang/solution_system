@@ -1,6 +1,7 @@
 package cn.yangtengfei.api.service.question;
 
 import cn.yangtengfei.api.cacheService.question.QuestionCacheService;
+import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
@@ -28,6 +29,9 @@ public class ApiQuestionService {
 
     @Autowired
     private QuestionCacheService questionCacheService;
+
+    @Autowired
+    private SolutionCacheService solutionCacheService;
 
     @Autowired
     private TagService tagService;
@@ -88,7 +92,7 @@ public class ApiQuestionService {
         for(Question question:questionList){
             QuestionView questionView = new QuestionView();
             BeanUtils.copyProperties(question,questionView);
-            questionView.setSolutionCount(questionCacheService.findSolutionCountByQuestionId(question.getId()));
+            questionView.setSolutionCount(solutionCacheService.findSolutionCountByQuestionId(question.getId()));
             questionView.setTagName(tagMap.get(question.getTagId()));
             questionViewList.add(questionView);
         }

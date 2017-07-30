@@ -38,6 +38,10 @@ public class SolutionScheduler {
     private String questionCachePath;
 
     @Scheduled(cron = "0 0/10 * * * *")
+    public void createTaskCache() {
+
+    }
+    @Scheduled(cron = "0 0/10 * * * *")
     public void createQuestionCache() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,50);

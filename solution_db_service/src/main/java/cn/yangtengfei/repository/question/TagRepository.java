@@ -11,7 +11,7 @@ import java.util.List;
 @EnableMongoRepositories(mongoTemplateRef = "questionMongoTemplate")
 public interface TagRepository extends MongoRepository<Tag,String> {
 
-    public Tag findByNameOrderByUpdateTimeDesc(String name);
+    public Tag findByName(String name);
 
     Page<Tag> findByUseStatusOrderByUpdateTimeDesc(Integer useStatus, Pageable pageable);
 

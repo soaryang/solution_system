@@ -16,4 +16,7 @@ public interface QuestionRepository extends MongoRepository<Question,String> {
 
     Page<Question> findByNameLike(String Name, Pageable pageable);
 
+
+    long countByTagIdAndDeleteFlg(String tagId,String deleteFlg);
+
 }
