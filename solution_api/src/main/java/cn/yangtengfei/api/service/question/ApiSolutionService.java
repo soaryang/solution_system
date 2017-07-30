@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/5/28 0028.
  */
@@ -54,6 +56,10 @@ public class ApiSolutionService {
 
     public Page<Solution> findAllByQuestionId(int page, int pageSize,String questionId) {
         return solutionService.findAllByQuestionId(page,pageSize,questionId);
+    }
+
+    public List<Solution> findSolutionViewList(String questionId,int deleteFlg){
+        return solutionService.findByQuestionIdAndDeleteFlg(questionId,deleteFlg);
     }
 
 

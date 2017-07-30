@@ -15,4 +15,7 @@ public class QuestionCacheKey {
     //问题下解决方案的数量
     public static final String QUESTION_SOLUTION_COUNT_KEY="count:question:solution:";
 
+    //问题下解决方案列表
+    public static final String QUESTION_SOLUTION_LiST_KEY="list:question:solution:";
+
 }

@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SolutionCacheService {
 
@@ -27,6 +29,10 @@ public class SolutionCacheService {
         return  solutionService.save(solution);
     }
 
+    @Cacheable(value= QuestionCacheKey.QUESTION_KEY,key = "'"+QuestionCacheKey.QUESTION_SOLUTION_LiST_KEY+"'+#questionId")
+    public List<Solution> findByQuestionIdAndDeleteFlg(String questionId, int deleteFlg){
+        return solutionService.findByQuestionIdAndDeleteFlg(questionId,deleteFlg);
+    }
     /**
      * 查询问题解决方案的数量
      * @param id
@@ -47,6 +53,8 @@ public class SolutionCacheService {
     public long resetSolutionCountByQuestionId(String id) {
         return solutionService.findSolutionCountByQuestionId(id);
     }
+
+
 
 
 }

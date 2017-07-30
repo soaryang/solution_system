@@ -3,6 +3,7 @@ package cn.yangtengfei.api.view.question;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/28 0028.
@@ -21,5 +22,7 @@ public class QuestionView implements Serializable {
     private String tagName;
 
     private long solutionCount;
+
+    private List<SolutionView> solutionViewList;
 
 }

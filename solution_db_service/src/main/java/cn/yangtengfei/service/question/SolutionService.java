@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/5/28 0028.
  */
@@ -46,6 +48,11 @@ public class SolutionService {
     }
     public long findAllCount(){
         return solutionRepository.count();
+    }
+
+
+    public List<Solution> findByQuestionIdAndDeleteFlg(String questionId, int deleteFlg){
+        return solutionRepository.findByQuestionIdAndDeleteFlg(questionId,deleteFlg);
     }
 
 
