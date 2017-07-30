@@ -30,10 +30,16 @@ public class QuestionNoAuthorityController {
     public Result findById(String id){
         Result result = new Result();
         QuestionView questionView = apiQuestionService.findQuestionViewById(id);
-        List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
-        List<SolutionView> solutionViewList = new ArrayList<>();
-        BeanUtils.copyProperties(solutionList,solutionViewList);
-        questionView.setSolutionViewList(solutionViewList);
+        if(questionView!=null){
+            List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
+            List<SolutionView> solutionViewList = new ArrayList<>();
+            for(Solution solution:solutionList){
+                SolutionView solutionView = new SolutionView();
+                BeanUtils.copyProperties(solution,solutionView);
+                solutionViewList.add(solutionView);
+            }
+            questionView.setSolutionViewList(solutionViewList);
+        }
         result.setCode("200");
         result.setMessage("OK");
         result.setData(questionView);
