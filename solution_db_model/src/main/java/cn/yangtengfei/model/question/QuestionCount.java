@@ -11,8 +11,6 @@ public class QuestionCount extends BaseModel {
 
     private String id;
 
-    private String questionId;
-
     /**解决方案数量*/
     private long solutionCount;
 

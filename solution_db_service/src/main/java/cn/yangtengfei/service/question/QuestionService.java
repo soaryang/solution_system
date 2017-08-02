@@ -5,8 +5,13 @@ import cn.yangtengfei.repository.question.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import javax.xml.crypto.Data;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/28 0028.
@@ -64,5 +69,14 @@ public class QuestionService {
      */
     public long countByTagIdAndDeleteFlg(String tagId,String deleteFlg){
         return questionRepository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
+    }
+
+    public Page<Question>  findAllByUpdateTimeAfterOrderByUpdateTime(Date date, int page, int pageSize){
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+        return questionRepository.findAllByUpdateTimeAfterOrderByUpdateTime(date,pageRequest);
+    }
+
+    public List<Question> findByIdIn(List<String> ids){
+        return questionRepository.findByIdIn(ids);
     }
 }

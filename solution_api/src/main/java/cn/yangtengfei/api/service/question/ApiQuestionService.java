@@ -10,12 +10,10 @@ import cn.yangtengfei.service.question.TagService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/5/28 0028.
@@ -70,8 +68,17 @@ public class ApiQuestionService {
         return questionService.findAll(page,pageSize);
     }
 
+    public Page<Question>  findAllByUpdateTimeAfterOrderByUpdateTime(Date date, int page, int pageSize){
+        return questionService.findAllByUpdateTimeAfterOrderByUpdateTime(date,page,pageSize);
+    }
+
+
     public long findAllCount(){
         return questionService.findAllCount();
+    }
+
+    public List<Question> findQuestionByIds(List<String> ids){
+        return questionService.findByIdIn(ids);
     }
 
     public List<QuestionView> findQuestionListWithTags(List<Question> questionList){

@@ -8,7 +8,6 @@ public class QuestionCountView {
 
     private String id;
 
-    private String questionId;
 
     /**解决方案数量*/
     private long solutionCount;

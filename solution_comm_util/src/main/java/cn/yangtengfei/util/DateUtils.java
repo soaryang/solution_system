@@ -45,6 +45,15 @@ public class DateUtils {
         return hour;
     }
 
+    public static Date subDate(Date date,int day) throws ParseException {
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - day);
+        Date endDate = dft.parse(dft.format(calendar.getTime()));
+        return endDate;
+    }
+
     /**
      * 把毫秒转化成日期
      * @param dateFormat(日期格式，例如：MM/ dd/yyyy HH:mm:ss)
@@ -88,4 +97,6 @@ public class DateUtils {
         }
         return date;
     }
+
+
 }

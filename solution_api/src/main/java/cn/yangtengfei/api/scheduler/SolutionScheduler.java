@@ -8,8 +8,11 @@ import cn.yangtengfei.api.service.question.ApiSolutionService;
 import cn.yangtengfei.api.view.question.QuestionCountView;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
+import cn.yangtengfei.model.question.QuestionCount;
+import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
+import io.swagger.models.auth.In;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +27,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.*;
 
 @Component
 @Configuration
@@ -45,20 +46,44 @@ public class SolutionScheduler {
     @Autowired
     private ApiQuestionCountService apiQuestionCountService;
 
-    @Value("${file.questionCachePath}")
-    private String questionCachePath;
+    @Value("${file.newquestionCachePath}")
+    private String newquestionCachePath;
 
-    @Scheduled(cron = "0 0/10 * * * *")
-    public void createTaskCache() {
+    @Value("${file.hotquestionCachePath}")
+    private String hotquestionCachePath;
 
+    @Scheduled(cron="0/30 * * * * ?")
+    public void createHotQuestionCache() {
+        logger.info("createQuestionCache------------start");
+
+        Page<QuestionCount> questionCountPage = apiQuestionCountService.findAllOrderByFollowCount(0,50);
+        logger.info("questionPage:{}",questionCountPage.getTotalElements());
+        if(questionCountPage.getTotalElements()!=0){
+            List<QuestionCount> questionCountList = questionCountPage.getContent();
+            List<String> ids = new ArrayList<String>();
+            questionCountList.forEach(questionCount -> ids.add(questionCount.getId()));
+            List<Question> questionList = apiQuestionService.findQuestionByIds(ids);
+            File file = new File(hotquestionCachePath);
+            Map<String,Object> dataMap = new HashMap<String,Object>();
+            dataMap.put("count",apiQuestionService.findAllCount());
+            dataMap.put("questionList",apiQuestionService.findQuestionListWithTags(questionList));
+            String fileContent = JSON.toJSONString(dataMap);
+            logger.info("fileContent:{}",fileContent);
+            try {
+                org.apache.commons.io.FileUtils.writeStringToFile(file, fileContent, "UTF-8");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
     @Scheduled(cron = "0 0/10 * * * *")
-    public void createQuestionCache() {
+    public void createNewQuestionCae() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,50);
         logger.info("questionPage:{}",questionPage.getTotalElements());
         if(questionPage.getTotalElements()!=0){
-            File file = new File(questionCachePath);
+            File file = new File(newquestionCachePath);
             Map<String,Object> dataMap = new HashMap<String,Object>();
             dataMap.put("count",apiQuestionService.findAllCount());
             dataMap.put("questionList",apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
@@ -72,32 +97,58 @@ public class SolutionScheduler {
         }
     }
 
-    @Scheduled(cron = "0/30 * * * * *")
+    @Scheduled(cron="0/60 * * * * ?")
     public void restQuestionSolutionCount() {
         logger.info("restQuestionSolutionCount------------start");
-        long questionCount = apiQuestionService.findAllCount();
+        long count = apiQuestionService.findAllCount();
         int pageSize = 500;
         int index = 0;
         int  page =0;
-        if(questionCount%pageSize==0){
-            page  = (int)questionCount/pageSize;
+        if(count%pageSize==0){
+            page  = (int)count/pageSize;
         }else{
-            page  = (int)questionCount/pageSize+1;
+            page  = (int)count/pageSize+1;
         }
+        Date date = DateUtils.getCurrentDate();
         while (index<page){
-            Page<Question> questionPage = apiQuestionService.findAll(index,pageSize);
+            Page<Question> questionPage = null;
+            try {
+                //questionPage = apiQuestionService.findAllByUpdateTimeAfterOrderByUpdateTime(DateUtils.subDate(date,1),index,pageSize);
+                questionPage = apiQuestionService.findAll(index,pageSize);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             List<Question> questionList = questionPage.getContent();
+            Map<String,Long> map = new HashMap<>();
+            List<String> ids = new ArrayList<>();
             if(ListUtils.checkListIsNotNull(questionList)){
-                questionList.forEach(question -> savequestionCount(question.getId(),solutionCacheService.findSolutionCountByQuestionId(question.getId())));
+                questionList.forEach(question -> ids.add(question.getId()));
+                questionList.forEach(question -> map.put(question.getId(),solutionCacheService.findSolutionCountByQuestionId(question.getId())));
+                List<QuestionCount>questionCountList =  apiQuestionCountService.findByIdIn(ids);
+                if(ListUtils.checkListIsNotNull(questionCountList)){
+                    for(int i=0; i<questionCountList.size(); i++){
+                        QuestionCount temp = questionCountList.get(i);
+                        temp.setSolutionCount(map.get(temp.getId()));
+                        questionCountList.set(i,temp);
+                    }
+                    questionCountList.forEach(temp->savequestionCount(temp));
+                }else{
+                    for(String id:ids){
+                        QuestionCount questionCount = new QuestionCount();
+                        questionCount.setId(id);
+                        questionCount.setSolutionCount(map.get(id));
+                        savequestionCount(questionCount);
+                    }
+                }
             }
 
+            index++;
         }
     }
 
-    private void savequestionCount(String id,long count){
+    private void savequestionCount(QuestionCount questionCount){
         QuestionCountView questionCountView = new QuestionCountView();
-        questionCountView.setId(id);
-        questionCountView.setSolutionCount(count);
+        BeanUtils.copyProperties(questionCount,questionCountView);
         apiQuestionCountService.save(questionCountView);
     }
 }
