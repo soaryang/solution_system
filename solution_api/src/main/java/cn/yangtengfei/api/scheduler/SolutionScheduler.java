@@ -77,7 +77,7 @@ public class SolutionScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0/10 * * * *")
+    @Scheduled(cron = "0/20 * * * * *")
     public void createNewQuestionCae() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,50);
