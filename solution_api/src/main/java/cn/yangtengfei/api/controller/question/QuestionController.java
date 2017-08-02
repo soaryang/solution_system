@@ -28,14 +28,14 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize, String tagId){
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Question> questionTypes = null;
+        Page<Question> questionPage = null;
         if(StringUtils.isEmpty(tagId)){
-            questionTypes = apiQuestionService.findAll(pageNumber-1,pageSize);
+            questionPage = apiQuestionService.findAll(pageNumber-1,pageSize);
         }else{
-            questionTypes = apiQuestionService.findAllPageByTagId(pageNumber-1,pageSize,tagId);
+            questionPage = apiQuestionService.findAllPageByTagId(pageNumber-1,pageSize,tagId);
         }
-        pageResultModel.setTotal(questionTypes.getTotalElements());
-        pageResultModel.setRows(apiQuestionService.findQuestionListWithTags(questionTypes.getContent()));
+        pageResultModel.setTotal(questionPage.getTotalElements());
+        pageResultModel.setRows(apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
         return  pageResultModel;
     }
 
