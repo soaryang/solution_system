@@ -32,7 +32,7 @@ public class MessageService {
         article.setDescription("你好");
         article.setTitle("欢迎新同学");
         article.setPicUrl("http://img.redocn.com/sheji/20160805/chuangyikaixuejihuanyingxintongxuehaibaosheji_6883731.jpg");
-        article.setUrl("http://www.baidu.com");
+        article.setUrl("http://www.51jieguo.com");
         articleList.add(article);
         newsMessage.setArticles(articleList);
         return FormatXmlProcess.newsMessageToXml(newsMessage);
