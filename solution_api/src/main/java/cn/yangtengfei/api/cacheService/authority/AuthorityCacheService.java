@@ -3,7 +3,7 @@ package cn.yangtengfei.api.cacheService.authority;
 
 import cn.yangtengfei.api.cacheService.user.UserCacheService;
 import cn.yangtengfei.api.util.BCrypt;
-import cn.yangtengfei.api.util.UserTokenConst;
+import cn.yangtengfei.api.util.cont.UserTokenConst;
 import cn.yangtengfei.api.util.cont.cacheConst.AuthorityCacheConst;
 import cn.yangtengfei.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;

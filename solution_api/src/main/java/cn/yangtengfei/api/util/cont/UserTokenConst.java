@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.util;
+package cn.yangtengfei.api.util.cont;
 
 public class UserTokenConst {
 

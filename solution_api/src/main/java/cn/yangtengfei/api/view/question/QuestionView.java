@@ -15,13 +15,19 @@ public class QuestionView implements Serializable {
 
     private String id;
 
+    private String createUserId;
+
+    private String createUser;
+
+    //private String createTime;
+
     private String name;
 
     private String tagId;
 
     private String tagName;
 
-    private long solutionCount;
+    private Integer solutionCount;
 
     private List<SolutionView> solutionViewList;
 

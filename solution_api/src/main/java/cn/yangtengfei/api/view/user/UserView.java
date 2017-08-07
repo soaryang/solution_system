@@ -24,6 +24,8 @@ public class UserView implements Serializable {
 
     private String password;
 
+    private String verifyCode;
+
     private String openId;
 
     private Integer subscribeState;

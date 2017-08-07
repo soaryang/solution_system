@@ -39,7 +39,7 @@ public class SolutionCacheService {
      * @return
      */
     @Cacheable(value= QuestionCacheKey.QUESTION_KEY,key = "'"+QuestionCacheKey.QUESTION_SOLUTION_COUNT_KEY+"'+#id",cacheManager = "countCacheManager")
-    public long findSolutionCountByQuestionId(String id){
+    public Integer findSolutionCountByQuestionId(String id){
         return solutionService.findSolutionCountByQuestionId(id);
     }
 
@@ -50,7 +50,7 @@ public class SolutionCacheService {
      * @return
      */
     @CachePut(value= QuestionCacheKey.QUESTION_KEY,key = "'"+QuestionCacheKey.QUESTION_SOLUTION_COUNT_KEY+"'+#id",cacheManager = "countCacheManager")
-    public long resetSolutionCountByQuestionId(String id) {
+    public Integer  resetSolutionCountByQuestionId(String id) {
         return solutionService.findSolutionCountByQuestionId(id);
     }
 

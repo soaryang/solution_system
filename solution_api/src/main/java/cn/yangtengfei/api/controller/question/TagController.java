@@ -36,8 +36,7 @@ public class TagController extends BaseController {
     @Autowired
     private StacKOverFlowDataCrwaler stacKOverFlowDataCrwaler;
 
-    @Autowired
-    private JavaMailSender mailSender;
+
 
 
 

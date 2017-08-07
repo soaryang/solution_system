@@ -27,9 +27,16 @@ public class UserCacheService {
         return  userService.findByName(name);
     }
 
+
+    @Cacheable(value=UserCacheKey.USER_KEY, key = "'"+UserCacheKey.USER_INFO_EMAIL_KEY+"'+#email")
+    public User findUserByEmail(String email){
+        return  userService.findByEmail(email);
+    }
+
     @Caching(put = {
             @CachePut(value = UserCacheKey.USER_KEY, key = "'"+UserCacheKey.USER_INFO_ID_KEY+"'+#user.id"),
-            @CachePut(value = UserCacheKey.USER_KEY, key = "'"+UserCacheKey.USER_INFO_NAME_KEY+"'+#user.name")
+            @CachePut(value = UserCacheKey.USER_KEY, key = "'"+UserCacheKey.USER_INFO_NAME_KEY+"'+#user.name"),
+            @CachePut(value = UserCacheKey.USER_KEY, key = "'"+UserCacheKey.USER_INFO_EMAIL_KEY+"'+#user.email")
     })
     public User update(User user) {
         user =userService.save(user);

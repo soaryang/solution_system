@@ -1,12 +1,11 @@
 package cn.yangtengfei.api.filter;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
-import cn.yangtengfei.api.cacheService.user.UserCacheService;
 import cn.yangtengfei.api.controller.base.BaseController;
-import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.util.ErrorCode;
-import cn.yangtengfei.api.util.UserTokenConst;
+import cn.yangtengfei.api.logicService.user.UserLogicService;
+import cn.yangtengfei.api.util.cont.UserTokenConst;
 import cn.yangtengfei.model.user.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,21 +19,30 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Service
+@Slf4j
 public class AuthorityFilter  implements HandlerInterceptor {
 
     @Autowired
     private AuthorityCacheService authorityCacheService;
 
     @Autowired
-    private UserCacheService userCacheService;
+    private UserLogicService userLogicService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if( handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            //Method method = handlerMethod.getMethod();
             String cookieValue = "";
-            String url = request.getRequestURI();;
-            if( url.indexOf("/v1/api/admin") != -1){
+            String url = request.getRequestURI();
+            String ip = request.getRemoteAddr();
+            if(url.indexOf("/v1/api/register")!=-1){
+                log.info("用户注册");
+                //1.判断用户名是否存在
+            }else if(url.indexOf("/v1/api/mail/sendMail")!=-1){
+                log.info("IP : " + ip);
+
+                return userLogicService.checkRegisterUserMailSend(request,response);
+            }else if( url.indexOf("/v1/api/admin") != -1){
                 Cookie[] cookies =request.getCookies();
                 if(cookies!=null && cookies.length!=0){
 

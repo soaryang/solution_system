@@ -15,6 +15,8 @@ public interface UserRepository extends MongoRepository<User,String> {
 
     public User findByName(String name);
 
+    public User findByEmail(String email);
+
     Page<User> findByDeleteFlgOrderByUpdateTimeDesc(int deleteFlg,Pageable pageable);
 
     List<User> findByIdIn(List<String> ids);

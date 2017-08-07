@@ -119,7 +119,7 @@ public class SolutionScheduler {
                 e.printStackTrace();
             }
             List<Question> questionList = questionPage.getContent();
-            Map<String,Long> map = new HashMap<>();
+            Map<String,Integer> map = new HashMap<>();
             List<String> ids = new ArrayList<>();
             if(ListUtils.checkListIsNotNull(questionList)){
                 questionList.forEach(question -> ids.add(question.getId()));
