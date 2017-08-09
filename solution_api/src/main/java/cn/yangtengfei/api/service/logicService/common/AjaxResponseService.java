@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.logicService.common;
+package cn.yangtengfei.api.service.logicService.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

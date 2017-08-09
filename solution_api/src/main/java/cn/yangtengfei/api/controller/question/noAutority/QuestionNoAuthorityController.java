@@ -2,10 +2,9 @@ package cn.yangtengfei.api.controller.question.noAutority;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.service.question.ApiQuestionService;
+import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.api.view.question.SolutionView;
-import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Solution;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

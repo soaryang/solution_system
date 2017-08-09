@@ -3,7 +3,7 @@ package cn.yangtengfei.api.controller.question;
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.controller.base.BaseController;
-import cn.yangtengfei.api.service.question.ApiSolutionService;
+import cn.yangtengfei.api.service.dataService.question.ApiSolutionService;
 import cn.yangtengfei.api.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
 import com.alibaba.fastjson.JSON;

@@ -3,18 +3,11 @@ package cn.yangtengfei.api.controller.user;
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.controller.base.BaseController;
-import cn.yangtengfei.api.controller.wechat.WeChatController;
-import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.service.user.ApiUserService;
-import cn.yangtengfei.api.util.BCrypt;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.view.user.UserView;
-import cn.yangtengfei.model.user.User;
-import cn.yangtengfei.service.user.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +47,7 @@ public class UserController extends BaseController {
     public Result save(@ModelAttribute UserView userView){
 
         Result result = new Result();
-        apiUserService.saveUser(userView);
+        apiUserService.saveUserByWechat(userView);
         result.setCode("200");
         return result;
         //logger.info("subscribeState:{},pageNumber:{},pageSize:{}",subscribeState,pageNumber,pageSize);

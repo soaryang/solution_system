@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.service.question;
+package cn.yangtengfei.api.service.dataService.question;
 
 import cn.yangtengfei.api.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;

@@ -2,18 +2,14 @@ package cn.yangtengfei.api.scheduler;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
 import cn.yangtengfei.api.controller.question.SolutionController;
-import cn.yangtengfei.api.service.question.ApiQuestionCountService;
-import cn.yangtengfei.api.service.question.ApiQuestionService;
-import cn.yangtengfei.api.service.question.ApiSolutionService;
+import cn.yangtengfei.api.service.dataService.question.ApiQuestionCountService;
+import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionCountView;
-import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.QuestionCount;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
-import io.swagger.models.auth.In;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +23,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 @Component

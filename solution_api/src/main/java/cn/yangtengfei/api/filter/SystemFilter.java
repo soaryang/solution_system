@@ -2,9 +2,10 @@ package cn.yangtengfei.api.filter;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
 import cn.yangtengfei.api.controller.base.BaseController;
-import cn.yangtengfei.api.logicService.user.UserLogicService;
+import cn.yangtengfei.api.service.logicService.user.UserLogicService;
 import cn.yangtengfei.api.util.cont.UserTokenConst;
 import cn.yangtengfei.model.user.User;
+import cn.yangtengfei.regeditCodeUtil.ValidateCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Slf4j
-public class AuthorityFilter  implements HandlerInterceptor {
+public class SystemFilter implements HandlerInterceptor {
 
     @Autowired
     private AuthorityCacheService authorityCacheService;
@@ -35,12 +36,20 @@ public class AuthorityFilter  implements HandlerInterceptor {
             String cookieValue = "";
             String url = request.getRequestURI();
             String ip = request.getRemoteAddr();
-            if(url.indexOf("/v1/api/register")!=-1){
+            if(url.indexOf("/v1/api/captcha/")!=-1) {
+                response.setContentType("text/html; charset=utf-8");
+                //禁止图像缓存。
+                response.setHeader("Pragma", "no-cache");
+                response.setHeader("Cache-Control", "no-cache,must-revalidate");
+                response.setDateHeader("Expires", 0);
+                response.setHeader("Transfer-Encoding","chunked");
+                ValidateCode vCode = new ValidateCode(120,40,5,100);
+                vCode.write(response.getOutputStream());
+            }else if(url.indexOf("/v1/api/register")!=-1){
                 log.info("用户注册");
-                //1.判断用户名是否存在
+                return userLogicService.checkRegisterCodeIsExist(request,response);
             }else if(url.indexOf("/v1/api/mail/sendMail")!=-1){
                 log.info("IP : " + ip);
-
                 return userLogicService.checkRegisterUserMailSend(request,response);
             }else if( url.indexOf("/v1/api/admin") != -1){
                 Cookie[] cookies =request.getCookies();

@@ -1,21 +1,19 @@
 package cn.yangtengfei.api.controller.authority;
 
 
-import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.controller.base.BaseController;
-import cn.yangtengfei.api.controller.question.SolutionController;
 import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.service.authority.AuthorityService;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
+import cn.yangtengfei.api.service.logicService.authority.AuthorityService;
 import cn.yangtengfei.api.util.ErrorCode;
 import cn.yangtengfei.api.view.user.UserView;
-import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.user.User;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +28,21 @@ public class AuthorityController extends BaseController {
     @Autowired
     private AuthorityService authorityService;
 
-    @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
-    public void register(@ModelAttribute UserView userView) throws Exception {
+    @Autowired
+    private ApiUserService apiUserService;
 
+    @RequestMapping(value = "/captcha/{code}", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result captcha(@PathVariable("code") String code) throws Exception {
+        return null;
     }
+    @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result register(@ModelAttribute UserView userView) throws Exception {
+        Result result = new Result();
+        apiUserService.saveUserByUserView(userView);
+        result.setCode("200");
+        return result;
+    }
+
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Result findAll(HttpServletRequest request,HttpServletResponse response) throws Exception {
         String userName = request.getParameter("userName");

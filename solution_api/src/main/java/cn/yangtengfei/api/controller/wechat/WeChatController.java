@@ -3,8 +3,8 @@ package cn.yangtengfei.api.controller.wechat;
 
 import cn.yangtengfei.api.config.RedisService;
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.service.common.MessageService;
-import cn.yangtengfei.api.service.user.ApiUserService;
+import cn.yangtengfei.api.service.dataService.common.MessageService;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.HttpUtil;
 import cn.yangtengfei.api.util.WeChatUtil;

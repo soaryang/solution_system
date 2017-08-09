@@ -1,9 +1,8 @@
-package cn.yangtengfei.api.service.common;
+package cn.yangtengfei.api.service.dataService.common;
 
 
 import cn.yangtengfei.api.wechat.message.Article;
 import cn.yangtengfei.api.wechat.message.NewsMessage;
-import cn.yangtengfei.api.wechat.message.PictureMessage;
 import cn.yangtengfei.api.wechat.message.TextMessage;
 import cn.yangtengfei.api.wechat.process.FormatXmlProcess;
 import cn.yangtengfei.api.wechat.util.MessageUtil;

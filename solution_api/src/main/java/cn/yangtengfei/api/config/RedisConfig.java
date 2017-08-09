@@ -67,6 +67,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         return redisCacheManager;
     }
 
+    @Bean(name = "mailSendCountCache")
+    public CacheManager mailSendCountCache(RedisTemplate redisTemplate){
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
+        redisCacheManager.setDefaultExpiration(60*60*24);
+        // return new RedisCacheManager(redisTemplate);
+        return redisCacheManager;
+    }
 
 
     @Primary

@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.service.user;
+package cn.yangtengfei.api.service.dataService.user;
 
 
 import cn.yangtengfei.api.config.PageResultModel;

@@ -2,10 +2,8 @@ package cn.yangtengfei.api.controller.user;
 
 
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.service.user.ApiUserService;
-import cn.yangtengfei.api.view.user.RoleView;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

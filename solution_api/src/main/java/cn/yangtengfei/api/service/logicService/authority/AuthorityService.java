@@ -1,11 +1,11 @@
-package cn.yangtengfei.api.service.authority;
+package cn.yangtengfei.api.service.logicService.authority;
 
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
 import cn.yangtengfei.api.cacheService.user.UserCacheService;
 import cn.yangtengfei.api.config.RedisService;
 import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.service.user.ApiUserService;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.ErrorCode;
 import cn.yangtengfei.api.util.cont.cacheConst.UserCacheConst;

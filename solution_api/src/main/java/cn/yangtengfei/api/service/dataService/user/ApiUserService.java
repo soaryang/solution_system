@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.service.user;
+package cn.yangtengfei.api.service.dataService.user;
 
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.view.user.RoleView;
@@ -12,7 +12,6 @@ import cn.yangtengfei.service.wechat.WechatUserService;
 import cn.yangtengfei.util.DateUtils;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,6 @@ public class ApiUserService {
 
     @Autowired
     private UserRoleService userRoleService;
-
 
     public UserView findUserByName(String name){
         User user = userService.findByName(name);
@@ -83,7 +81,15 @@ public class ApiUserService {
         }
     }
 
-    public void saveUser(UserView userView){
+    public void saveUserByUserView(UserView userView){
+        User user = new User();
+        user.setName(userView.getName());
+        user.setPassword(userView.getPassword());
+        user.setEmail(userView.getEmail());
+        userService.save(user);
+    }
+
+    public void saveUserByWechat(UserView userView){
         String openId = userView.getOpenId();
         WechatUser wechatUser =  wechatUserService.findByOpenId(openId);
         //User user = new User();
