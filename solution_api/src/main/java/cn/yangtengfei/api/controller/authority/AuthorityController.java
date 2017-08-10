@@ -31,8 +31,8 @@ public class AuthorityController extends BaseController {
     @Autowired
     private ApiUserService apiUserService;
 
-    @RequestMapping(value = "/captcha/{code}", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result captcha(@PathVariable("code") String code) throws Exception {
+    @RequestMapping(value = "/captcha", method = {RequestMethod.GET, RequestMethod.POST})
+    public Result captcha() throws Exception {
         return null;
     }
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
