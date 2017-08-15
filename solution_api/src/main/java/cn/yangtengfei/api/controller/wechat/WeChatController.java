@@ -7,6 +7,7 @@ import cn.yangtengfei.api.service.dataService.common.MessageService;
 import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.util.HttpUtil;
+import cn.yangtengfei.api.util.RandomCodeUtil;
 import cn.yangtengfei.api.util.WeChatUtil;
 import cn.yangtengfei.api.util.cont.cacheConst.UserCacheConst;
 import cn.yangtengfei.api.view.user.UserView;
@@ -49,7 +50,6 @@ public class WeChatController {
     @Autowired
     private MessageService messageService;
 
-    public static final String numberLowerLetterChar = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
@@ -168,7 +168,7 @@ public class WeChatController {
                 log.info("text:" + content);
                 if("wori".equals(content) && "o3QMVwI1DrAj4y3TE9VD1I4HqOFE".equals(openId)){
                     //
-                    String code = getCode();
+                    String code = RandomCodeUtil.getCode();
                     String password = BCrypt.hashpw(code, BCrypt.gensalt());
 
                     String key = UserCacheConst.USER_PASSWORD_CACHE_KEY+openId;
@@ -194,13 +194,5 @@ public class WeChatController {
         return result;
     }
 
-    private String getCode(){
 
-        StringBuffer sb = new StringBuffer();
-        Random random = new Random();
-        for(int i = 0; i < 8; i++) {
-            sb.append( numberLowerLetterChar.charAt( random.nextInt( numberLowerLetterChar.length() ) ) );
-        }
-        return sb.toString();
-    }
 }
