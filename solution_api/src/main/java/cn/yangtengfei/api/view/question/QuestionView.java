@@ -3,6 +3,7 @@ package cn.yangtengfei.api.view.question;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,8 @@ public class QuestionView implements Serializable {
     private String id;
 
     private String createUserId;
+
+    private Date createTime;
 
     private String createUser;
 
