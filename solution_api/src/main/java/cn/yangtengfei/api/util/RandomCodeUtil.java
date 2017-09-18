@@ -18,8 +18,7 @@ public class RandomCodeUtil {
         for(int i = 0; i < 8; i++) {
             sb.append( numberLowerLetterChar.charAt( random.nextInt( numberLowerLetterChar.length())));
         }
-        String result =  sb.append(date.getTime()).toString();
-        System.out.println("==============="+result);
+        String result =  sb.toString();
         return result;
     }
 }
