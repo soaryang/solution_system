@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.controller.user;
+package cn.yangtengfei.api.controller.server.user;
 
 
 import cn.yangtengfei.api.config.PageResultModel;

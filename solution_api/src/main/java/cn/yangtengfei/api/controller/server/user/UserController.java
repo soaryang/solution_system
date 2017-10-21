@@ -1,12 +1,10 @@
-package cn.yangtengfei.api.controller.user;
+package cn.yangtengfei.api.controller.server.user;
 
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.server.base.BaseController;
 import cn.yangtengfei.api.service.dataService.user.ApiUserService;
-import cn.yangtengfei.api.util.BCrypt;
 import cn.yangtengfei.api.view.user.UserView;
-import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.service.user.UserService;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;

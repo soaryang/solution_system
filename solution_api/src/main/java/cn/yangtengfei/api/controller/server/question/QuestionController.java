@@ -1,8 +1,8 @@
-package cn.yangtengfei.api.controller.question;
+package cn.yangtengfei.api.controller.server.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.server.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;

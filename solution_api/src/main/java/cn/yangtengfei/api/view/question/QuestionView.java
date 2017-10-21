@@ -1,8 +1,10 @@
 package cn.yangtengfei.api.view.question;
 
+import cn.yangtengfei.model.question.Tag;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +28,15 @@ public class QuestionView implements Serializable {
 
     private String name;
 
+    private String describe;
+
     private String tagId;
+
+    List<Tag> tagList;
 
     private String tagName;
 
-    private Integer solutionCount;
+    private Integer solutionCount = 0;
 
     private List<SolutionView> solutionViewList;
 

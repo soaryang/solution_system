@@ -1,15 +1,10 @@
 package cn.yangtengfei.api.filter;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
-import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.server.base.BaseController;
 import cn.yangtengfei.api.service.logicService.user.UserLogicService;
 import cn.yangtengfei.api.util.cont.UserTokenConst;
-import cn.yangtengfei.api.util.sdk.GeetestConfig;
-import cn.yangtengfei.api.util.sdk.GeetestLib;
 import cn.yangtengfei.model.user.User;
-import cn.yangtengfei.regeditCodeUtil.ValidateCode;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 
 @Service
@@ -41,6 +35,9 @@ public class SystemFilter implements HandlerInterceptor {
             String cookieValue = "";
             String url = request.getRequestURI();
             String ip = request.getRemoteAddr();
+
+            String method = request.getMethod();
+            log.info("request method"+method);
             /*if(url.indexOf("/v1/api/captcha")!=-1) {
                 GeetestLib gtSdk = new GeetestLib(GeetestConfig.getGeetest_id(), GeetestConfig.getGeetest_key(), GeetestConfig.isnewfailback());
                 String resStr = "{}";

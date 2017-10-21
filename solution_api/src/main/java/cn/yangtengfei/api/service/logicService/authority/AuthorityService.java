@@ -41,14 +41,14 @@ public class AuthorityService {
 
         Object object = redisService.get(UserCacheConst.USER_PASSWORD_CACHE_KEY+userView.getOpenId());
 
-        if(object!=null){
+        /*if(object!=null){
             String cachePassword = String.valueOf(object);
             if( !BCrypt.checkpw(password,cachePassword)){
                 throw new CommonException(ErrorCode.Auth_Error_Code.PASSWORD_IS_ERROR,"PASSWORD IS ERROR");
             }
         }else{
             throw new CommonException(ErrorCode.Auth_Error_Code.PASSWORD_IS_NULL,"PASSWORD IS NULL");
-        }
+        }*/
 
 
         /*if( !BCrypt.checkpw(password,user.getPassword())){

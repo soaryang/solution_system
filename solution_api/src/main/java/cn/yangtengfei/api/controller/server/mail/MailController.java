@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.controller.mail;
+package cn.yangtengfei.api.controller.server.mail;
 
 import cn.yangtengfei.api.cacheService.user.RegisterCacheService;
 import cn.yangtengfei.api.config.Result;

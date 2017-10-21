@@ -1,10 +1,9 @@
-package cn.yangtengfei.api.controller.authority;
+package cn.yangtengfei.api.controller.server.authority;
 
 
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.server.base.BaseController;
 import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.service.logicService.authority.AuthorityService;
 import cn.yangtengfei.api.util.ErrorCode;
 import cn.yangtengfei.api.util.RandomCodeUtil;
@@ -18,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

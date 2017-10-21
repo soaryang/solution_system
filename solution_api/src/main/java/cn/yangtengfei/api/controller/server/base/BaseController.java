@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.controller.base;
+package cn.yangtengfei.api.controller.server.base;
 
 import cn.yangtengfei.model.user.User;
 

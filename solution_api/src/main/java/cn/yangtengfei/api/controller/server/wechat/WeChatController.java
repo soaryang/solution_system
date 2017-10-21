@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.controller.wechat;
+package cn.yangtengfei.api.controller.server.wechat;
 
 
 import cn.yangtengfei.api.config.RedisService;
@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 @RestController
 @RequestMapping(value = "/wechChat")

@@ -1,8 +1,8 @@
-package cn.yangtengfei.api.controller.question;
+package cn.yangtengfei.api.controller.server.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.controller.base.BaseController;
+import cn.yangtengfei.api.controller.server.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiSolutionService;
 import cn.yangtengfei.api.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
@@ -92,20 +92,20 @@ public class SolutionController extends BaseController {
             /**
              * 文件路径不存在则需要创建文件路径
              */
-            File filePath = new File("F:/temp/image");
+            File filePath = new File("D:/temp/image");
             if (!filePath.exists()) {
                 filePath.mkdirs();
             }
 
             //最终文件名
-            File realFile = new File("F:/temp/image" + File.separator + attach.getOriginalFilename());
+            File realFile = new File("D:/temp/image" + File.separator + attach.getOriginalFilename());
             FileUtils.copyInputStreamToFile(attach.getInputStream(), realFile);
 
             //下面response返回的json格式是editor.md所限制的，规范输出就OK
-            Map<String,Object> map = new HashMap<String,Object>();
-            map.put("login",1);
-            map.put("message","上传成功");
-            map.put("url","http://localhost/image/"+attach.getOriginalFilename());
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("login", 1);
+            map.put("message", "上传成功");
+            map.put("url", "http://localhost/image/" + attach.getOriginalFilename());
             response.getWriter().write(JSON.toJSONString(map));
         } catch (Exception e) {
             try {

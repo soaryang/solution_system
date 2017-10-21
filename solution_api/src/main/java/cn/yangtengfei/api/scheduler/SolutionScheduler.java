@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.scheduler;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.controller.question.SolutionController;
+import cn.yangtengfei.api.controller.server.question.SolutionController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionCountService;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.view.question.QuestionCountView;
