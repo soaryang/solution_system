@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.filter;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
-import cn.yangtengfei.api.controller.server.base.BaseController;
+import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.logicService.user.UserLogicService;
 import cn.yangtengfei.api.util.cont.UserTokenConst;
 import cn.yangtengfei.model.user.User;

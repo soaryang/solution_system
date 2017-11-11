@@ -1,6 +1,6 @@
 package cn.yangtengfei.api.service.dataService.question;
 
-import cn.yangtengfei.api.view.question.SolutionView;
+import cn.yangtengfei.api.server.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.service.question.SolutionService;
 import org.apache.commons.lang3.StringUtils;

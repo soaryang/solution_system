@@ -1,10 +1,10 @@
 package cn.yangtengfei.api.scheduler;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.controller.server.question.SolutionController;
+import cn.yangtengfei.api.server.controller.question.SolutionController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionCountService;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
-import cn.yangtengfei.api.view.question.QuestionCountView;
+import cn.yangtengfei.api.server.view.question.QuestionCountView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.QuestionCount;
 import cn.yangtengfei.util.DateUtils;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -47,7 +46,7 @@ public class SolutionScheduler {
     @Value("${file.hotquestionCachePath}")
     private String hotquestionCachePath;
 
-    @Scheduled(cron="0/30 * * * * ?")
+    //@Scheduled(cron="0/30 * * * * ?")
     public void createHotQuestionCache() {
         logger.info("createQuestionCache------------start");
 
@@ -72,7 +71,7 @@ public class SolutionScheduler {
         }
     }
 
-    @Scheduled(cron = "0/20 * * * * *")
+    //@Scheduled(cron = "0/20 * * * * *")
     public void createNewQuestionCae() {
         logger.info("createQuestionCache------------start");
         Page<Question> questionPage =  apiQuestionService.findAll(0,50);
@@ -92,7 +91,7 @@ public class SolutionScheduler {
         }
     }
 
-    @Scheduled(cron="0/60 * * * * ?")
+    //@Scheduled(cron="0/60 * * * * ?")
     public void restQuestionSolutionCount() {
         logger.info("restQuestionSolutionCount------------start");
         long count = apiQuestionService.findAllCount();

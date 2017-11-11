@@ -2,7 +2,7 @@ package cn.yangtengfei.api.service.dataService.user;
 
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.view.user.RoleView;
+import cn.yangtengfei.api.server.view.user.RoleView;
 import cn.yangtengfei.model.user.Role;
 import cn.yangtengfei.service.user.RoleService;
 import cn.yangtengfei.util.DateUtils;

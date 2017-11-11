@@ -31,7 +31,7 @@ public class WebLogAspect {
 
     ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-    @Pointcut("execution(public * cn.yangtengfei.api.controller..*.*(..))")
+    @Pointcut("execution(public * cn.yangtengfei.api.server.controller..*.*(..))")
     public void webLog(){}
 
     @Before("webLog()")

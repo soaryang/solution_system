@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.service.dataService.question;
 
 
-import cn.yangtengfei.api.view.question.QuestionCountView;
+import cn.yangtengfei.api.server.view.question.QuestionCountView;
 import cn.yangtengfei.model.question.QuestionCount;
 import cn.yangtengfei.service.question.QuestionCountService;
 import org.springframework.beans.BeanUtils;

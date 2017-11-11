@@ -2,7 +2,7 @@ package cn.yangtengfei.api.service.dataService.question;
 
 import cn.yangtengfei.api.cacheService.question.QuestionCacheService;
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.view.question.QuestionView;
+import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.QuestionService;
@@ -32,6 +32,14 @@ public class ApiQuestionService {
 
     @Autowired
     private TagService tagService;
+
+    public String save(String questionName,String describe) {
+        Question question = new Question();
+        question.setName(questionName);
+        question.setDescribe(describe);
+        question = questionService.save(question);
+        return question.getId();
+    }
 
 
     public QuestionView save(QuestionView questionView){
