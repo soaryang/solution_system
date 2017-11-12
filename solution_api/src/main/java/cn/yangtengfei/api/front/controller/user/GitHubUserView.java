@@ -43,13 +43,13 @@ public class GitHubUserView {
     private String disk_usage;
     private String collaborators;
     private String two_factor_authentication;
-    private List<UserPlan> plan;
+    //private List<UserPlan> plan;
 }
 
-@Data
-class UserPlan{
-    private String name;
-    private String space;
-    private String collaborators;
-    private String private_repos;
-}
+//@Data
+//class UserPlan{
+//    private String name;
+//    private String space;
+//    private String collaborators;
+//    private String private_repos;
+//}
