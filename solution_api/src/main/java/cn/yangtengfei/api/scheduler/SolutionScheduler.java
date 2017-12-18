@@ -1,10 +1,10 @@
 package cn.yangtengfei.api.scheduler;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.controller.question.SolutionController;
+import cn.yangtengfei.api.server.controller.question.SolutionController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionCountService;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
-import cn.yangtengfei.api.view.question.QuestionCountView;
+import cn.yangtengfei.api.server.view.question.QuestionCountView;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.QuestionCount;
 import cn.yangtengfei.util.DateUtils;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

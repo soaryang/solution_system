@@ -16,8 +16,9 @@ public class RandomCodeUtil {
         StringBuffer sb = new StringBuffer();
         Random random = new Random();
         for(int i = 0; i < 8; i++) {
-            sb.append( numberLowerLetterChar.charAt( random.nextInt( numberLowerLetterChar.length() ) ) );
+            sb.append( numberLowerLetterChar.charAt( random.nextInt( numberLowerLetterChar.length())));
         }
-        return sb.append(date.getTime()).toString();
+        String result =  sb.toString();
+        return result;
     }
 }

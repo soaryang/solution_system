@@ -39,6 +39,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
 
     public Page<User> findAllOrderByUpdateTimeDesc(int deleteFlg, int page, int pageSize) {
         PageRequest pageRequest = new PageRequest(page, pageSize);

@@ -1,6 +1,6 @@
 package cn.yangtengfei.api.service.dataService.question;
 
-import cn.yangtengfei.api.view.question.TagView;
+import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.TagService;
 import cn.yangtengfei.util.DateUtils;

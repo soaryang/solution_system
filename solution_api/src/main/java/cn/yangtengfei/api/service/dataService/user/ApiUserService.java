@@ -1,8 +1,8 @@
 package cn.yangtengfei.api.service.dataService.user;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.view.user.RoleView;
-import cn.yangtengfei.api.view.user.UserView;
+import cn.yangtengfei.api.server.view.user.RoleView;
+import cn.yangtengfei.api.server.view.user.UserView;
 import cn.yangtengfei.model.user.User;
 import cn.yangtengfei.model.user.UserRole;
 import cn.yangtengfei.model.wechat.WechatUser;
