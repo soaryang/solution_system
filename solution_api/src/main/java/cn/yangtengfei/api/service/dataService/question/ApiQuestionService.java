@@ -7,6 +7,7 @@ import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,9 +48,15 @@ public class ApiQuestionService {
         QuestionView questionView = new QuestionView();
         if(question!=null){
             String tagId = question.getTagId();
-            Tag  tag = tagService.findById(tagId);
+
             BeanUtils.copyProperties(question,questionView);
-            questionView.setTagName(tag.getName());
+            if(StringUtils.isNoneBlank(tagId)){
+                Tag  tag = tagService.findById(tagId);
+                questionView.setTagName(tag.getName());
+            }
+
+
+
         }
         return questionView;
     }

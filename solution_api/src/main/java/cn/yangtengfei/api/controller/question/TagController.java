@@ -11,10 +11,14 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -31,7 +35,8 @@ public class TagController extends BaseController {
     @Autowired
     private StacKOverFlowDataCrwaler stacKOverFlowDataCrwaler;
 
-
+    @Value("${tag.imageFilePath}")
+    private String  imageFilePath;
 
 
 
@@ -51,6 +56,8 @@ public class TagController extends BaseController {
 //        message.setSubject("主题：简单邮件");
 //        message.setText("测试邮件内容");
 //        mailSender.send(message);
+
+        //http://www.cnblogs.com/qiantuwuliang/archive/2009/09/01/1558347.html
 
         String id = request.getParameter("id");
         String name = request.getParameter("name");
@@ -82,13 +89,65 @@ public class TagController extends BaseController {
     }
 
 
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@ModelAttribute TagView tagView, HttpServletRequest request){
-        log.info("保存tag:{}",JSON.toJSONString(tagView));
+    public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request){
+        /*log.info("保存tag:{}",JSON.toJSONString(tagView));
         Result result = new Result();
         tagView = apiTagService.save(tagView);
         result.setCode("200");
+        result.setData(tagView);*/
+        Result result = new Result();
+        TagView tagView = new TagView();
+        String tagName = request.getParameter("tagName");
+
+        tagView.setName(tagName);
+
+        tagView = apiTagService.save(tagView);
+
+        FileOutputStream out = null;
+        try {
+            //String contentType = file.getContentType();
+            String fileName = file.getOriginalFilename();
+            File targetFile = new File(imageFilePath);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+
+            String suffix = fileName.substring(fileName.lastIndexOf("."));
+
+            String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
+
+            String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
+            File dictoryFile = new File(fileDictoryPath);
+            if(!dictoryFile.exists()){
+                dictoryFile.mkdirs();
+            }
+
+            out = new FileOutputStream(imageFilePath+filePath);
+            out.write(file.getBytes());
+
+            tagView.setImagePath(filePath);
+
+            tagView = apiTagService.update(tagView);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(out!=null){
+                try {
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        result.setCode("200");
         result.setData(tagView);
+
         return result;
     }
 

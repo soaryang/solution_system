@@ -3,6 +3,7 @@ package cn.yangtengfei.api.service.dataService.question;
 import cn.yangtengfei.api.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.TagService;
+import cn.yangtengfei.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,14 @@ public class ApiTagService {
             log.info("tag存在,直接返回");
             BeanUtils.copyProperties(tagTemp,tagView);
         }
+        return tagView;
+    }
+
+    public TagView update(TagView tagView){
+        Tag tag = new Tag();
+        BeanUtils.copyProperties(tagView,tag);
+        tag.setUpdateTime(DateUtils.getCurrentDate());
+        tagService.save(tag);
         return tagView;
     }
 

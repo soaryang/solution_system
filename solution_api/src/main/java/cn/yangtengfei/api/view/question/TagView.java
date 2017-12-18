@@ -17,5 +17,7 @@ public class TagView implements Serializable {
 
     private String name;
 
+    private String imagePath;
+
     private int questionCount;
 }
