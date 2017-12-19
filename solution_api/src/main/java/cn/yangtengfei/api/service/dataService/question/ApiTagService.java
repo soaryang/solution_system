@@ -1,5 +1,7 @@
 package cn.yangtengfei.api.service.dataService.question;
 
+import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.TagService;
@@ -23,7 +25,7 @@ public class ApiTagService {
     @Autowired
     private TagService tagService;
 
-    public TagView save(TagView tagView){
+    /*public TagView save(TagView tagView){
         Tag tag = new Tag();
         String name = tagView.getName();
         Tag tagTemp = findByName(name);
@@ -39,6 +41,21 @@ public class ApiTagService {
             BeanUtils.copyProperties(tagTemp,tagView);
         }
         return tagView;
+    }*/
+
+    public TagView  saveTag(String name,String imagePath) throws CommonException {
+        Tag tagTemp = findByName(name);
+        if(tagTemp!=null){
+            throw new CommonException("404","名字已经存在");
+        }
+        Tag tag = new Tag();
+        tag.setUseStatus(0);
+        tag.setImagePath(imagePath);
+        tag = tagService.save(tag);
+        TagView tagView = new TagView();
+        BeanUtils.copyProperties(tag,tagView);
+        return tagView;
+
     }
 
     public TagView update(TagView tagView){
@@ -49,10 +66,19 @@ public class ApiTagService {
         return tagView;
     }
 
-    public void save(String tagName){
-        Tag tag = new Tag();
+    public TagView save(String tagName) throws CommonException {
+        Tag tag = findByName(tagName);
+        if(tag!=null){
+            throw new CommonException("404","名字已经存在");
+        }
+        tag = new Tag();
         tag.setName(tagName);
-        tagService.save(tag);
+        tag.setUseStatus(0);
+        tag = tagService.save(tag);
+
+        TagView tagView = new TagView();
+        BeanUtils.copyProperties(tag,tagView);
+        return tagView;
     }
 
 

@@ -2,6 +2,7 @@ package cn.yangtengfei.api.server.controller.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
@@ -91,20 +92,19 @@ public class TagController extends BaseController {
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request){
+    public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
         /*log.info("保存tag:{}",JSON.toJSONString(tagView));
         Result result = new Result();
         tagView = apiTagService.save(tagView);
         result.setCode("200");
         result.setData(tagView);*/
         Result result = new Result();
-        TagView tagView = new TagView();
         String tagName = request.getParameter("tagName");
+        if(StringUtils.isBlank(tagName)){
+            throw new CommonException("401","tag名称不存在");
+        }
 
-        tagView.setName(tagName);
-
-        tagView = apiTagService.save(tagView);
-
+        TagView tagView = apiTagService.save(tagName);
         FileOutputStream out = null;
         try {
             //String contentType = file.getContentType();
@@ -190,7 +190,7 @@ public class TagController extends BaseController {
                         for(String tag:tagList){
                             Tag tagObject = apiTagService.findByName(tag);
                             if(tagObject==null){
-                                apiTagService.save(tag);
+                                //apiTagService.save(tag);
                             }
                         }
                     }
