@@ -14,8 +14,6 @@
         <groupId>cn.yangtengfei</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
-    <name>solution_api</name>
     <properties>
         <java.version>1.8</java.version>
     </properties>

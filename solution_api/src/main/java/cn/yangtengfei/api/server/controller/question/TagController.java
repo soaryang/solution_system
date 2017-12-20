@@ -104,16 +104,21 @@ public class TagController extends BaseController {
             throw new CommonException("401","tag名称不存在");
         }
 
-        TagView tagView = apiTagService.save(tagName);
+
         FileOutputStream out = null;
         try {
             //String contentType = file.getContentType();
             String fileName = file.getOriginalFilename();
+            if(StringUtils.isBlank(fileName)){
+                throw new CommonException("401","文件不存在");
+            }
+
+            TagView tagView = apiTagService.save(tagName);
+
             File targetFile = new File(imageFilePath);
             if(!targetFile.exists()){
                 targetFile.mkdirs();
             }
-
             String suffix = fileName.substring(fileName.lastIndexOf("."));
 
             String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
@@ -146,7 +151,7 @@ public class TagController extends BaseController {
             }
         }
         result.setCode("200");
-        result.setData(tagView);
+        //result.setData(tagView);
 
         return result;
     }
