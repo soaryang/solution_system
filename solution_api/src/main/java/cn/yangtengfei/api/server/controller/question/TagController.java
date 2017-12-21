@@ -102,10 +102,11 @@ public class TagController extends BaseController {
             throw new CommonException("401","tag名称不存在");
         }
         FileOutputStream out = null;
+        TagView tagView = new TagView();
         try {
             String fileName = file.getOriginalFilename();
+            tagView = apiTagService.findById(tagId);
             if(!StringUtils.isBlank(fileName)){
-                TagView tagView = apiTagService.findById(tagId);
                 File targetFile = new File(imageFilePath);
                 if(!targetFile.exists()){
                     targetFile.mkdirs();
@@ -119,9 +120,12 @@ public class TagController extends BaseController {
                 }
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
+
                 tagView.setImagePath(filePath);
-                apiTagService.update(tagView);
+
             }
+            tagView.setName(tagName);
+            apiTagService.update(tagView);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
