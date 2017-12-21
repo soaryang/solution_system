@@ -89,22 +89,67 @@ public class TagController extends BaseController {
         return  pageResultModel;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Result update(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
+        Result result = new Result();
+        String tagName = request.getParameter("tagName");
+        String tagId = request.getParameter("tagId");
 
+        if(StringUtils.isBlank(tagId)){
+            throw new CommonException("401","tagId不存在");
+        }
+        if(StringUtils.isBlank(tagName)){
+            throw new CommonException("401","tag名称不存在");
+        }
+        FileOutputStream out = null;
+        try {
+            String fileName = file.getOriginalFilename();
+            if(!StringUtils.isBlank(fileName)){
+                TagView tagView = apiTagService.findById(tagId);
+                File targetFile = new File(imageFilePath);
+                if(!targetFile.exists()){
+                    targetFile.mkdirs();
+                }
+                String suffix = fileName.substring(fileName.lastIndexOf("."));
+                String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
+                String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
+                File dictoryFile = new File(fileDictoryPath);
+                if(!dictoryFile.exists()){
+                    dictoryFile.mkdirs();
+                }
+                out = new FileOutputStream(imageFilePath+filePath);
+                out.write(file.getBytes());
+                tagView.setImagePath(filePath);
+                apiTagService.update(tagView);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(out!=null){
+                try {
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        result.setCode("200");
+        return result;
+
+
+
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
-        /*log.info("保存tag:{}",JSON.toJSONString(tagView));
-        Result result = new Result();
-        tagView = apiTagService.save(tagView);
-        result.setCode("200");
-        result.setData(tagView);*/
         Result result = new Result();
         String tagName = request.getParameter("tagName");
         if(StringUtils.isBlank(tagName)){
             throw new CommonException("401","tag名称不存在");
         }
-
-
         FileOutputStream out = null;
         try {
             //String contentType = file.getContentType();
