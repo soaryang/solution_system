@@ -41,8 +41,8 @@ public class TagController extends BaseController {
 
 
 
-    @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public Result findAll(String id){
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    public Result findAll(@PathVariable("id") String id){
         Result result = new Result();
         result.setCode("200");
         result.setData(apiTagService.findById(id));
