@@ -7,6 +7,7 @@ import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
+import cn.yangtengfei.util.ImageUtil;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -106,23 +107,28 @@ public class TagController extends BaseController {
         try {
             String fileName = file.getOriginalFilename();
             tagView = apiTagService.findById(tagId);
+            File targetFile = new File(imageFilePath);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+
+            String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
+            File dictoryFile = new File(fileDictoryPath);
+            if(!dictoryFile.exists()){
+                dictoryFile.mkdirs();
+            }
+
             if(!StringUtils.isBlank(fileName)){
-                File targetFile = new File(imageFilePath);
-                if(!targetFile.exists()){
-                    targetFile.mkdirs();
-                }
+
                 String suffix = fileName.substring(fileName.lastIndexOf("."));
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
-                String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
-                File dictoryFile = new File(fileDictoryPath);
-                if(!dictoryFile.exists()){
-                    dictoryFile.mkdirs();
-                }
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
-
                 tagView.setImagePath(filePath);
 
+            }else{
+                String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";
+                ImageUtil.createTextImage(tagName,imageFilePath+filePath);
             }
             tagView.setName(tagName);
             apiTagService.update(tagView);
