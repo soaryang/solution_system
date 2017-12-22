@@ -10,8 +10,8 @@ import java.io.IOException;
 public class ImageUtil {
 
     public static void createTextImage(String text,String path){
-        int imageWidth = 150;  //图片的宽度
-        int imageHeight = 150; //图片的高度
+        int imageWidth = 300;  //图片的宽度
+        int imageHeight = 300; //图片的高度
         BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
         //设置图片的背景色
         Graphics2D main = image.createGraphics();
@@ -36,8 +36,8 @@ public class ImageUtil {
 
 
         Graphics title2 = image.createGraphics();
-        title2.setColor(Color.BLACK);
-        Font titleFont2 = new Font("Arial", Font.BOLD, 50);
+        title2.setColor(new Color(	65,105,225));
+        Font titleFont2 = new Font("Arial", Font.PLAIN, 40);
         title2.setFont(titleFont2);
         FontMetrics fm2 = title2.getFontMetrics();
         int stringWidth2 = fm2.stringWidth(text);

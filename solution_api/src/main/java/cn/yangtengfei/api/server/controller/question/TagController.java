@@ -164,30 +164,31 @@ public class TagController extends BaseController {
         try {
             //String contentType = file.getContentType();
             String fileName = file.getOriginalFilename();
-            if(StringUtils.isBlank(fileName)){
-                throw new CommonException("401","文件不存在");
-            }
-
             TagView tagView = apiTagService.save(tagName);
 
             File targetFile = new File(imageFilePath);
             if(!targetFile.exists()){
                 targetFile.mkdirs();
             }
-            String suffix = fileName.substring(fileName.lastIndexOf("."));
-
-            String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
-
             String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
             File dictoryFile = new File(fileDictoryPath);
             if(!dictoryFile.exists()){
                 dictoryFile.mkdirs();
             }
+            if(!StringUtils.isBlank(fileName)){
+                String suffix = fileName.substring(fileName.lastIndexOf("."));
+                String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
 
-            out = new FileOutputStream(imageFilePath+filePath);
-            out.write(file.getBytes());
 
-            tagView.setImagePath(filePath);
+                out = new FileOutputStream(imageFilePath+filePath);
+                out.write(file.getBytes());
+
+                tagView.setImagePath(filePath);
+            }else{
+                String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";
+                tagView.setImagePath(filePath);
+                ImageUtil.createTextImage(tagName,imageFilePath+filePath);
+            }
 
             tagView = apiTagService.update(tagView);
 
