@@ -24,7 +24,7 @@ public class ImageUtil {
             Graphics title = image.createGraphics();
             title.setColor(Color.lightGray);
             //设置字体
-            Font titleFont = new Font("TimesRoman", Font.CENTER_BASELINE, 20);
+            Font titleFont = new Font("微软雅黑", Font.CENTER_BASELINE, 20);
             title.setFont(titleFont);
             FontMetrics fm = title.getFontMetrics();
             int stringWidth = fm.stringWidth("51结果");
@@ -37,7 +37,7 @@ public class ImageUtil {
 
         Graphics title2 = image.createGraphics();
         title2.setColor(new Color(	65,105,225));
-        Font titleFont2 = new Font("Arial", Font.PLAIN, 40);
+        Font titleFont2 = new Font("微软雅黑", Font.PLAIN, 40);
         title2.setFont(titleFont2);
         FontMetrics fm2 = title2.getFontMetrics();
         int stringWidth2 = fm2.stringWidth(text);
