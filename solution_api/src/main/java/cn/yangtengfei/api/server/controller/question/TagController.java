@@ -128,6 +128,7 @@ public class TagController extends BaseController {
 
             }else{
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";
+                tagView.setImagePath(filePath);
                 ImageUtil.createTextImage(tagName,imageFilePath+filePath);
             }
             tagView.setName(tagName);
