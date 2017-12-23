@@ -51,7 +51,7 @@ public class TagController extends BaseController {
     @RequestMapping(value = "/setIndexPage", method = RequestMethod.GET)
     public Result setIndexPage() throws IOException {
         Result result = new Result();
-        Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,20);
+        Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,9);
         List<Tag> tagList = tagPage.getContent();
         List<TagView> tagViewList = new ArrayList<TagView>();
         if(ListUtils.checkListIsNotNull(tagList)){
