@@ -8,10 +8,13 @@ import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.util.ImageUtil;
+import cn.yangtengfei.util.ListUtils;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +44,35 @@ public class TagController extends BaseController {
     @Value("${tag.imageFilePath}")
     private String  imageFilePath;
 
+    @Value("${file.tagFilecacheFath}")
+    private String tagFilecacheFath;
 
+
+    @RequestMapping(value = "/setIndexPage", method = RequestMethod.GET)
+    public Result setIndexPage() throws IOException {
+        Result result = new Result();
+        Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,20);
+        List<Tag> tagList = tagPage.getContent();
+        List<TagView> tagViewList = new ArrayList<TagView>();
+        if(ListUtils.checkListIsNotNull(tagList)){
+            for(Tag tag:tagPage.getContent()){
+                TagView tagView = new TagView();
+                BeanUtils.copyProperties(tag,tagView);
+                tagViewList.add(tagView);
+            }
+            FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
+
+            //tagViewList = LogicBeanUtil.copyListToAimList(page.getContent(),tagViewList);
+            //log.info("tagViewList:{}",JSON.toJSONString(tagViewList));
+            //try {
+            //    FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
+            //} catch (IOException e) {
+            //    e.printStackTrace();
+            //}
+        }
+        result.setCode("200");
+        return result;
+    }
 
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
     public Result findAll(@PathVariable("id") String id){
