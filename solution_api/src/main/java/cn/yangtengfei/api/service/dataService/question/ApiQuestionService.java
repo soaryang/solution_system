@@ -31,6 +31,8 @@ public class ApiQuestionService {
     @Autowired
     private SolutionCacheService solutionCacheService;
 
+
+
     @Autowired
     private TagService tagService;
 
@@ -46,7 +48,8 @@ public class ApiQuestionService {
     public QuestionView save(QuestionView questionView){
         Question question = new Question();
         BeanUtils.copyProperties(questionView,question);
-        question = questionService.save(question);
+        //question = questionService.save(question);
+        question = questionCacheService.save(question);
         questionView.setId(question.getId());
         return questionView;
     }
