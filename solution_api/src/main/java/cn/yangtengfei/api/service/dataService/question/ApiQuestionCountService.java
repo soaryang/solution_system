@@ -36,7 +36,6 @@ public class ApiQuestionCountService {
     }
 
     public Page<QuestionCount> findAllOrderByFollowCount(int page, int pageSize) {
-        PageRequest pageRequest = new PageRequest(page, pageSize);
         return questionCountService.findAllOrderByFollowCount(page,pageSize);
     }
 

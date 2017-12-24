@@ -60,11 +60,10 @@ public class ApiQuestionService {
             BeanUtils.copyProperties(question,questionView);
             if(StringUtils.isNoneBlank(tagId)){
                 Tag  tag = tagService.findById(tagId);
-                questionView.setTagName(tag.getName());
+                if(tag!=null){
+                    questionView.setTagName(tag.getName());
+                }
             }
-
-
-
         }
         return questionView;
     }
