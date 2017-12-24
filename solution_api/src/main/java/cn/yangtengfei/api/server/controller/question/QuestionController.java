@@ -34,6 +34,7 @@ public class QuestionController extends BaseController {
     @RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
     public Result newQuestion(){
         Result result = new Result();
+        sechedulerService.createNewQuestionCache();
         result.setCode("200");
         return  result;
     }

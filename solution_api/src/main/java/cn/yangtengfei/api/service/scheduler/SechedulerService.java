@@ -60,23 +60,25 @@ public class SechedulerService {
 
                 FileUtils.writeStringToFile(new File(hotquestionCachePath), JSON.toJSONString(dataMap), "UTF-8");
             }
+        }
+    }
 
-
-
-
-
-            /*List<Question> questionList = apiQuestionService.findQuestionByIds(ids);
-            File file = new File(hotquestionCachePath);
+    public void createNewQuestionCache() {
+        log.info("createQuestionCache------------start");
+        Page<Question> questionPage =  apiQuestionService.findAll(0,50);
+        log.info("questionPage:{}",questionPage.getTotalElements());
+        if(questionPage.getTotalElements()!=0){
+            File file = new File(newquestionCachePath);
             Map<String,Object> dataMap = new HashMap<String,Object>();
             dataMap.put("count",apiQuestionService.findAllCount());
-            dataMap.put("questionList",apiQuestionService.findQuestionListWithTags(questionList));
+            dataMap.put("questionList",apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
             String fileContent = JSON.toJSONString(dataMap);
-            logger.info("fileContent:{}",fileContent);
+            log.info("fileContent:{}",fileContent);
             try {
                 org.apache.commons.io.FileUtils.writeStringToFile(file, fileContent, "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 
