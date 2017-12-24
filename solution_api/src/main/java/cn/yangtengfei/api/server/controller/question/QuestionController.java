@@ -5,13 +5,16 @@ import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.server.view.question.QuestionView;
+import cn.yangtengfei.api.service.scheduler.SechedulerService;
 import cn.yangtengfei.model.question.Question;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/5/28 0028.
@@ -23,6 +26,25 @@ public class QuestionController extends BaseController {
 
     @Autowired
     private ApiQuestionService apiQuestionService;
+
+
+    @Autowired
+    private SechedulerService sechedulerService;
+
+    @RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
+    public Result newQuestion(){
+        Result result = new Result();
+        result.setCode("200");
+        return  result;
+    }
+
+    @RequestMapping(value = "/hostQuestion", method = RequestMethod.GET)
+    public Result hostQuestion() throws IOException {
+        Result result = new Result();
+        sechedulerService.createHotQuestionCache();
+        result.setCode("200");
+        return  result;
+    }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize, String tagId){
