@@ -5,11 +5,13 @@ import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.api.server.view.question.SolutionView;
+import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.Tag;
+import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -43,12 +45,29 @@ public class QuestionNoAuthorityController {
     @Autowired
     private SolutionCacheService solutionCacheService;
 
+
     @RequestMapping(value = "/listById/{pageNo}/{pageSize}/{tagId}", method = RequestMethod.GET)
     public PageResultModel findAllByTagId(@PathVariable("tagId") String tagId,@PathVariable("pageNo")Integer pageNo , @PathVariable("pageSize")Integer pageSize){
         PageResultModel pageResultModel = new PageResultModel();
         Page<Question> questionPage = apiQuestionService.findAllPageByTagId(pageNo-1,pageSize,tagId);
+
+
+
+        List<Question> questionList = questionPage.getContent();
+        if(ListUtils.checkListIsNotNull(questionList)){
+            TagView tagView =  apiTagService.findById(tagId);
+            QuestionView questionView = new QuestionView();
+            List<QuestionView> questionViewList = new ArrayList<>();
+            for(Question question:questionList){
+                BeanUtils.copyProperties(question,questionView);
+                questionView.setTagName(tagView.getName());
+                questionViewList.add(questionView);
+            }
+            pageResultModel.setRows(questionViewList);
+        }
+
         pageResultModel.setTotal(questionPage.getTotalElements());
-        pageResultModel.setRows(questionPage.getContent());
+
         return  pageResultModel;
     }
 
