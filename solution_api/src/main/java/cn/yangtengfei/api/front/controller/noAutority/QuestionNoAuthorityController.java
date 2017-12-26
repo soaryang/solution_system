@@ -56,9 +56,10 @@ public class QuestionNoAuthorityController {
         List<Question> questionList = questionPage.getContent();
         if(ListUtils.checkListIsNotNull(questionList)){
             TagView tagView =  apiTagService.findById(tagId);
-            QuestionView questionView = new QuestionView();
+
             List<QuestionView> questionViewList = new ArrayList<>();
             for(Question question:questionList){
+                QuestionView questionView = new QuestionView();
                 BeanUtils.copyProperties(question,questionView);
                 questionView.setTagName(tagView.getName());
                 questionViewList.add(questionView);
