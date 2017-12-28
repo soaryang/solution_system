@@ -104,7 +104,7 @@ public class TagController extends BaseController {
         }else  if(!StringUtils.isEmpty(id) && StringUtils.isEmpty(name)){
             questionTypes = apiTagService.findByUseStatusAndId(useStatus,id,start,pageSize);
         }else  if(StringUtils.isEmpty(id) && !StringUtils.isEmpty(name)){
-            questionTypes = apiTagService.findByUseStatusAndNameLike(useStatus,name,start,pageSize);
+            questionTypes = apiTagService.findByUseStatusAndNameOrderByUpdateTimeDesc(useStatus,name,start,pageSize);
         }else {
             questionTypes = apiTagService.findByUseStatusAndIdAndNameLike(useStatus,id,name,start,pageSize);
         }
