@@ -42,7 +42,7 @@ public class TagNoAuthorityController {
 
     @RequestMapping(value = "/page/{pageNo}/{size}", method = RequestMethod.GET)
     public PageResultModel findAll(@PathVariable("pageNo") Integer pageNo, @PathVariable("size") Integer size){
-        int useStatus = 0;
+        int useStatus = 1;
         int start = pageNo-1;
         PageResultModel pageResultModel = new PageResultModel();
         Page<Tag> questionTypes = null;
