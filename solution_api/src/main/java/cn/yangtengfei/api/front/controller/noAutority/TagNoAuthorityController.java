@@ -13,8 +13,10 @@ import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,12 +40,17 @@ public class TagNoAuthorityController {
     @Autowired
     private ApiTagService apiTagService;
 
-    @Autowired
-    private ApiQuestionService apiQuestionService;
-
-    @Autowired
-    private SolutionCacheService solutionCacheService;
-
+    @RequestMapping(value = "/page/{pageNo}/{size}", method = RequestMethod.GET)
+    public PageResultModel findAll(@PathVariable("pageNo") Integer pageNo, @PathVariable("size") Integer size){
+        int useStatus = 0;
+        int start = pageNo-1;
+        PageResultModel pageResultModel = new PageResultModel();
+        Page<Tag> questionTypes = null;
+        questionTypes = apiTagService.findByUseStatus(useStatus,start,size);
+        pageResultModel.setTotal(questionTypes.getTotalElements());
+        pageResultModel.setRows(questionTypes.getContent());
+        return  pageResultModel;
+    }
 
     @RequestMapping(value = "/{tagId}", method = RequestMethod.GET)
     public Result findAllByTagId(@PathVariable("tagId") String tagId){
