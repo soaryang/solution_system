@@ -85,7 +85,7 @@ public class QuestionNoAuthorityController {
     public Result findById(String id){
         Result result = new Result();
         QuestionView questionView = apiQuestionService.findQuestionViewById(id);
-        if(questionView!=null){
+        /*if(questionView!=null){
             List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
             List<SolutionView> solutionViewList = new ArrayList<>();
             for(Solution solution:solutionList){
@@ -94,7 +94,7 @@ public class QuestionNoAuthorityController {
                 solutionViewList.add(solutionView);
             }
             questionView.setSolutionViewList(solutionViewList);
-        }
+        }*/
         result.setCode("200");
         result.setMessage("OK");
         result.setData(questionView);
