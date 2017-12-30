@@ -5,6 +5,8 @@ import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.api.server.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
+import cn.yangtengfei.util.ListUtils;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,15 @@ public class SolutionNoAuthorityController {
         Result result = new Result();
         List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionId,0);
         List<SolutionView> solutionViewList = new ArrayList<>();
-        for(Solution solution:solutionList){
-            SolutionView solutionView = new SolutionView();
-            BeanUtils.copyProperties(solution,solutionView);
-            solutionViewList.add(solutionView);
+        if(ListUtils.checkListIsNotNull(solutionList)){
+            for(Solution solution:solutionList){
+                SolutionView solutionView = new SolutionView();
+                BeanUtils.copyProperties(solution,solutionView);
+                solutionViewList.add(solutionView);
+            }
+        }else{
+            log.info("solutionList:{}", JSON.toJSONString(solutionList));
+            log.info("没有获取到解决方案信息");
         }
         result.setCode("200");
         result.setMessage("OK");
