@@ -32,7 +32,7 @@ public class SolutionNoAuthorityController {
 
     @RequestMapping(value = "/findQuetionId/{questionId}", method = RequestMethod.GET)
     public Result findById(@PathVariable("questionId") String  questionId){
-        log.info("-----------------------通过问题编号获取解决方案--------------------");
+        log.info("-----------------------通过问题编号:questionId:{}获取解决方案--------------------",questionId);
         Result result = new Result();
         List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionId,0);
         List<SolutionView> solutionViewList = new ArrayList<>();
