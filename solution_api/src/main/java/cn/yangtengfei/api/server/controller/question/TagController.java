@@ -61,14 +61,6 @@ public class TagController extends BaseController {
                 tagViewList.add(tagView);
             }
             FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
-
-            //tagViewList = LogicBeanUtil.copyListToAimList(page.getContent(),tagViewList);
-            //log.info("tagViewList:{}",JSON.toJSONString(tagViewList));
-            //try {
-            //    FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
-            //} catch (IOException e) {
-            //    e.printStackTrace();
-            //}
         }
         result.setCode("200");
         return result;
@@ -127,6 +119,7 @@ public class TagController extends BaseController {
         Result result = new Result();
         String tagName = request.getParameter("tagName");
         String tagId = request.getParameter("tagId");
+        String describe = request.getParameter("describe");
 
         if(StringUtils.isBlank(tagId)){
             throw new CommonException("401","tagId不存在");
@@ -164,6 +157,7 @@ public class TagController extends BaseController {
                 ImageUtil.createTextImage(tagName,imageFilePath+filePath);
             }
             tagView.setName(tagName);
+            tagView.setDescribe(describe);
             apiTagService.update(tagView);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -190,6 +184,7 @@ public class TagController extends BaseController {
     public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
         Result result = new Result();
         String tagName = request.getParameter("tagName");
+        String describe = request.getParameter("describe");
         if(StringUtils.isBlank(tagName)){
             throw new CommonException("401","tag名称不存在");
         }
@@ -198,6 +193,8 @@ public class TagController extends BaseController {
             //String contentType = file.getContentType();
             String fileName = file.getOriginalFilename();
             TagView tagView = apiTagService.save(tagName);
+
+            tagView.setDescribe(describe);
 
             File targetFile = new File(imageFilePath);
             if(!targetFile.exists()){
@@ -222,7 +219,6 @@ public class TagController extends BaseController {
                 tagView.setImagePath(filePath);
                 ImageUtil.createTextImage(tagName,imageFilePath+filePath);
             }
-
             tagView = apiTagService.update(tagView);
 
         } catch (FileNotFoundException e) {

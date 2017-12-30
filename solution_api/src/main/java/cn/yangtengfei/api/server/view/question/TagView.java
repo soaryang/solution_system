@@ -19,6 +19,8 @@ public class TagView implements Serializable {
 
     private String imagePath;
 
+    private String describe;
+
     /**未使用：0 ; 使用：1 ；禁用：2*/
     private Integer useStatus;
 
