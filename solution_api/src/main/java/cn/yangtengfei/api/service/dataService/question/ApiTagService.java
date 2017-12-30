@@ -106,6 +106,9 @@ public class ApiTagService {
     public Page<Tag> findByUseStatusAndNameLike(int status,String name,int page, int pageSize) {
         return tagService.findByUseStatusAndNameLike(status,name,page,pageSize);
     }
+    public Page<Tag> findByUseStatusAndNameOrderByUpdateTimeDesc(int status,String name,int page, int pageSize) {
+        return tagService.findByUseStatusAndNameOrderByUpdateTimeDesc(status,name,page,pageSize);
+    }
 
     public Page<Tag> findByUseStatusAndId(int status,String id,int page, int pageSize) {
         return tagService.findByUseStatusAndId(status,id,page,pageSize);

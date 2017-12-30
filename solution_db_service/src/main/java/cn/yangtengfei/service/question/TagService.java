@@ -40,6 +40,11 @@ public class TagService {
         return tagRepository.findByUseStatusAndNameLikeOrderByUpdateTimeDesc(useStatus,name, pageRequest);
     }
 
+    public Page<Tag> findByUseStatusAndNameOrderByUpdateTimeDesc(int useStatus,String name,int page, int pageSize) {
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+        return tagRepository.findByUseStatusAndNameOrderByUpdateTimeDesc(useStatus,name, pageRequest);
+    }
+
     public Page<Tag> findByUseStatusAndId(int useStatus,String id,int page, int pageSize) {
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return tagRepository.findByUseStatusAndIdOrderByUpdateTimeDesc(useStatus,id, pageRequest);

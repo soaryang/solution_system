@@ -5,10 +5,13 @@ import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.api.server.view.question.SolutionView;
+import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
+import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.Tag;
+import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +45,33 @@ public class QuestionNoAuthorityController {
     @Autowired
     private SolutionCacheService solutionCacheService;
 
+
+    @RequestMapping(value = "/listById/{pageNo}/{pageSize}/{tagId}", method = RequestMethod.GET)
+    public PageResultModel findAllByTagId(@PathVariable("tagId") String tagId,@PathVariable("pageNo")Integer pageNo , @PathVariable("pageSize")Integer pageSize){
+        PageResultModel pageResultModel = new PageResultModel();
+        Page<Question> questionPage = apiQuestionService.findAllPageByTagId(pageNo-1,pageSize,tagId);
+
+
+
+        List<Question> questionList = questionPage.getContent();
+        if(ListUtils.checkListIsNotNull(questionList)){
+            TagView tagView =  apiTagService.findById(tagId);
+
+            List<QuestionView> questionViewList = new ArrayList<>();
+            for(Question question:questionList){
+                QuestionView questionView = new QuestionView();
+                BeanUtils.copyProperties(question,questionView);
+                questionView.setTagName(tagView.getName());
+                questionViewList.add(questionView);
+            }
+            pageResultModel.setRows(questionViewList);
+        }
+
+        pageResultModel.setTotal(questionPage.getTotalElements());
+
+        return  pageResultModel;
+    }
+
     @RequestMapping(value = "/page/{tagName}", method = RequestMethod.GET)
     public PageResultModel findAllByTagName(@PathVariable("tagName") String tagName){
         PageResultModel pageResultModel = new PageResultModel();
@@ -55,7 +85,7 @@ public class QuestionNoAuthorityController {
     public Result findById(String id){
         Result result = new Result();
         QuestionView questionView = apiQuestionService.findQuestionViewById(id);
-        if(questionView!=null){
+        /*if(questionView!=null){
             List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
             List<SolutionView> solutionViewList = new ArrayList<>();
             for(Solution solution:solutionList){
@@ -64,7 +94,7 @@ public class QuestionNoAuthorityController {
                 solutionViewList.add(solutionView);
             }
             questionView.setSolutionViewList(solutionViewList);
-        }
+        }*/
         result.setCode("200");
         result.setMessage("OK");
         result.setData(questionView);
