@@ -3,6 +3,7 @@ package cn.yangtengfei.api.front.controller.noAutority;
 import cn.yangtengfei.api.front.controller.user.GitHubUserView;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +31,10 @@ public class GitHubController {
     }*/
 
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public void  RegisteredByGithub(HttpServletRequest request){
-        String userInfo = request.getParameter("avatar_url");
-        log.info("userInfo:{}",userInfo);
+    public void  RegisteredByGithub(HttpServletRequest request,@RequestBody GitHubUserView gitHubUserView){
+        String avatar_url = request.getParameter("avatar_url");
+        log.info("avatar_url:{}",avatar_url);
+        log.info("userInfo:{}",JSON.toJSONString(gitHubUserView));
         //GitHubUserView gitHubUserView = JSON.parseObject(userInfo,GitHubUserView.class);
         //log.info(JSON.toJSONString(gitHubUserView));
     }
