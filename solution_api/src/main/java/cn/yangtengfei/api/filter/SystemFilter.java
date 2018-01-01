@@ -37,7 +37,8 @@ public class SystemFilter implements HandlerInterceptor {
             String ip = request.getRemoteAddr();
 
             String method = request.getMethod();
-            log.info("request method"+method);
+            log.info("request url:"+url);
+            log.info("request method:"+method);
             /*if(url.indexOf("/v1/api/captcha")!=-1) {
                 GeetestLib gtSdk = new GeetestLib(GeetestConfig.getGeetest_id(), GeetestConfig.getGeetest_key(), GeetestConfig.isnewfailback());
                 String resStr = "{}";
