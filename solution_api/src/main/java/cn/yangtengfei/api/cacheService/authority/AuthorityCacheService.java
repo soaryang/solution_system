@@ -73,7 +73,8 @@ public class AuthorityCacheService {
     public void setUserNickKeyIntoCookie(HttpServletResponse response,String name,int time) throws UnsupportedEncodingException {
         Cookie nickCookie = new Cookie(UserTokenConst.COOKIE_NAME, URLEncoder.encode(name, "UTF-8") );
         nickCookie.setMaxAge(3600*24*30);
-        nickCookie.setPath("/");
+        //nickCookie.setPath("/");
+        nickCookie.setDomain(".yangtengfei.cn");
         response.addCookie(nickCookie);
     }
 

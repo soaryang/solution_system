@@ -1,4 +1,4 @@
-package cn.yangtengfei.model.wechat;
+package cn.yangtengfei.model.user;
 
 
 import cn.yangtengfei.baseModel.BaseModel;

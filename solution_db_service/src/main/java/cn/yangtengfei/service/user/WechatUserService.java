@@ -1,7 +1,7 @@
-package cn.yangtengfei.service.wechat;
+package cn.yangtengfei.service.user;
 
 
-import cn.yangtengfei.model.wechat.WechatUser;
+import cn.yangtengfei.model.user.WechatUser;
 import cn.yangtengfei.repository.user.WechatRepostitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
