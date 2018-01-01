@@ -1,6 +1,7 @@
 package cn.yangtengfei.api.front.controller.noAutority;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
+import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.front.controller.user.GitHubUserView;
 import cn.yangtengfei.api.server.view.user.UserView;
@@ -53,10 +54,7 @@ public class GitHubController {
     private ApiGitHubUserService apiGitHubUserService;
 
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public void  RegisteredByGithub(HttpServletRequest request,HttpServletResponse response) throws CommonException {
-        //String login = request.getParameter("login");
-        //String id = request.getParameter("id");
-        //String avatar_url = request.getParameter("avatar_url");
+    public Result RegisteredByGithub(HttpServletRequest request, HttpServletResponse response) throws CommonException {
         String login=request.getParameter("login");log.info("========="+login);
         String id=request.getParameter("id");log.info("========="+id);
         String avatar_url=request.getParameter("avatar_url");log.info("========="+avatar_url);
@@ -111,16 +109,23 @@ public class GitHubController {
             user.setUpdateTime(currentDate);
             user = userService.save(user);
             gitHubUserView.setUserId(user.getId());
-            apiGitHubUserService.save(gitHubUserView);
+            gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
         }else{
-            apiGitHubUserService.save(gitHubUserView);
+            gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
         }
 
-        try {
+        Result result = new Result();
+        result.setCode("200");
+        result.setData(gitHubUserInfo);
+        return result;
+
+
+
+        /*try {
             authorityCacheService.setUserInfoIntoCookie(response,gitHubUserView.getUserId(),gitHubUserView.getLogin(),gitHubUserView.getAvatar_url());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         //log.info("avatar_url:{}",avatar_url);
