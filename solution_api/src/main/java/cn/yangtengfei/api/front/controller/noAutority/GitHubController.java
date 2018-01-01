@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/v1")
 public class GitHubController {
 
-    @RequestMapping(value="/github/vaild",method = RequestMethod.GET)
+    /*@RequestMapping(value="/github/vaild",method = RequestMethod.GET)
     public String  RegisteredByGithub(String code){
         log.info("================code:{}",code);
 
@@ -27,6 +27,14 @@ public class GitHubController {
     public String   nodeHttpPost(GitHubUserView gitHubUserView){
         log.info("gitHubUserView:{}",JSON.toJSONString(gitHubUserView));
         return JSON.toJSONString(gitHubUserView);
+    }*/
+
+    @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
+    public void  RegisteredByGithub(HttpServletRequest request){
+        String userInfo = request.getParameter("userInfo");
+        log.info("userInfo:{}",userInfo);
+        GitHubUserView gitHubUserView = JSON.parseObject(userInfo,GitHubUserView.class);
+        log.info(JSON.toJSONString(gitHubUserView));
     }
 
 }

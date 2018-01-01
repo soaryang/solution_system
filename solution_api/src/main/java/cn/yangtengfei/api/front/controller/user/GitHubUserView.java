@@ -2,6 +2,7 @@ package cn.yangtengfei.api.front.controller.user;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,25 +32,24 @@ public class GitHubUserView {
     private String email;
     private String hireable;
     private String bio;;
-    private String public_repos;
-    private String public_gists;
-    private String followers;
-    private String following;
-    private String created_at;
-    private String updated_at;
-    private String private_gists;
-    private String total_private_repos;
-    private String owned_private_repos;
-    private String disk_usage;
-    private String collaborators;
-    private String two_factor_authentication;
-    //private List<UserPlan> plan;
+    private int public_repos;
+    private int public_gists;
+    private int followers;
+    private int following;
+    private Date created_at;
+    private Date updated_at;
+    private int private_gists;
+    private int total_private_repos;
+    private int owned_private_repos;
+    private int disk_usage;
+    private int collaborators;
+    private boolean two_factor_authentication;
+    private List<UserPlan> plan;
 }
 
-//@Data
-//class UserPlan{
-//    private String name;
-//    private String space;
-//    private String collaborators;
-//    private String private_repos;
-//}
+@Data class UserPlan{
+    private String name;
+    private String space;
+    private int collaborators;
+    private int private_repos;
+}
