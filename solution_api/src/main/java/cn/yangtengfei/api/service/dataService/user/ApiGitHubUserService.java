@@ -15,6 +15,10 @@ public class ApiGitHubUserService {
     @Autowired
     private GitHubUserInfoService gitHubUserInfoService;
 
+    public GitHubUserInfo findById(String id){
+        return gitHubUserInfoService.findById(id);
+    }
+
     public GitHubUserInfo save(GitHubUserView gitHubUserView){
         GitHubUserInfo gitHubUserInfo = new GitHubUserInfo();
         BeanUtils.copyProperties(gitHubUserView,gitHubUserInfo);

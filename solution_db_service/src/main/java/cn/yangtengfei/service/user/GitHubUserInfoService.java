@@ -17,6 +17,11 @@ public class GitHubUserInfoService {
     @Autowired
     private GitHubUserInfoRepository gitHubUserInfoRepository;
 
+
+    public GitHubUserInfo findById(String id){
+        return gitHubUserInfoRepository.findOne(id);
+    }
+
     public GitHubUserInfo save(GitHubUserInfo gitHubUserInfo){
         GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findOne(gitHubUserInfo.getId());
         Date date = new Date();

@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class GitHubUserView {
     private String login;
+    private String userId;
     private String id;;
     private String avatar_url;
     private String gravatar_id;

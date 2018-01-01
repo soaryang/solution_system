@@ -1,8 +1,14 @@
 package cn.yangtengfei.api.front.controller.noAutority;
 
+import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.front.controller.user.GitHubUserView;
+import cn.yangtengfei.api.server.view.user.UserView;
 import cn.yangtengfei.api.service.dataService.user.ApiGitHubUserService;
+import cn.yangtengfei.model.user.GitHubUserInfo;
+import cn.yangtengfei.model.user.User;
+import cn.yangtengfei.service.user.UserService;
+import cn.yangtengfei.util.DateUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 
 @Slf4j
@@ -35,10 +44,16 @@ public class GitHubController {
     }*/
 
     @Autowired
+    private AuthorityCacheService authorityCacheService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
     private ApiGitHubUserService apiGitHubUserService;
 
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public void  RegisteredByGithub(HttpServletRequest request) throws CommonException {
+    public void  RegisteredByGithub(HttpServletRequest request,HttpServletResponse response) throws CommonException {
         //String login = request.getParameter("login");
         //String id = request.getParameter("id");
         //String avatar_url = request.getParameter("avatar_url");
@@ -83,15 +98,29 @@ public class GitHubController {
         if(StringUtils.isBlank(id) || StringUtils.isBlank(avatar_url) || StringUtils.isBlank(login)){
             throw new CommonException("401","用户信息不完整");
         }
+
+        GitHubUserInfo gitHubUserInfo = apiGitHubUserService.findById(id);
         GitHubUserView gitHubUserView = new GitHubUserView();
         gitHubUserView.setId(id);
         gitHubUserView.setAvatar_url(avatar_url);
         gitHubUserView.setLogin(login);
+        Date currentDate =  DateUtils.getCurrentDate();
+        if(gitHubUserInfo!=null){
+            User user = new User();
+            user.setCreateTime(currentDate);
+            user.setUpdateTime(currentDate);
+            user = userService.save(user);
+            gitHubUserView.setUserId(user.getId());
+            apiGitHubUserService.save(gitHubUserView);
+        }else{
+            apiGitHubUserService.save(gitHubUserView);
+        }
 
-        apiGitHubUserService.save(gitHubUserView);
-
-
-
+        try {
+            authorityCacheService.setUserInfoIntoCookie(response,gitHubUserView.getUserId(),gitHubUserView.getLogin(),gitHubUserView.getAvatar_url());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
 
         //log.info("avatar_url:{}",avatar_url);

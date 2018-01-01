@@ -11,6 +11,8 @@ import java.util.List;
 public class GitHubUserInfo  extends BaseModel {
 
     private String login;
+
+    private String userId;
     private String id;;
     private String avatar_url;
     private String gravatar_id;

@@ -53,7 +53,7 @@ public class AuthorityService {
         /*if( !BCrypt.checkpw(password,user.getPassword())){
             throw new CommonException(ErrorCode.Auth_Error_Code.PASSWORD_IS_ERROR,"PASSWORD IS ERROR");
         }*/
-        authorityCacheService.setUserInfoIntoCookie(response,user);
+        authorityCacheService.setAdminUserInfoIntoCookie(response,user);
         return user;
     }
 

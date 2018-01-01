@@ -50,10 +50,18 @@ public class AuthorityCacheService {
         return null;
     }
 
-    public void setUserInfoIntoCookie(HttpServletResponse response,User user) throws UnsupportedEncodingException {
+    public void setAdminUserInfoIntoCookie(HttpServletResponse response,User user) throws UnsupportedEncodingException {
         int time = 3600*3;
         setAuthKeyIntoCookie(response,createAuthKey(user.getId(),time),time);
-        setUserNickKeyIntoCookie(response,user.getName(),3600*24*30);
+        setUserNickKeyIntoCookie(response,user.getName());
+    }
+
+    public void setUserInfoIntoCookie(HttpServletResponse response,String id,String nick,String url) throws UnsupportedEncodingException {
+        int time = 3600*3;
+        setAuthKeyIntoCookie(response,createAuthKey(id,time),time);
+        setUserNickKeyIntoCookie(response,nick);
+
+        setUserImageIntoCookie(response,url);
     }
 
     public void addSessionTime(String key,HttpServletResponse response){
@@ -70,8 +78,15 @@ public class AuthorityCacheService {
         response.addCookie(authKeyCookie);
     }
 
-    public void setUserNickKeyIntoCookie(HttpServletResponse response,String name,int time) throws UnsupportedEncodingException {
+    public void setUserNickKeyIntoCookie(HttpServletResponse response,String name) throws UnsupportedEncodingException {
         Cookie nickCookie = new Cookie(UserTokenConst.COOKIE_NAME, URLEncoder.encode(name, "UTF-8") );
+        nickCookie.setMaxAge(3600*24*30);
+        //nickCookie.setPath("/");
+        nickCookie.setDomain(".yangtengfei.cn");
+        response.addCookie(nickCookie);
+    }
+    public void setUserImageIntoCookie(HttpServletResponse response,String avatar_url)throws UnsupportedEncodingException {
+        Cookie nickCookie = new Cookie(UserTokenConst.AVATAR_URL, URLEncoder.encode(avatar_url, "UTF-8") );
         nickCookie.setMaxAge(3600*24*30);
         //nickCookie.setPath("/");
         nickCookie.setDomain(".yangtengfei.cn");
