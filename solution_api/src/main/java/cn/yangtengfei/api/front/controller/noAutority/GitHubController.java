@@ -1,8 +1,12 @@
 package cn.yangtengfei.api.front.controller.noAutority;
 
+import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.front.controller.user.GitHubUserView;
+import cn.yangtengfei.api.service.dataService.user.ApiGitHubUserService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +34,11 @@ public class GitHubController {
         return JSON.toJSONString(gitHubUserView);
     }*/
 
+    @Autowired
+    private ApiGitHubUserService apiGitHubUserService;
+
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public void  RegisteredByGithub(HttpServletRequest request){
+    public void  RegisteredByGithub(HttpServletRequest request) throws CommonException {
         //String login = request.getParameter("login");
         //String id = request.getParameter("id");
         //String avatar_url = request.getParameter("avatar_url");
@@ -71,6 +78,18 @@ public class GitHubController {
         String disk_usage=request.getParameter("disk_usage");log.info("========="+disk_usage);
         String collaborators=request.getParameter("collaborators");log.info("========="+collaborators);
         String two_factor_authentication=request.getParameter("two_factor_authentication");log.info("========="+two_factor_authentication);
+
+
+        if(StringUtils.isBlank(id) || StringUtils.isBlank(avatar_url) || StringUtils.isBlank(login)){
+            throw new CommonException("401","用户信息不完整");
+        }
+        GitHubUserView gitHubUserView = new GitHubUserView();
+        gitHubUserView.setId(id);
+        gitHubUserView.setAvatar_url(avatar_url);
+        gitHubUserView.setLogin(login);
+
+        apiGitHubUserService.save(gitHubUserView);
+
 
 
 
