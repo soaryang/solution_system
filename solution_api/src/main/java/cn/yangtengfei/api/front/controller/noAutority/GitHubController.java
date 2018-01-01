@@ -30,10 +30,9 @@ public class GitHubController {
     }*/
 
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public void  RegisteredByGithub(GitHubUserView gitHubUserView){
-        //String userInfo = request.getParameter("avatar_url");
-        log.info("-=-----------------------------------------------");
-        log.info("userInfo:{}",JSON.toJSONString(gitHubUserView));
+    public void  RegisteredByGithub(HttpServletRequest request){
+        String userInfo = request.getParameter("avatar_url");
+        log.info("userInfo:{}",userInfo);
         //GitHubUserView gitHubUserView = JSON.parseObject(userInfo,GitHubUserView.class);
         //log.info(JSON.toJSONString(gitHubUserView));
     }
