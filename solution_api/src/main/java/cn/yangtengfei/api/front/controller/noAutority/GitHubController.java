@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -116,7 +118,11 @@ public class GitHubController {
 
         Result result = new Result();
         result.setCode("200");
-        result.setData(gitHubUserInfo);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("nick",gitHubUserInfo.getLogin());
+        map.put("avatar_url",gitHubUserInfo.getAvatar_url());
+        result.setData(map);
         return result;
 
 
