@@ -104,7 +104,7 @@ public class GitHubController {
         gitHubUserView.setAvatar_url(avatar_url);
         gitHubUserView.setLogin(login);
         Date currentDate =  DateUtils.getCurrentDate();
-        if(gitHubUserInfo!=null){
+        if(gitHubUserInfo==null){
             log.info("新加入的用户");
             User user = new User();
             user.setCreateTime(currentDate);
