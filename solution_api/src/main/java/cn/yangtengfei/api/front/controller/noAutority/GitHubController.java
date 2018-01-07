@@ -94,7 +94,6 @@ public class GitHubController {
         String collaborators=request.getParameter("collaborators");log.info("========="+collaborators);
         String two_factor_authentication=request.getParameter("two_factor_authentication");log.info("========="+two_factor_authentication);
 
-
         if(StringUtils.isBlank(id) || StringUtils.isBlank(avatar_url) || StringUtils.isBlank(login)){
             throw new CommonException("401","用户信息不完整");
         }
@@ -106,6 +105,7 @@ public class GitHubController {
         gitHubUserView.setLogin(login);
         Date currentDate =  DateUtils.getCurrentDate();
         if(gitHubUserInfo!=null){
+            log.info("新加入的用户");
             User user = new User();
             user.setCreateTime(currentDate);
             user.setUpdateTime(currentDate);
@@ -113,6 +113,7 @@ public class GitHubController {
             gitHubUserView.setUserId(user.getId());
             gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
         }else{
+            log.info("更新用户信息");
             gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
         }
 
