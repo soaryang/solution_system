@@ -49,10 +49,6 @@ public class UserQuestionController {
     @Autowired
     private TagQuestionRelationService tagQuestionRelationService;
 
-
-
-
-
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public Result findById(String id){
         Result result = new Result();

@@ -11,6 +11,7 @@ import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.Tag;
+import cn.yangtengfei.service.question.TagService;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
 import io.swagger.models.auth.In;
@@ -40,13 +41,16 @@ public class TagNoAuthorityController {
     @Autowired
     private ApiTagService apiTagService;
 
+    @Autowired
+    private TagService tagService;
+
     @RequestMapping(value = "/page/{pageNo}/{size}", method = RequestMethod.GET)
     public PageResultModel findAll(@PathVariable("pageNo") Integer pageNo, @PathVariable("size") Integer size){
         int useStatus = 1;
         int start = pageNo-1;
         PageResultModel pageResultModel = new PageResultModel();
         Page<Tag> questionTypes = null;
-        questionTypes = apiTagService.findByUseStatus(useStatus,start,size);
+        questionTypes = tagService.findByUseStatusOrderByQuestionCountDesc(useStatus,start,size);
         pageResultModel.setTotal(questionTypes.getTotalElements());
         pageResultModel.setRows(questionTypes.getContent());
         return  pageResultModel;

@@ -1,8 +1,10 @@
 package cn.tst;
 
 import cn.yangtengfei.Application;
+import cn.yangtengfei.api.server.view.user.UserView;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
+import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.model.question.Tag;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
@@ -24,7 +26,17 @@ public class TagTest {
     @Autowired
     private ApiTagService apiTagService;
 
+    @Autowired
+    private ApiUserService apiUserService;
+
     @Test
+    public void findParty(){
+        UserView userView = new UserView();
+        userView.setName("admin");
+        userView.setPassword("123");
+        apiUserService.saveUserByUserView(userView);
+    }
+    /*@Test
     public void findParty(){
         TagView tagView = new TagView();
         tagView.setName("springboo22222t");
@@ -36,5 +48,5 @@ public class TagTest {
     public void updateTag(){
        Tag tag =apiTagService.updateUseStatus("591e5c6c54815a0ea114ff23",0,"asdasdasdasd");
         System.out.println("================="+ JSON.toJSONString(tag));
-    }
+    }*/
 }

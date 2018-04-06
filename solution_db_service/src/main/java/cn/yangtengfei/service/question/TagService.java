@@ -35,6 +35,11 @@ public class TagService {
         return tagRepository.findByUseStatusOrderByUpdateTimeDesc(useStatus,pageRequest);
     }
 
+    public Page<Tag> findByUseStatusOrderByQuestionCountDesc(int useStatus,int page, int pageSize) {
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+        return tagRepository.findByUseStatusOrderByQuestionCountDesc(useStatus,pageRequest);
+    }
+
     public Page<Tag> findByUseStatusAndNameLike(int useStatus,String name,int page, int pageSize) {
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return tagRepository.findByUseStatusAndNameLikeOrderByUpdateTimeDesc(useStatus,name, pageRequest);
@@ -69,5 +74,10 @@ public class TagService {
 
     public List<Tag> findByIdIn(List<String> ids){
         return tagRepository.findByIdInOrderByUpdateTimeDesc(ids);
+    }
+
+
+    public List<Tag> findAll(){
+        return  tagRepository.findAll();
     }
 }
