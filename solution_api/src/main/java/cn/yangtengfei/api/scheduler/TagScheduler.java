@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -27,8 +28,8 @@ public class TagScheduler {
     private TagService tagService;
 
     @Description("当前标签下的问题数量")
-    //@Scheduled(cron="0 0/60 * * * ?")
-    @PostConstruct
+    @Scheduled(cron="0 0/5 * * * ?")
+    //@PostConstruct
     public void tagQuestionCount() {
         log.info("计算每个标签下问题的总数");
         List<Tag> tagList = tagService.findAll();
