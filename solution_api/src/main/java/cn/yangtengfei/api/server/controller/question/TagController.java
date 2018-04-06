@@ -136,21 +136,17 @@ public class TagController extends BaseController {
             if(!targetFile.exists()){
                 targetFile.mkdirs();
             }
-
             String fileDictoryPath = targetFile.getPath() + File.separator+"tag";
             File dictoryFile = new File(fileDictoryPath);
             if(!dictoryFile.exists()){
                 dictoryFile.mkdirs();
             }
-
             if(!StringUtils.isBlank(fileName)){
-
                 String suffix = fileName.substring(fileName.lastIndexOf("."));
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
                 tagView.setImagePath(filePath);
-
             }else{
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";
                 tagView.setImagePath(filePath);
