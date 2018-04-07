@@ -50,7 +50,7 @@ public class NormalUserController {
             }
         }*/
         result.setCode("200");
-        GitHubUserInfo gitHubUserInfo =  gitHubUserCacheService.findByLogin(key);
+        GitHubUserInfo gitHubUserInfo =  gitHubUserCacheService.findByLogin(authorityCacheService.getAuthKey(key));
         result.setData(gitHubUserInfo);
 
         return result;

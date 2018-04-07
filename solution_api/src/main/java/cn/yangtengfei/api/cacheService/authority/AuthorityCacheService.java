@@ -36,6 +36,15 @@ public class AuthorityCacheService {
         return key;
     }
 
+    public String getAuthKey(String key){
+        String authKey = "authKey:"+key;
+        Object object = redisTemplate.opsForValue().get(authKey);
+        if(object!=null){
+            return String.valueOf(object);
+        }
+        return "";
+    }
+
     public boolean chekAuthKeyIsExist(String key){
         String authKey = "authKey:"+key;
         return redisTemplate.hasKey(authKey);
