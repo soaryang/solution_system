@@ -121,6 +121,8 @@ public class GitHubController {
         Result result = new Result();
         Map<String,Object> map = new HashMap<>();
         String key = authorityCacheService.createAuthKey(login,360*60*24*7);
+
+        log.info("key=================:{}",key);
         map.put("key",key);
 
 
