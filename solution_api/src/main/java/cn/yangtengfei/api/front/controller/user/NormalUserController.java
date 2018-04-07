@@ -54,6 +54,8 @@ public class NormalUserController {
         GitHubUserInfo gitHubUserInfo =  gitHubUserCacheService.findByLogin(authorityCacheService.getAuthKey(key));
         result.setData(gitHubUserInfo);
 
+        authorityCacheService.addSessionTime(key,response);
+
         return result;
     }
 }
