@@ -27,7 +27,7 @@ public class GitHubUserInfoService {
     }
 
     public GitHubUserInfo save(GitHubUserInfo gitHubUserInfo){
-        GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findOne(gitHubUserInfo.getId());
+        GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findByGitHubId(gitHubUserInfo.getGitHubId());
         Date date = new Date();
         if(gitHubUserInfoTemp==null){
             gitHubUserInfo.setCreateTime(date);
