@@ -10,4 +10,6 @@ public class UserTokenConst {
 
     public static final String COOKIE_ROLE = "role";
 
+    public static final String COOKIE_KEY = "key";
+
 }
