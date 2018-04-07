@@ -53,6 +53,6 @@ public class NormalUserController {
         GitHubUserInfo gitHubUserInfo =  gitHubUserCacheService.findByLogin(key);
         result.setData(gitHubUserInfo);
 
-        return null;
+        return result;
     }
 }
