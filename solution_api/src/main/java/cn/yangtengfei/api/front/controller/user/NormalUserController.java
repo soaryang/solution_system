@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
 
 @Slf4j
 @RestController
@@ -35,6 +36,7 @@ public class NormalUserController {
         Result result = new Result();
         Cookie[] cookies =request.getCookies();
         String key = "";
+
         if(cookies!=null && cookies.length!=0) {
             log.info("cookies.length:{}",cookies.length);
             for (Cookie cookie : cookies) {
@@ -44,6 +46,7 @@ public class NormalUserController {
                 }
             }
         }
+        log.info("==============="+ URLDecoder.decode(key));
         /*if (!StringUtils.isEmpty(key)) {
             if (!authorityCacheService.chekAuthKeyIsExist(key)) {
             } else {
