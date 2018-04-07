@@ -27,8 +27,6 @@ public class ApiGitHubUserService {
         GitHubUserInfo gitHubUserInfo = new GitHubUserInfo();
 
         BeanUtils.copyProperties(gitHubUserView,gitHubUserInfo);
-        gitHubUserInfo.setGitHubId(gitHubUserInfo.getId());
-        gitHubUserInfo.setId(gitHubUserInfo.getId());
         return gitHubUserInfoService.save(gitHubUserInfo);
     }
 }
