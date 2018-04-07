@@ -39,7 +39,7 @@ public class NormalUserController {
             log.info("cookies.length:{}",cookies.length);
             for (Cookie cookie : cookies) {
                 if (UserTokenConst.COOKIE_USER_KEY.equals(cookie.getName())) {
-                    log.info("cookies value",cookie.getValue());
+                    log.info("cookies value,{}",cookie.getValue());
                     key = cookie.getValue();
                 }
             }
