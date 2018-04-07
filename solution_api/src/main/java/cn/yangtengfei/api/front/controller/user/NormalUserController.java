@@ -12,6 +12,6 @@ public class NormalUserController {
 
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public Result findById(String id){
-
+        return null;
     }
 }
