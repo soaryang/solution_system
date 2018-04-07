@@ -10,5 +10,5 @@ public interface GitHubUserInfoRepository  extends MongoRepository<GitHubUserInf
     GitHubUserInfo findByGitHubId(String id);
 
 
-    GitHubUserInfo findAllByLogin(String login);
+    GitHubUserInfo findByLogin(String login);
 }

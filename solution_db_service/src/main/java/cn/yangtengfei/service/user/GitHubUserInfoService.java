@@ -27,7 +27,7 @@ public class GitHubUserInfoService {
     }
 
     public GitHubUserInfo findByLogin(String login){
-        return gitHubUserInfoRepository.findAllByLogin(login);
+        return gitHubUserInfoRepository.findByLogin(login);
     }
 
     public GitHubUserInfo save(GitHubUserInfo gitHubUserInfo){
