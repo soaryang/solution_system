@@ -36,8 +36,10 @@ public class NormalUserController {
         Cookie[] cookies =request.getCookies();
         String key = "";
         if(cookies!=null && cookies.length!=0) {
+            log.info("cookies.length:{}",cookies.length);
             for (Cookie cookie : cookies) {
                 if (UserTokenConst.COOKIE_KEY.equals(cookie.getName())) {
+                    log.info("cookies value",cookie.getValue());
                     key = cookie.getValue();
                 }
             }
