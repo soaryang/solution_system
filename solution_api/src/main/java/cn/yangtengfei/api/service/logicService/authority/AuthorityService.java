@@ -38,7 +38,7 @@ public class AuthorityService {
             throw new CommonException(ErrorCode.Auth_Error_Code.USERNAME_IS_ERROR,"USERNAME IS ERROR");
         }
 
-        UserView userView = apiUserService.finUserInfo(user.getId());
+        /*UserView userView = apiUserService.finUserInfo(user.getId());
 
         Object object = redisService.get(UserCacheConst.USER_PASSWORD_CACHE_KEY+userView.getOpenId());
 
@@ -49,7 +49,7 @@ public class AuthorityService {
             }
         }else{
             throw new CommonException(ErrorCode.Auth_Error_Code.PASSWORD_IS_NULL,"PASSWORD IS NULL");
-        }
+        }*/
 
 
         /*if( !BCrypt.checkpw(password,user.getPassword())){

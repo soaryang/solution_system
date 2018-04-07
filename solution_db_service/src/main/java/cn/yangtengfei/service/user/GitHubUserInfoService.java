@@ -22,6 +22,10 @@ public class GitHubUserInfoService {
         return gitHubUserInfoRepository.findOne(id);
     }
 
+    public GitHubUserInfo findByGitHubId(String id){
+        return gitHubUserInfoRepository.findByGitHubId(id);
+    }
+
     public GitHubUserInfo save(GitHubUserInfo gitHubUserInfo){
         GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findOne(gitHubUserInfo.getId());
         Date date = new Date();

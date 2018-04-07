@@ -3,8 +3,7 @@ package cn.yangtengfei.api.front.controller.noAutority;
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.exception.CommonException;
-import cn.yangtengfei.api.front.controller.user.GitHubUserView;
-import cn.yangtengfei.api.server.view.user.UserView;
+import cn.yangtengfei.api.front.view.user.GitHubUserView;
 import cn.yangtengfei.api.service.dataService.user.ApiGitHubUserService;
 import cn.yangtengfei.model.user.GitHubUserInfo;
 import cn.yangtengfei.model.user.User;
@@ -14,15 +13,13 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.spring.web.json.Json;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,10 +94,11 @@ public class GitHubController {
         if(StringUtils.isBlank(id) || StringUtils.isBlank(avatar_url) || StringUtils.isBlank(login)){
             throw new CommonException("401","用户信息不完整");
         }
+        GitHubUserInfo gitHubUserInfo = apiGitHubUserService.findByGitHubId(id);
+        log.info("从数据库中获取的用户信息:{}", JSON.toJSONString(gitHubUserInfo));
 
-        GitHubUserInfo gitHubUserInfo = apiGitHubUserService.findById(id);
         GitHubUserView gitHubUserView = new GitHubUserView();
-        gitHubUserView.setId(id);
+        gitHubUserView.setGitHubId(id);
         gitHubUserView.setAvatar_url(avatar_url);
         gitHubUserView.setLogin(login);
         Date currentDate =  DateUtils.getCurrentDate();
@@ -109,6 +107,8 @@ public class GitHubController {
             User user = new User();
             user.setCreateTime(currentDate);
             user.setUpdateTime(currentDate);
+            //从github上注册的
+            user.setUserRegisterType(2);
             user = userService.save(user);
             gitHubUserView.setUserId(user.getId());
             gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
@@ -117,28 +117,21 @@ public class GitHubController {
             gitHubUserInfo = apiGitHubUserService.save(gitHubUserView);
         }
 
+        //创建cookie 信息
         Result result = new Result();
-        result.setCode("200");
-
         Map<String,Object> map = new HashMap<>();
+        String key = authorityCacheService.createAuthKey(login,360*60*24*7);
+        map.put("key",key);
+
+
+        result.setCode("200");
+        result.setData(map);
+
+        /*Map<String,Object> map = new HashMap<>();
         map.put("nick",gitHubUserInfo.getLogin());
         map.put("avatar_url",gitHubUserInfo.getAvatar_url());
-        result.setData(map);
+        result.setData(map);*/
         return result;
-
-
-
-        /*try {
-            authorityCacheService.setUserInfoIntoCookie(response,gitHubUserView.getUserId(),gitHubUserView.getLogin(),gitHubUserView.getAvatar_url());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }*/
-
-
-        //log.info("avatar_url:{}",avatar_url);
-        //log.info("userInfo:{}",JSON.toJSONString(gitHubUserView));
-        //GitHubUserView gitHubUserView = JSON.parseObject(userInfo,GitHubUserView.class);
-        //log.info(JSON.toJSONString(gitHubUserView));
     }
 
 }

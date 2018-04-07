@@ -1,6 +1,6 @@
 package cn.yangtengfei.api.service.dataService.user;
 
-import cn.yangtengfei.api.front.controller.user.GitHubUserView;
+import cn.yangtengfei.api.front.view.user.GitHubUserView;
 import cn.yangtengfei.model.user.GitHubUserInfo;
 import cn.yangtengfei.service.user.GitHubUserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +19,16 @@ public class ApiGitHubUserService {
         return gitHubUserInfoService.findById(id);
     }
 
+    public GitHubUserInfo findByGitHubId(String id){
+        return gitHubUserInfoService.findByGitHubId(id);
+    }
+
     public GitHubUserInfo save(GitHubUserView gitHubUserView){
         GitHubUserInfo gitHubUserInfo = new GitHubUserInfo();
+
         BeanUtils.copyProperties(gitHubUserView,gitHubUserInfo);
+        gitHubUserInfo.setGitHubId(gitHubUserInfo.getId());
+        gitHubUserInfo.setId(gitHubUserInfo.getId());
         return gitHubUserInfoService.save(gitHubUserInfo);
     }
 }

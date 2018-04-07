@@ -10,10 +10,11 @@ import java.util.List;
 @Data
 public class GitHubUserInfo  extends BaseModel {
 
+    private String id;
     private String login;
 
     private String userId;
-    private String id;;
+    private String gitHubId;;
     private String avatar_url;
     private String gravatar_id;
     private String url;;
