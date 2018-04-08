@@ -12,4 +12,6 @@ public class Course extends BaseModel {
 
     private String name;
 
+    private String describe;
+
 }

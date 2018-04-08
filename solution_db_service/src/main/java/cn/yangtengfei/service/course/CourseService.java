@@ -19,7 +19,7 @@ public class CourseService {
         courseRespository.save(course);
     }
 
-    public Page<Tag> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg,int page, int pageSize){
+    public Page<Course> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg,int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return courseRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
     }

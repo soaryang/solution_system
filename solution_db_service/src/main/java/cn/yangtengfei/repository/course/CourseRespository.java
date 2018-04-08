@@ -14,5 +14,5 @@ import java.util.List;
 @EnableMongoRepositories(mongoTemplateRef = "courseMongoProperties")
 public interface CourseRespository extends MongoRepository<Course,String> {
 
-    Page<Tag> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, Pageable pageable);
+    Page<Course> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, Pageable pageable);
 }
