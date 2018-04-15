@@ -4,6 +4,8 @@ import cn.yangtengfei.model.course.Course;
 import cn.yangtengfei.model.course.CourseContent;
 import cn.yangtengfei.repository.course.CourseContentRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,10 @@ public class CourseContentService {
         return courseContentRespository.findByCourseId(courseId);
     }
 
-
-
+    public Page<CourseContent> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, int page, int pageSize){
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+        return courseContentRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
+    }
 
 
 }

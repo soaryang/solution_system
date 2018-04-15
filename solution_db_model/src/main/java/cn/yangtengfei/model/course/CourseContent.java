@@ -12,7 +12,7 @@ public class CourseContent extends BaseModel {
 
     private String courseId;
 
-    private String content;
+    private String courseContentName;
 
     private String markDownContent;
 
