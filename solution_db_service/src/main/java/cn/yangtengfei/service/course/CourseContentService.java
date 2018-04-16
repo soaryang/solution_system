@@ -28,6 +28,10 @@ public class CourseContentService {
         return courseContentRespository.findByCourseId(courseId);
     }
 
+    public CourseContent findById(String id){
+        return courseContentRespository.findOne(id);
+    }
+
     public Page<CourseContent> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return courseContentRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);

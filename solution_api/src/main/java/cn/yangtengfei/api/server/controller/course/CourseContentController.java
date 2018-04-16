@@ -8,8 +8,10 @@ import cn.yangtengfei.model.course.CourseContent;
 import cn.yangtengfei.service.course.CourseContentService;
 import cn.yangtengfei.service.course.CourseService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +36,27 @@ public class CourseContentController extends BaseController {
         return  pageResultModel;
     }
 
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    public Result findById(@PathVariable("id") String id){
+        Result result = new Result();
+        CourseContent courseContent =  courseContentService.findById(id);
+        result.setCode("200");
+        result.setData(courseContent);
+        return result;
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result findAll(HttpServletRequest request){
+        String id = request.getParameter("id");
         String courseId = request.getParameter("courseId");
         String courseContentName = request.getParameter("courseContentName");
         String markDownContent = request.getParameter("markDownContent");
 
         CourseContent courseContent = new CourseContent();
+        if(!StringUtils.isBlank(id)){
+            courseContent.setId(id);
+        }
+
         courseContent.setCourseId(courseId);
         courseContent.setCourseContentName(courseContentName);
         courseContent.setMarkDownContent(markDownContent);
