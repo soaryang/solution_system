@@ -155,7 +155,7 @@ public class TagController extends BaseController {
             tagView.setName(tagName);
             tagView.setDescribe(describe);
 
-            log.info(JSON.toJSONString(tagView));
+            log.info("===================="+JSON.toJSONString(tagView));
             apiTagService.update(tagView);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
