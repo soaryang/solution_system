@@ -116,6 +116,9 @@ public class TagController extends BaseController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result update(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
+
+
+        log.info("============================================================================");
         Result result = new Result();
         String tagName = request.getParameter("tagName");
         String tagId = request.getParameter("tagId");
