@@ -32,9 +32,9 @@ public class CourseContentService {
         return courseContentRespository.findOne(id);
     }
 
-    public Page<CourseContent> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, int page, int pageSize){
+    public Page<CourseContent> findByCourseIdAndDeleteFlgOrderByUpdateTimeDesc(String courseId,Integer deleteFlg, int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
-        return courseContentRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
+        return courseContentRespository.findByCourseIdAndDeleteFlgOrderByUpdateTimeDesc(courseId,deleteFlg,pageRequest);
     }
 
 
