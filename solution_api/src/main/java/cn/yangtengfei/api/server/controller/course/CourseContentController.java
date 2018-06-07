@@ -30,7 +30,7 @@ public class CourseContentController extends BaseController {
         String courseId = request.getParameter("courseId");
         int start = pageNumber-1;
         PageResultModel pageResultModel = new PageResultModel();
-        Page<CourseContent> coursesPage = courseContentService.findByDeleteFlgOrderByUpdateTimeDesc(0,start,pageSize);
+        Page<CourseContent> coursesPage = courseContentService.findByCourseIdAndDeleteFlgOrderByUpdateTimeDesc(courseId,0,start,pageSize);
         pageResultModel.setTotal(coursesPage.getTotalElements());
         pageResultModel.setRows(coursesPage.getContent());
         return  pageResultModel;

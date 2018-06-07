@@ -16,6 +16,7 @@ public interface CourseContentRespository  extends MongoRepository<CourseContent
 
     List<CourseContent> findByCourseId(String courseId);
 
-    Page<CourseContent> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, Pageable pageable);
+    Page<CourseContent> findByCourseIdAndDeleteFlgOrderByUpdateTimeDesc(String courseId,Integer deleteFlg, Pageable pageable);
+
 
 }
