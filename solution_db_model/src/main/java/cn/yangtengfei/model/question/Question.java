@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Data
-@Document(collection = "question")
+@Document(collection = "employees")
 public class Question extends BaseModel{
 
     private String id;
