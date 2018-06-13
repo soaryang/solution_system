@@ -36,6 +36,15 @@ public class AuthorityCacheService {
         return key;
     }
 
+    public String getAuthKey(String key){
+        String authKey = "authKey:"+key;
+        Object object = redisTemplate.opsForValue().get(authKey);
+        if(object!=null){
+            return String.valueOf(object);
+        }
+        return "";
+    }
+
     public boolean chekAuthKeyIsExist(String key){
         String authKey = "authKey:"+key;
         return redisTemplate.hasKey(authKey);
@@ -56,13 +65,6 @@ public class AuthorityCacheService {
         setUserNickKeyIntoCookie(response,user.getName());
     }
 
-    public void setUserInfoIntoCookie(HttpServletResponse response,String id,String nick,String url) throws UnsupportedEncodingException {
-        int time = 3600*3;
-        setAuthKeyIntoCookie(response,createAuthKey(id,time),time);
-        setUserNickKeyIntoCookie(response,nick);
-
-        setUserImageIntoCookie(response,url);
-    }
 
     public void addSessionTime(String key,HttpServletResponse response){
         int time = 3600*3;
@@ -81,14 +83,6 @@ public class AuthorityCacheService {
     public void setUserNickKeyIntoCookie(HttpServletResponse response,String name) throws UnsupportedEncodingException {
         Cookie nickCookie = new Cookie(UserTokenConst.COOKIE_NAME, URLEncoder.encode(name, "UTF-8") );
         nickCookie.setMaxAge(3600*24*30);
-        //nickCookie.setPath("/");
-        nickCookie.setDomain(".yangtengfei.cn");
-        response.addCookie(nickCookie);
-    }
-    public void setUserImageIntoCookie(HttpServletResponse response,String avatar_url)throws UnsupportedEncodingException {
-        Cookie nickCookie = new Cookie(UserTokenConst.AVATAR_URL, URLEncoder.encode(avatar_url, "UTF-8") );
-        nickCookie.setMaxAge(3600*24*30);
-        //nickCookie.setPath("/");
         nickCookie.setDomain(".yangtengfei.cn");
         response.addCookie(nickCookie);
     }

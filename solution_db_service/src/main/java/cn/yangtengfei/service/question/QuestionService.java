@@ -58,6 +58,7 @@ public class QuestionService {
         //return questionRepository.findByNameLike("防火墙",pageRequest);
     }
 
+
     public long findAllCount(){
         return questionRepository.count();
     }
@@ -67,7 +68,7 @@ public class QuestionService {
      * @param tagId
      * @return
      */
-    public long countByTagIdAndDeleteFlg(String tagId,String deleteFlg){
+    public long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg){
         return questionRepository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
     }
 

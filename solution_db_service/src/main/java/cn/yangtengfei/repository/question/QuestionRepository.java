@@ -23,7 +23,7 @@ public interface QuestionRepository extends MongoRepository<Question,String> {
     List<Question> findByIdIn(List<String> ids);
 
 
-    long countByTagIdAndDeleteFlg(String tagId,String deleteFlg);
+    long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg);
 
 
 

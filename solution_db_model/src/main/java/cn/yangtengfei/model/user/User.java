@@ -24,4 +24,7 @@ public class User extends BaseModel {
 
     private String password;
 
+    /**注册来源 1：微信 2:github*/
+    private Integer userRegisterType;
+
 }

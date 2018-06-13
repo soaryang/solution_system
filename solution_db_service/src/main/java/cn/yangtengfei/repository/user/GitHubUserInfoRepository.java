@@ -7,5 +7,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(mongoTemplateRef = "userMongoTemplate")
 public interface GitHubUserInfoRepository  extends MongoRepository<GitHubUserInfo,String> {
 
+    GitHubUserInfo findByGitHubId(String id);
 
+
+    GitHubUserInfo findByLogin(String login);
 }

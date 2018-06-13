@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.front.controller.user;
+package cn.yangtengfei.api.front.view.user;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class GitHubUserView {
     private String login;
     private String userId;
-    private String id;;
+    private String gitHubId;;
     private String avatar_url;
     private String gravatar_id;
     private String url;;
@@ -45,12 +45,5 @@ public class GitHubUserView {
     private int disk_usage;
     private int collaborators;
     private boolean two_factor_authentication;
-    private List<UserPlan> plan;
 }
 
-@Data class UserPlan{
-    private String name;
-    private String space;
-    private int collaborators;
-    private int private_repos;
-}

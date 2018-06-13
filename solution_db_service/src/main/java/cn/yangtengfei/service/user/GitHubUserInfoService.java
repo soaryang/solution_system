@@ -22,8 +22,16 @@ public class GitHubUserInfoService {
         return gitHubUserInfoRepository.findOne(id);
     }
 
+    public GitHubUserInfo findByGitHubId(String id){
+        return gitHubUserInfoRepository.findByGitHubId(id);
+    }
+
+    public GitHubUserInfo findByLogin(String login){
+        return gitHubUserInfoRepository.findByLogin(login);
+    }
+
     public GitHubUserInfo save(GitHubUserInfo gitHubUserInfo){
-        GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findOne(gitHubUserInfo.getId());
+        GitHubUserInfo gitHubUserInfoTemp = gitHubUserInfoRepository.findByGitHubId(gitHubUserInfo.getGitHubId());
         Date date = new Date();
         if(gitHubUserInfoTemp==null){
             gitHubUserInfo.setCreateTime(date);

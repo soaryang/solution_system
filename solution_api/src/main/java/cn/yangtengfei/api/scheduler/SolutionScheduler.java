@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -91,7 +92,7 @@ public class SolutionScheduler {
         }
     }
 
-    //@Scheduled(cron="0/60 * * * * ?")
+    @Scheduled(cron="0 0/5 * * * ?")
     public void restQuestionSolutionCount() {
         logger.info("restQuestionSolutionCount------------start");
         long count = apiQuestionService.findAllCount();
@@ -135,7 +136,6 @@ public class SolutionScheduler {
                     }
                 }
             }
-
             index++;
         }
     }

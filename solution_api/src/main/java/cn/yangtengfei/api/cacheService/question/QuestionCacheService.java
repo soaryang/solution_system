@@ -5,6 +5,7 @@ import cn.yangtengfei.cacheKey.question.TagCacheKey;
 import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.SolutionService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -44,7 +45,7 @@ public class QuestionCacheService {
      * @return
      */
     @Cacheable(value=QuestionCacheKey.QUESTION_KEY,key = "'"+ TagCacheKey.TAG_QUESTION_COUNT_KEY +"'+#id")
-    public long findAllCountByTagId(String id,String deleteFlg){
+    public long findAllCountByTagId(String id,Integer deleteFlg){
         return questionService.countByTagIdAndDeleteFlg(id,deleteFlg);
     }
 
@@ -56,7 +57,7 @@ public class QuestionCacheService {
      * @return
      */
     @CachePut(value=QuestionCacheKey.QUESTION_KEY,key = "'"+ TagCacheKey.TAG_QUESTION_COUNT_KEY +"'+#id")
-    public long resetAllCountByTagId(String id,String deleteFlg){
+    public long resetAllCountByTagId(String id,Integer deleteFlg){
         return questionService.countByTagIdAndDeleteFlg(id,deleteFlg);
     }
 
