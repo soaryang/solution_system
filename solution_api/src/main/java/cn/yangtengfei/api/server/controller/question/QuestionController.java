@@ -7,6 +7,7 @@ import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.api.service.scheduler.SechedulerService;
 import cn.yangtengfei.model.question.Question;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ import java.io.IOException;
  * Created by Administrator on 2017/5/28 0028.
  */
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/v1/api/admin/question")
 public class QuestionController extends BaseController {
@@ -49,6 +51,7 @@ public class QuestionController extends BaseController {
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageResultModel findAll(Integer pageNumber , Integer pageSize, String tagId){
+        log.info("===========================================");
         PageResultModel pageResultModel = new PageResultModel();
         Page<Question> questionPage = null;
         if(StringUtils.isEmpty(tagId)){
