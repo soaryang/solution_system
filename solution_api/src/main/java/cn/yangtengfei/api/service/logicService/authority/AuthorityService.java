@@ -34,7 +34,7 @@ public class AuthorityService {
 
     public User userLogin(String userName,String password,HttpServletResponse response) throws Exception {
         User user = userCacheService.findUserByName(userName);
-        /*if(user==null){
+        if(user==null){
             throw new CommonException(ErrorCode.Auth_Error_Code.USERNAME_IS_ERROR,"USERNAME IS ERROR");
         }
 
@@ -49,7 +49,7 @@ public class AuthorityService {
             }
         }else{
             throw new CommonException(ErrorCode.Auth_Error_Code.PASSWORD_IS_NULL,"PASSWORD IS NULL");
-        }*/
+        }
 
 
 
