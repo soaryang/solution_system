@@ -59,6 +59,7 @@ public class QuestionController extends BaseController {
         }else{
             questionPage = apiQuestionService.findAllPageByTagId(pageNumber-1,pageSize,tagId);
         }
+        log.info("count:{}",questionPage.getTotalElements());
         pageResultModel.setTotal(questionPage.getTotalElements());
         pageResultModel.setRows(apiQuestionService.findQuestionListWithTags(questionPage.getContent()));
         return  pageResultModel;

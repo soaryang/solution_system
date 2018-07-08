@@ -7,6 +7,7 @@ import cn.yangtengfei.model.question.Question;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.question.QuestionService;
 import cn.yangtengfei.service.question.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.*;
  * Created by Administrator on 2017/5/28 0028.
  */
 
+@Slf4j
 @Service
 public class ApiQuestionService {
 
@@ -112,6 +114,7 @@ public class ApiQuestionService {
         for(Tag tag:tagList){
             tagMap.put(tag.getId(),tag.getName());
         }
+
         for(Question question:questionList){
             QuestionView questionView = new QuestionView();
             BeanUtils.copyProperties(question,questionView);
