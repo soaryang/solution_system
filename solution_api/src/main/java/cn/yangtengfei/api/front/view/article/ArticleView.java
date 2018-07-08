@@ -1,19 +1,20 @@
-package cn.yangtengfei.model.course;
+package cn.yangtengfei.api.front.view.article;
 
 import cn.yangtengfei.baseModel.BaseModel;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "question")
-public class Course extends BaseModel {
+public class ArticleView extends BaseModel {
 
     private String id;
 
     private String tagId;
 
-    private String name;
+    private String articleName;
 
-    private String describe;
+    private String content;
+
+    private String tagName;
 
 }

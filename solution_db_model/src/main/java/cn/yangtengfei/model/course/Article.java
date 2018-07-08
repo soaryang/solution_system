@@ -5,15 +5,15 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "courseContent")
-public class CourseContent extends BaseModel {
+@Document(collection = "article")
+public class Article extends BaseModel {
 
     private String id;
 
-    private String courseId;
+    private String tagId;
 
-    private String courseContentName;
+    private String articleName;
 
-    private String markDownContent;
+    private String content;
 
 }

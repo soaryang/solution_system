@@ -10,16 +10,16 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 
 @Configuration
-@EnableMongoRepositories(basePackages = "cn.yangtengfei.repository.course", mongoTemplateRef = "masterMongoTemplate")
-public class CourseMongoConfig {
+@EnableMongoRepositories(basePackages = "cn.yangtengfei.repository.article", mongoTemplateRef = "articleMongoTemplate")
+public class ArticleMongoConfig {
 
     @Bean(name = "courseMongoProperties")
-    @ConfigurationProperties(prefix = "spring.data.mongodb.course")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.article")
     public MongoProperties danmuMongoProperties() {
         return new MongoProperties();
     }
 
-    @Bean(name = "courseMongoTemplate")
+    @Bean(name = "articleMongoTemplate")
     public MongoTemplate danmuMongoTemplate() throws Exception {
         MongoProperties mongoProperties = danmuMongoProperties();
         MongoClient mongoClient = mongoProperties.createMongoClient(null,null);

@@ -14,6 +14,7 @@ import java.util.List;
 public class PageResultModel<T> {
     private long total = 0;
     private List<T> rows;
+    private Object otherData;
 
     public PageResultModel() {
     }
@@ -42,5 +43,13 @@ public class PageResultModel<T> {
 
     public void setRows(List<T> rows) {
         this.rows = rows;
+    }
+
+    public Object getOtherData() {
+        return otherData;
+    }
+
+    public void setOtherData(Object otherData) {
+        this.otherData = otherData;
     }
 }

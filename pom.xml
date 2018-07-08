@@ -21,8 +21,6 @@
         <module>solution_webCrawler</module>
         <module>solution_comm_util</module>
         <module>solution_common</module>
-        <module>solution_es_model</module>
-        <module>solution_es_service</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

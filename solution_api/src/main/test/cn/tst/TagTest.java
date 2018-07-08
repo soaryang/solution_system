@@ -1,16 +1,8 @@
 package cn.tst;
 
 import cn.yangtengfei.Application;
-import cn.yangtengfei.api.server.view.user.UserView;
-import cn.yangtengfei.api.service.dataService.question.ApiTagService;
-import cn.yangtengfei.api.server.view.question.TagView;
-import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.model.lottery.DoubleColorBall;
-import cn.yangtengfei.model.question.Tag;
-import cn.yangtengfei.service.lottery.DoubleColorBallService;
 import cn.yangtengfei.webCrawler.stackOverFlow.HttpClientUtil;
-import com.alibaba.fastjson.JSON;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,21 +10,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.tools.Tool;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static org.springframework.beans.BeanUtils.getPropertyDescriptor;
 
 /**
  * Created by Administrator on 2017/1/23.
@@ -45,7 +30,7 @@ public class TagTest {
 
 
     @Autowired
-    private DoubleColorBallService doubleColorBallService;
+    //private DoubleColorBallService doubleColorBallService;
 
     @Test
     public void showData() throws NoSuchFieldException, IllegalAccessException {
@@ -84,11 +69,11 @@ public class TagTest {
             System.out.println();
         }*/
 
-        long sum = doubleColorBallService.sum();
+        /*long sum = doubleColorBallService.sum();
         System.out.println("彩票总期数:"+sum);
 
         List<DoubleColorBall> doubleColorBallServiceAll = doubleColorBallService.findAll();
-        DoubleColorBall doubleColorBall = doubleColorBallServiceAll.get(doubleColorBallServiceAll.size()-1);
+        DoubleColorBall doubleColorBall = doubleColorBallServiceAll.get(doubleColorBallServiceAll.size()-1);*/
 
 
          /*for(int i=1; i<=33; i++){
@@ -104,7 +89,7 @@ public class TagTest {
         }
         System.out.println();*/
 
-        HashMap<String,Double> map = new HashMap<String,Double>();
+        /*HashMap<String,Double> map = new HashMap<String,Double>();
         ValueComparator bvc =  new ValueComparator(map);
         TreeMap<String,Double> stringDoubleTreeMap = new TreeMap<String,Double>(bvc);
         for(int i=1; i<=33; i++){
@@ -130,7 +115,7 @@ public class TagTest {
         stringDoubleTreeMap.putAll(map);
         System.out.println();
         System.out.println("stringDoubleTreeMap: "+stringDoubleTreeMap);
-        System.out.println();
+        System.out.println();*/
 
     }
 
@@ -183,7 +168,7 @@ public class TagTest {
         }
         System.out.print(doubleColorBall);
 
-        doubleColorBallService.save(doubleColorBall);
+        //doubleColorBallService.save(doubleColorBall);
         System.out.println();
     }
 
