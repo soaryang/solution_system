@@ -17,7 +17,7 @@ public class UserCacheKey {
     public static final String USER_COUNT_KEY="cout:user";
 
     //用户问题的数量
-    public static final String USER_QUESTION_COUNT_KEY="count:user:employees:";
+    public static final String USER_QUESTION_COUNT_KEY="count:user:question:";
 
     //用户发表的文章数量
     private static final String USER_ARTICLE_COUNT_KEY="count:user:aritcle:";

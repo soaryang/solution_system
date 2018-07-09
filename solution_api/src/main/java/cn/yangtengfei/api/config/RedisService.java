@@ -250,7 +250,7 @@ public class RedisService {
      * @param orderByDesc
      * @return
      */
-    public Set<String> getSortSetByRnage(String key, long startRange, long endRange, boolean orderByDesc) {
+    public Set<String> getSortSetByRange(String key, long startRange, long endRange, boolean orderByDesc) {
         if (orderByDesc) {
             return redisTemplate.opsForZSet().range(key, startRange, endRange);
         } else {

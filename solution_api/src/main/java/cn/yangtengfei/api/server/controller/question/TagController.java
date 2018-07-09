@@ -4,13 +4,19 @@ import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.Result;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
+import cn.yangtengfei.api.server.view.question.TagTitleView;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.model.question.Tag;
+import cn.yangtengfei.model.question.TagTitle;
+import cn.yangtengfei.service.question.TagService;
+import cn.yangtengfei.service.question.TagTitleService;
 import cn.yangtengfei.util.ImageUtil;
 import cn.yangtengfei.util.ListUtils;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,8 +30,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/5/28 0028.
@@ -48,10 +57,48 @@ public class TagController extends BaseController {
     private String tagFilecacheFath;
 
 
+    @Autowired
+    private TagTitleService tagTitleService;
+
+
+    @Autowired
+    private TagService tagService;
+
+
+    @RequestMapping(value = "/selectTag", method = RequestMethod.GET)
+    public Result selectTag(String tagId) throws IOException {
+        Result result = new Result();
+
+        Tag tag = tagService.findById(tagId);
+
+
+        TagTitle tagTitle = tagTitleService.findByTagId(tagId);
+        if(tagTitle==null){
+            tagTitle = new TagTitle();
+            tagTitle.setTagId(tag.getId());
+            tagTitleService.save(tagTitle);
+            result.setCode("200");
+        }else{
+            result.setCode("500");
+        }
+
+        return result;
+    }
+
     @RequestMapping(value = "/setIndexPage", method = RequestMethod.GET)
     public Result setIndexPage() throws IOException {
+        /*TagView  tagView = apiTagService.findById(tagId);
+        Map<String, TagView> map = new HashMap<>();
+        String content = FileUtils.readFileToString(new File(tagFilecacheFath), "UTF-8");
+        if(!StringUtils.isEmpty(content)) {
+            List<String> tagsList = JSONObject.parseArray(content, String.class);
+            for (String tagStr : tagsList) {
+                TagView tagViewTemp = JSON.parseObject(tagStr, TagView.class);
+                map.put(tagViewTemp.getId(), tagView);
+            }
+        }*/
         Result result = new Result();
-        Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,11);
+        /*Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,11);
         List<Tag> tagList = tagPage.getContent();
         List<TagView> tagViewList = new ArrayList<TagView>();
         if(ListUtils.checkListIsNotNull(tagList)){
@@ -61,10 +108,54 @@ public class TagController extends BaseController {
                 tagViewList.add(tagView);
             }
             FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
+        }*/
+
+        List<TagTitle> tagTitles = tagTitleService.findAll();
+        List<String> ids = new ArrayList<>();
+        tagTitles.forEach(tagTitle -> ids.add(tagTitle.getTagId()));
+        List<Tag> tagList = tagService.findByIdIn(ids);
+        List<TagView> tagViewList = new ArrayList<TagView>();
+        if(ListUtils.checkListIsNotNull(tagList)){
+            for(Tag tag:tagList){
+                TagView tagView = new TagView();
+                BeanUtils.copyProperties(tag,tagView);
+                tagViewList.add(tagView);
+            }
+            FileUtils.writeStringToFile(new File(tagFilecacheFath), JSON.toJSONString(tagViewList), "UTF-8");
         }
+
+
         result.setCode("200");
         return result;
     }
+
+
+
+
+    @RequestMapping(value = "/findAllTagTitle", method = RequestMethod.GET)
+    public Result findAllTagTitle(){
+        Result result = new Result();
+        result.setCode("200");
+        List<TagTitle> tagTitles = tagTitleService.findAll();
+
+        List<String> ids = new ArrayList<>();
+        tagTitles.forEach(tagTitle -> ids.add(tagTitle.getTagId()));
+        List<Tag> tags = tagService.findByIdIn(ids);
+
+
+        Map<String,Tag> tagMap = new HashMap<>();
+        tags.forEach(tag -> tagMap.put(tag.getId(),tag));
+
+
+
+        List<TagTitleView> tagTitleViewArrayList = new ArrayList<TagTitleView>();
+        tagTitles.forEach(tagTitle -> tagTitleViewArrayList.add(new TagTitleView(tagTitle.getId(),tagTitle.getTagId(),tagMap.get(tagTitle.getTagId()).getName())));
+
+
+        result.setData(tagTitleViewArrayList);
+        return result;
+    }
+
 
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
     public Result findAll(@PathVariable("id") String id){

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Cacheable(value="employees")
+@Cacheable(value="question")
 public @interface MyCacheable {
 
 }

@@ -50,7 +50,7 @@ public class ApiQuestionService {
     public QuestionView save(QuestionView questionView){
         Question question = new Question();
         BeanUtils.copyProperties(questionView,question);
-        //employees = questionService.save(employees);
+        //question = questionService.save(question);
         question = questionCacheService.save(question);
         questionView.setId(question.getId());
         return questionView;
