@@ -46,7 +46,7 @@ public class TagScheduler {
         long questioncount = questionService.countByTagIdAndDeleteFlg(tag.getId(),0);
         long articleCount = articleService.countByTagIdAndDeleteFlg(tag.getId(),0);
         tag.setQuestionCount(questioncount);
-        tag.setQuestionCount(articleCount);
+        tag.setArticleCount(articleCount);
         tagService.save(tag);
 
     }
