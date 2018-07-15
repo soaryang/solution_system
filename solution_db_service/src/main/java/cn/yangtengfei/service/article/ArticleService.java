@@ -14,31 +14,35 @@ import java.util.List;
 public class ArticleService {
 
     @Autowired
-    private ArticleRespository ArticleRespository;
+    private ArticleRespository articleRespository;
 
     public void save(Article Article){
-        ArticleRespository.save(Article);
+        articleRespository.save(Article);
     }
 
     public void Article(String id){
-        ArticleRespository.findOne(id);
+        articleRespository.findOne(id);
     }
 
     public List<Article> findArticleByTagId(String courseId){
-        return ArticleRespository.findByTagId(courseId);
+        return articleRespository.findByTagId(courseId);
     }
 
     public Article findById(String id){
-        return ArticleRespository.findOne(id);
+        return articleRespository.findOne(id);
     }
 
-    public Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String articleId,Integer deleteFlg, int page, int pageSize){
+    public Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String tagId,Integer deleteFlg, int page, int pageSize){
         PageRequest pageRequest = new PageRequest(page, pageSize);
-        if(!StringUtils.isEmpty(articleId)){
-            return ArticleRespository.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(articleId,deleteFlg,pageRequest);
+        if(!StringUtils.isEmpty(tagId)){
+            return articleRespository.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(tagId,deleteFlg,pageRequest);
         }else{
-            return ArticleRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
+            return articleRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
         }
+    }
+
+    public long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg){
+        return articleRespository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
     }
 
 

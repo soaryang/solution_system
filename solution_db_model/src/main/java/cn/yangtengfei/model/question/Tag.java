@@ -24,7 +24,10 @@ public class Tag extends BaseModel {
     /**未使用：0 ; 使用：1 ；禁用：2*/
     private Integer useStatus;
 
-    /**解决方案数量*/
+    /**问题数量*/
     private long questionCount;
+
+    /**文章数量*/
+    private long articleCount;
 
 }

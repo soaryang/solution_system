@@ -14,10 +14,13 @@ public interface ArticleRespository  extends MongoRepository<Article,String> {
 
     List<Article> findByTagId(String courseId);
 
-    Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String courseId,Integer deleteFlg, Pageable pageable);
+    Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String tagId,Integer deleteFlg, Pageable pageable);
 
 
     Page<Article> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, Pageable pageable);
+
+
+    long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg);
 
 
 
