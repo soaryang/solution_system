@@ -18,7 +18,7 @@ public class Config {
 
     public String getfreemarkDirecotryh(){
         if(StringUtils.isBlank(freemarkDirecotry)){
-            return this.getClass().getResource("/templates").getPath().substring(1);
+            return this.getClass().getResource("/templates").getPath();
         }
         return freemarkDirecotry;
     }
@@ -29,7 +29,7 @@ public class Config {
      * @return
      */
     public String getRootPath(String projectName) {
-        return this.getClass().getResource("/").getPath().substring(1)+"temp"+File.separator  + projectName;
+        return this.getClass().getResource("/").getPath()+"temp"+File.separator  + projectName;
     }
 
     public String getMainPath(String rootPath) {
