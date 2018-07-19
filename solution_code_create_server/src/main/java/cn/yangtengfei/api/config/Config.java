@@ -16,9 +16,18 @@ public class Config {
     @Value("${freemarkDirecotry:}")
     public String freemarkDirecotry;
 
+
+    public String getExceDirecotryh(){
+        if(StringUtils.isBlank(freemarkDirecotry)){
+            return this.getClass().getResource("/templates").getPath()+"/excel";
+        }
+        return freemarkDirecotry;
+    }
+
+
     public String getfreemarkDirecotryh(){
         if(StringUtils.isBlank(freemarkDirecotry)){
-            return this.getClass().getResource("/templates").getPath();
+            return this.getClass().getResource("/templates").getPath()+"/freemark";
         }
         return freemarkDirecotry;
     }
