@@ -10,10 +10,10 @@
         <version>1.5.3.RELEASE</version>
     </parent>
 
-    <groupId>${package}</groupId>
-    <artifactId>${projectName}</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>${packageType}</packaging>
+    <groupId>${basePackage}</groupId>
+    <artifactId>${name}</artifactId>
+    <version>${version}-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
