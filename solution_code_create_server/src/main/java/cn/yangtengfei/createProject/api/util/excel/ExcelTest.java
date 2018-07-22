@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.util.excel;
+package cn.yangtengfei.createProject.api.util.excel;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 public class ExcelTest {
 
     //读取excel
-    public static Workbook readExcel(String filePath){
+    /*public static Workbook readExcel(String filePath){
         Workbook wb = null;
         if(filePath==null){
             return null;
@@ -62,8 +62,7 @@ public class ExcelTest {
             attribute.setValue(df.format(row.getCell(2).getNumericCellValue()));
         }
         System.out.println(attribute.toString());
-
-        /*for (int i = 0; i<colnum; i++) {
+        for (int i = 0; i<colnum; i++) {
 
             if(i<=1){
                 Cell cell  = row.getCell(i);
@@ -74,7 +73,7 @@ public class ExcelTest {
                 System.out.print(cell.toString());
                 System.out.print("\t");
             }
-        }*/
+        }
     }
 
 
@@ -88,7 +87,7 @@ public class ExcelTest {
                 readSheet(workbook.getSheetAt(0));
             }
         }
-    }
+    }*/
 
 
 }
