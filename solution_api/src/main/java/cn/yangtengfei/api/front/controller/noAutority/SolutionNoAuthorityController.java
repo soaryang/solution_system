@@ -1,8 +1,7 @@
 package cn.yangtengfei.api.front.controller.noAutority;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.server.view.question.QuestionView;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.view.question.SolutionView;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.util.ListUtils;
@@ -31,9 +30,9 @@ public class SolutionNoAuthorityController {
     private SolutionCacheService solutionCacheService;
 
     @RequestMapping(value = "/findQuetionId/{questionId}", method = RequestMethod.GET)
-    public Result findById(@PathVariable("questionId") String  questionId){
+    public RestResult findById(@PathVariable("questionId") String  questionId){
         log.info("-----------------------通过问题编号:questionId:{}获取解决方案--------------------",questionId);
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionId,0);
         List<SolutionView> solutionViewList = new ArrayList<>();
         if(ListUtils.checkListIsNotNull(solutionList)){
@@ -46,9 +45,9 @@ public class SolutionNoAuthorityController {
             log.info("solutionList:{}", JSON.toJSONString(solutionList));
             log.info("没有获取到解决方案信息");
         }
-        result.setCode("200");
-        result.setMessage("OK");
-        result.setData(solutionViewList);
-        return result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        restResult.setData(solutionViewList);
+        return restResult;
     }
 }

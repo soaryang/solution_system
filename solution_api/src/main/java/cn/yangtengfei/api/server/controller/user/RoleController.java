@@ -2,7 +2,7 @@ package cn.yangtengfei.api.server.controller.user;
 
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.service.dataService.user.ApiRoleService;
 import cn.yangtengfei.api.server.view.user.RoleView;
 import org.slf4j.Logger;
@@ -23,22 +23,22 @@ public class RoleController {
     private ApiRoleService apiRoleService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@ModelAttribute RoleView roleView){
-        Result result = new Result();
-        result.setCode("200");
+    public RestResult save(@ModelAttribute RoleView roleView){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
         apiRoleService.saveRole(roleView);
-        return result;
+        return restResult;
     }
 
 
 
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public Result findAll(){
-        Result result = new Result();
-        result.setCode("200");
-        result.setData(apiRoleService.findAll(0));
-        return result;
+    public RestResult findAll(){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setData(apiRoleService.findAll(0));
+        return restResult;
     }
 
 

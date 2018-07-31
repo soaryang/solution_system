@@ -2,7 +2,7 @@ package cn.yangtengfei.api.server.controller.wechat;
 
 
 import cn.yangtengfei.api.config.RedisService;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.service.dataService.common.MessageService;
 import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.util.BCrypt;
@@ -52,13 +52,13 @@ public class WeChatController {
 
 
     @RequestMapping(value = "/getTokeken", method = RequestMethod.GET)
-    public Result findById(String id){
+    public RestResult findById(String id){
 
 
-        Result result = new Result();
-        result.setCode("200");
-        result.setData(getAccessToken());
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setData(getAccessToken());
+        return restResult;
     }
 
     private String getAccessToken(){

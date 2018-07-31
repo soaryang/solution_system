@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.mail;
 
 import cn.yangtengfei.api.cacheService.user.RegisterCacheService;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.util.RegisterUtil;
 import freemarker.template.Configuration;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +34,8 @@ public class MailController {
 
 
     @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-    public Result sendMessage(HttpServletRequest request, String email){
-        Result result = new Result();
+    public RestResult sendMessage(HttpServletRequest request, String email){
+        RestResult restResult = new RestResult();
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -51,12 +51,12 @@ public class MailController {
             String text = geFreeMarkerTemplateContent(model);
             helper.setText(text, true);
             mailSender.send(mimeMessage);
-            result.setCode("200");
-            return result;
+            restResult.setCode("200");
+            return restResult;
         }catch (Exception e){
             log.error("发送邮件异常:{}",e);
-            result.setCode("500");
-            return result;
+            restResult.setCode("500");
+            return restResult;
         }
     }
 

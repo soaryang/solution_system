@@ -2,7 +2,7 @@ package cn.yangtengfei.api.front.controller.article;
 
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.front.view.article.ArticleView;
 import cn.yangtengfei.model.course.Article;
@@ -32,9 +32,9 @@ public class ArticleNoAuthorityController {
     private ArticleService articleService;
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public Result findAll(HttpServletRequest request, Integer pageNumber , Integer pageSize) throws CommonException {
+    public RestResult findAll(HttpServletRequest request, Integer pageNumber , Integer pageSize) throws CommonException {
 
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         String tagId = request.getParameter("tagId");
 
         Tag tag = tagService.findById(tagId);
@@ -47,22 +47,22 @@ public class ArticleNoAuthorityController {
         pageResultModel.setTotal(articlesPage.getTotalElements());
         pageResultModel.setRows(articlesPage.getContent());
         pageResultModel.setOtherData(tag);
-        result.setCode("200");
-        result.setData(pageResultModel);
-        return  result;
+        restResult.setCode("200");
+        restResult.setData(pageResultModel);
+        return restResult;
     }
 
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    public Result findById(@PathVariable("id") String id){
-        Result result = new Result();
+    public RestResult findById(@PathVariable("id") String id){
+        RestResult restResult = new RestResult();
         Article article =  articleService.findById(id);
         String tagId = article.getTagId();
         Tag tag = tagService.findById(tagId);
         ArticleView articleView = new ArticleView();
         BeanUtils.copyProperties(article,articleView);
         articleView.setTagName(tag.getName());
-        result.setCode("200");
-        result.setData(articleView);
-        return result;
+        restResult.setCode("200");
+        restResult.setData(articleView);
+        return restResult;
     }
 }

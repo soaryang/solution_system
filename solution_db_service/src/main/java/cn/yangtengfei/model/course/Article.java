@@ -1,10 +1,12 @@
-package cn.yangtengfei.api.front.view.article;
+package cn.yangtengfei.model.course;
 
 import cn.yangtengfei.model.baseModel.BaseModel;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-public class ArticleView extends BaseModel {
+@Document(collection = "article")
+public class Article extends BaseModel {
 
     private String id;
 
@@ -13,7 +15,5 @@ public class ArticleView extends BaseModel {
     private String articleName;
 
     private String content;
-
-    private String tagName;
 
 }

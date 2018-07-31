@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiSolutionService;
 import cn.yangtengfei.api.server.view.question.SolutionView;
@@ -45,39 +45,39 @@ public class SolutionController extends BaseController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@ModelAttribute SolutionView solutionView, HttpServletRequest request){
+    public RestResult save(@ModelAttribute SolutionView solutionView, HttpServletRequest request){
         //return  null;
         apiSolutionService.save(solutionView);
         return null;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public Result edit(@ModelAttribute SolutionView solutionView, HttpServletRequest request){
+    public RestResult edit(@ModelAttribute SolutionView solutionView, HttpServletRequest request){
         //return  null;
-        Result result = new Result();
-        result.setCode("200");
-        result.setData(apiSolutionService.save(solutionView));
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setData(apiSolutionService.save(solutionView));
+        return restResult;
     }
 
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public Result del(String id){
+    public RestResult del(String id){
         //return  null;
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         apiSolutionService.del(id);
-        result.setCode("200");
-        return result;
+        restResult.setCode("200");
+        return restResult;
     }
 
 
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public Result findById(String id){
+    public RestResult findById(String id){
         //return  null;
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         SolutionView solutionView = apiSolutionService.findSolutionViewById(id);
-        result.setCode("200");
-        result.setData(solutionView);
-        return result;
+        restResult.setCode("200");
+        restResult.setData(solutionView);
+        return restResult;
     }
 
 

@@ -2,11 +2,10 @@ package cn.yangtengfei.api.service.logicService.user;
 
 import cn.yangtengfei.api.cacheService.user.RegisterCacheService;
 import cn.yangtengfei.api.cacheService.user.UserCacheService;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.service.logicService.common.AjaxResponseService;
 import cn.yangtengfei.model.user.User;
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +31,11 @@ public class UserLogicService {
         String verifyCode = request.getParameter("verifyCode");
         String ip = request.getRemoteAddr();
         String code = registerCacheService.findMailRegisterCode(ip);
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         if(StringUtils.isEmpty(code)){
-            //result.setCode("500");
-            //result.setMessage("注册码失效");
-            //ajaxResponseService.returnJson(response, JSON.toJSONString(result));
+            //restResult.setCode("500");
+            //restResult.setMessage("注册码失效");
+            //ajaxResponseService.returnJson(response, JSON.toJSONString(restResult));
             throw new CommonException("500","注册码失效");
         }else if(!verifyCode.equals(code)){
             throw new CommonException("500","注册码错误");

@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.user;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.user.ApiUserService;
 import cn.yangtengfei.api.server.view.user.UserView;
@@ -39,23 +39,23 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "/findUserInfo", method = RequestMethod.GET)
-    public Result findUserInfo(String id){
+    public RestResult findUserInfo(String id){
 
-        Result result = new Result();
-        result.setCode("200");
-        result.setData(apiUserService.finUserInfo(id));
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setData(apiUserService.finUserInfo(id));
+        return restResult;
     }
 
 
     @RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
-    public Result save(@ModelAttribute UserView userView){
+    public RestResult save(@ModelAttribute UserView userView){
 
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         apiUserService.saveUserByWechat(userView);
-        result.setCode("200");
+        restResult.setCode("200");
         logger.info("all:{}", JSON.toJSONString(userService.findAll()));
-        return result;
+        return restResult;
 
 
         //logger.info("subscribeState:{},pageNumber:{},pageSize:{}",subscribeState,pageNumber,pageSize);
@@ -64,13 +64,13 @@ public class UserController extends BaseController {
 
 
     /*@RequestMapping(value = "/save", method = {RequestMethod.GET,RequestMethod.POST})
-    private Result saveUser(){
+    private RestResult saveUser(){
         User user = new User();
         String password = BCrypt.hashpw("***20121226NOTFORGET",BCrypt.gensalt());
         user.setName("admin");
         user.setPassword(password);
         userService.save(user);
-        Result result = new Result();
+        RestResult result = new RestResult();
         result.setCode("200");
         return result;
     }*/

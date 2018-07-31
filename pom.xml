@@ -16,8 +16,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>solution_api</module>
-        <module>solution_code_create_server</module>
-        <module>solution_db_model</module>
         <module>solution_db_service</module>
         <module>solution_webCrawler</module>
         <module>solution_comm_util</module>

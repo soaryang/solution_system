@@ -2,8 +2,7 @@ package cn.yangtengfei.api.front.controller.question;
 
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
-import cn.yangtengfei.api.config.Result;
-import cn.yangtengfei.api.server.view.question.TagView;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.server.view.question.QuestionView;
 import cn.yangtengfei.api.server.view.question.SolutionView;
@@ -13,11 +12,8 @@ import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.TagQuestionRelation;
 import cn.yangtengfei.service.question.TagQuestionRelationService;
-import cn.yangtengfei.util.ArrayUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,9 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -50,8 +44,8 @@ public class UserQuestionController {
     private TagQuestionRelationService tagQuestionRelationService;
 
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public Result findById(String id){
-        Result result = new Result();
+    public RestResult findById(String id){
+        RestResult restResult = new RestResult();
         QuestionView questionView = apiQuestionService.findQuestionViewById(id);
         if(questionView!=null){
             List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
@@ -63,15 +57,15 @@ public class UserQuestionController {
             }
             questionView.setSolutionViewList(solutionViewList);
         }
-        result.setCode("200");
-        result.setMessage("OK");
-        result.setData(questionView);
-        return result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        restResult.setData(questionView);
+        return restResult;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@ModelAttribute UserQuestionUploadView userQuestionUploadView, HttpServletRequest request){
-        Result result = new Result();
+    public RestResult save(@ModelAttribute UserQuestionUploadView userQuestionUploadView, HttpServletRequest request){
+        RestResult restResult = new RestResult();
 
         List<String> tagList = userQuestionUploadView.getTagInfo();
         List<TagFrontView> tagViews = new ArrayList<>();
@@ -85,10 +79,10 @@ public class UserQuestionController {
         String id = apiQuestionService.save(userQuestionUploadView.getName(),userQuestionUploadView.getDescribe());
         //保存关系信息.
         tagViews.forEach(tagView -> saveQuestion(tagView.getId(),id));
-        result.setCode("200");
-        result.setMessage("OK");
+        restResult.setCode("200");
+        restResult.setMessage("OK");
         //apiQuestionService.save(questionView);
-        return result;
+        return restResult;
     }
 
     private void saveQuestion(String tagId,String questionId){

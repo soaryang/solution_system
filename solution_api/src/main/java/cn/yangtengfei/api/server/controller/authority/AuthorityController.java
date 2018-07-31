@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.authority;
 
 
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.service.logicService.authority.AuthorityService;
@@ -50,7 +50,7 @@ public class AuthorityController extends BaseController {
     }
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
     public void register(@ModelAttribute UserView userView,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        /*Result result = new Result();
+        /*RestResult result = new RestResult();
         apiUserService.saveUserByUserView(userView);
         result.setCode("200");
         return result;*/
@@ -100,19 +100,19 @@ public class AuthorityController extends BaseController {
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-    public Result findAll(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public RestResult findAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
             throw new CommonException(ErrorCode.Auth_Error_Code.USERNAME_OR_PASSWORD_IS_NULL, "USERNAME OR  PASSWORD IS NULL");
         }
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         User user = authorityService.userLogin(userName, password,response);
         if(user!=null){
-            result.setCode("200");
+            restResult.setCode("200");
         }else{
-            result.setCode("500");
+            restResult.setCode("500");
         }
-        return result;
+        return restResult;
     }
 }

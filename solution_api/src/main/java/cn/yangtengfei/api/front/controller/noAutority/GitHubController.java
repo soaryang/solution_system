@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.front.controller.noAutority;
 
 import cn.yangtengfei.api.cacheService.authority.AuthorityCacheService;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.front.view.user.GitHubUserView;
 import cn.yangtengfei.api.service.dataService.user.ApiGitHubUserService;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -53,7 +52,7 @@ public class GitHubController {
     private ApiGitHubUserService apiGitHubUserService;
 
     @RequestMapping(value="/api/github/userAdd",method = RequestMethod.POST)
-    public Result RegisteredByGithub(HttpServletRequest request, HttpServletResponse response) throws CommonException {
+    public RestResult RegisteredByGithub(HttpServletRequest request, HttpServletResponse response) throws CommonException {
         String login=request.getParameter("login");log.info("========="+login);
         String id=request.getParameter("id");log.info("========="+id);
         String avatar_url=request.getParameter("avatar_url");log.info("========="+avatar_url);
@@ -118,7 +117,7 @@ public class GitHubController {
         }
 
         //创建cookie 信息
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         Map<String,Object> map = new HashMap<>();
         String key = authorityCacheService.createAuthKey(login,360*60*24*7);
 
@@ -126,14 +125,14 @@ public class GitHubController {
         map.put("key",key);
 
 
-        result.setCode("200");
-        result.setData(map);
+        restResult.setCode("200");
+        restResult.setData(map);
 
         /*Map<String,Object> map = new HashMap<>();
         map.put("nick",gitHubUserInfo.getLogin());
         map.put("avatar_url",gitHubUserInfo.getAvatar_url());
-        result.setData(map);*/
-        return result;
+        restResult.setData(map);*/
+        return restResult;
     }
 
 }

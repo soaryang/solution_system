@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.server.view.question.QuestionView;
@@ -10,7 +10,6 @@ import cn.yangtengfei.model.question.Question;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,19 +33,19 @@ public class QuestionController extends BaseController {
     private SechedulerService sechedulerService;
 
     @RequestMapping(value = "/newQuestion", method = RequestMethod.GET)
-    public Result newQuestion(){
-        Result result = new Result();
+    public RestResult newQuestion(){
+        RestResult restResult = new RestResult();
         sechedulerService.createNewQuestionCache();
-        result.setCode("200");
-        return  result;
+        restResult.setCode("200");
+        return restResult;
     }
 
     @RequestMapping(value = "/hostQuestion", method = RequestMethod.GET)
-    public Result hostQuestion() throws IOException {
-        Result result = new Result();
+    public RestResult hostQuestion() throws IOException {
+        RestResult restResult = new RestResult();
         sechedulerService.createHotQuestionCache();
-        result.setCode("200");
-        return  result;
+        restResult.setCode("200");
+        return restResult;
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
@@ -66,31 +65,31 @@ public class QuestionController extends BaseController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@ModelAttribute QuestionView questionView, HttpServletRequest request){
-        Result result = new Result();
-        result.setCode("200");
-        result.setMessage("OK");
+    public RestResult save(@ModelAttribute QuestionView questionView, HttpServletRequest request){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setMessage("OK");
         apiQuestionService.save(questionView);
-        return result;
+        return restResult;
     }
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public Result findById(String id){
-        Result result = new Result();
-        result.setCode("200");
-        result.setMessage("OK");
-        result.setData(apiQuestionService.findQuestionViewById(id));
-        return result;
+    public RestResult findById(String id){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        restResult.setData(apiQuestionService.findQuestionViewById(id));
+        return restResult;
     }
 
 
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
-    public Result del(@PathVariable("id") String id){
+    public RestResult del(@PathVariable("id") String id){
         apiQuestionService.del(id);
-        Result result = new Result();
-        result.setCode("200");
-        result.setMessage("OK");
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        return restResult;
 
     }
 

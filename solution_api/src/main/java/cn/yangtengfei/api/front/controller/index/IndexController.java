@@ -1,6 +1,6 @@
 package cn.yangtengfei.api.front.controller.index;
 
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.model.question.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,13 @@ public class IndexController {
     private ApiTagService apiTagService;
 
     @RequestMapping(value = "/findTags", method = RequestMethod.GET)
-    public Result findTags(){
-        Result result = new Result();
+    public RestResult findTags(){
+        RestResult restResult = new RestResult();
         Page<Tag> tagPage = apiTagService.findByUseStatus(0,1,20);
-        result.setCode("200");
-        result.setMessage("OK");
-        result.setData(tagPage.getContent());
-        return result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        restResult.setData(tagPage.getContent());
+        return restResult;
     }
 
 }

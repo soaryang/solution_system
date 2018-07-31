@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.question;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.server.view.question.TagTitleView;
@@ -15,8 +15,6 @@ import cn.yangtengfei.util.ImageUtil;
 import cn.yangtengfei.util.ListUtils;
 import cn.yangtengfei.webCrawler.stackOverFlow.StacKOverFlowDataCrwaler;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,11 +24,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +62,8 @@ public class TagController extends BaseController {
 
 
     @RequestMapping(value = "/selectTag", method = RequestMethod.GET)
-    public Result selectTag(String tagId) throws IOException {
-        Result result = new Result();
+    public RestResult selectTag(String tagId) throws IOException {
+        RestResult restResult = new RestResult();
 
         Tag tag = tagService.findById(tagId);
 
@@ -77,16 +73,16 @@ public class TagController extends BaseController {
             tagTitle = new TagTitle();
             tagTitle.setTagId(tag.getId());
             tagTitleService.save(tagTitle);
-            result.setCode("200");
+            restResult.setCode("200");
         }else{
-            result.setCode("500");
+            restResult.setCode("500");
         }
 
-        return result;
+        return restResult;
     }
 
     @RequestMapping(value = "/setIndexPage", method = RequestMethod.GET)
-    public Result setIndexPage() throws IOException {
+    public RestResult setIndexPage() throws IOException {
         /*TagView  tagView = apiTagService.findById(tagId);
         Map<String, TagView> map = new HashMap<>();
         String content = FileUtils.readFileToString(new File(tagFilecacheFath), "UTF-8");
@@ -97,7 +93,7 @@ public class TagController extends BaseController {
                 map.put(tagViewTemp.getId(), tagView);
             }
         }*/
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         /*Page<Tag> tagPage = apiTagService.findByUseStatus(1,0,11);
         List<Tag> tagList = tagPage.getContent();
         List<TagView> tagViewList = new ArrayList<TagView>();
@@ -125,17 +121,17 @@ public class TagController extends BaseController {
         }
 
 
-        result.setCode("200");
-        return result;
+        restResult.setCode("200");
+        return restResult;
     }
 
 
 
 
     @RequestMapping(value = "/findAllTagTitle", method = RequestMethod.GET)
-    public Result findAllTagTitle(){
-        Result result = new Result();
-        result.setCode("200");
+    public RestResult findAllTagTitle(){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
         List<TagTitle> tagTitles = tagTitleService.findAll();
 
         List<String> ids = new ArrayList<>();
@@ -152,17 +148,17 @@ public class TagController extends BaseController {
         tagTitles.forEach(tagTitle -> tagTitleViewArrayList.add(new TagTitleView(tagTitle.getId(),tagTitle.getTagId(),tagMap.get(tagTitle.getTagId()).getName())));
 
 
-        result.setData(tagTitleViewArrayList);
-        return result;
+        restResult.setData(tagTitleViewArrayList);
+        return restResult;
     }
 
 
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
-    public Result findAll(@PathVariable("id") String id){
-        Result result = new Result();
-        result.setCode("200");
-        result.setData(apiTagService.findById(id));
-        return result;
+    public RestResult findAll(@PathVariable("id") String id){
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setData(apiTagService.findById(id));
+        return restResult;
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
@@ -206,11 +202,11 @@ public class TagController extends BaseController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Result update(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
+    public RestResult update(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws CommonException {
 
 
         log.info("============================================================================");
-        Result result = new Result();
+        RestResult restResult = new RestResult();
         String tagName = request.getParameter("tagName");
         String tagId = request.getParameter("tagId");
         String describe = request.getParameter("describe");
@@ -265,16 +261,16 @@ public class TagController extends BaseController {
                 }
             }
         }
-        result.setCode("200");
-        return result;
+        restResult.setCode("200");
+        return restResult;
 
 
 
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result save(@RequestParam(value = "file", required = false) MultipartFile file,HttpServletRequest request) throws CommonException {
-        Result result = new Result();
+    public RestResult save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws CommonException {
+        RestResult restResult = new RestResult();
         String tagName = request.getParameter("tagName");
         String describe = request.getParameter("describe");
         if(StringUtils.isBlank(tagName)){
@@ -327,35 +323,35 @@ public class TagController extends BaseController {
                 }
             }
         }
-        result.setCode("200");
-        //result.setData(tagView);
+        restResult.setCode("200");
+        //restResult.setData(tagView);
 
-        return result;
+        return restResult;
     }
 
 
     @RequestMapping(value = "/tagUse", method = RequestMethod.GET)
-    public Result tagUse(String id,Integer status, HttpServletRequest request){
+    public RestResult tagUse(String id, Integer status, HttpServletRequest request){
         apiTagService.updateUseStatus(id,status,getUser().getId());
-        Result result = new Result();
-        result.setCode("200");
-        result.setMessage("OK");
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        return restResult;
     }
 
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
-    public Result del(@PathVariable("id") String id){
-        Result result = new Result();
+    public RestResult del(@PathVariable("id") String id){
+        RestResult restResult = new RestResult();
         apiTagService.del(id);
-        result.setCode("200");
-        result.setMessage("OK");
-        return  result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        return restResult;
     }
 
     @RequestMapping(value = "/crawler", method = RequestMethod.GET)
-    public Result crawler(){
-        Result result = new Result();
+    public RestResult crawler(){
+        RestResult restResult = new RestResult();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -380,9 +376,9 @@ public class TagController extends BaseController {
 
             }
         }).start();
-        result.setCode("200");
-        result.setMessage("OK");
-        return  result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        return restResult;
     }
 
 }

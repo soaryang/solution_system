@@ -1,7 +1,7 @@
 package cn.yangtengfei.api.server.controller.article;
 
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.model.course.Article;
@@ -48,16 +48,16 @@ public class ArticleController extends BaseController {
     }
 
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
-    public Result findById(@PathVariable("id") String id){
-        Result result = new Result();
+    public RestResult findById(@PathVariable("id") String id){
+        RestResult restResult = new RestResult();
         Article Article =  articleService.findById(id);
-        result.setCode("200");
-        result.setData(Article);
-        return result;
+        restResult.setCode("200");
+        restResult.setData(Article);
+        return restResult;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Result findAll(HttpServletRequest request) throws CommonException {
+    public RestResult findAll(HttpServletRequest request) throws CommonException {
         String id = request.getParameter("id");
         String tagId = request.getParameter("tagId");
         String articleName = request.getParameter("articleName");
@@ -78,9 +78,9 @@ public class ArticleController extends BaseController {
 
 
         articleService.save(article);
-        Result result = new Result();
-        result.setCode("200");
-        return result;
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        return restResult;
     }
 
 }

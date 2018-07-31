@@ -2,18 +2,15 @@ package cn.yangtengfei.api.front.controller.noAutority;
 
 import cn.yangtengfei.api.cacheService.question.SolutionCacheService;
 import cn.yangtengfei.api.config.PageResultModel;
-import cn.yangtengfei.api.config.Result;
+import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.server.view.question.QuestionView;
-import cn.yangtengfei.api.server.view.question.SolutionView;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.api.service.dataService.question.ApiQuestionService;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.model.question.Question;
-import cn.yangtengfei.model.question.Solution;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.util.ListUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
@@ -82,8 +79,8 @@ public class QuestionNoAuthorityController {
     }
 
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public Result findById(String id){
-        Result result = new Result();
+    public RestResult findById(String id){
+        RestResult restResult = new RestResult();
         QuestionView questionView = apiQuestionService.findQuestionViewById(id);
         /*if(questionView!=null){
             List<Solution> solutionList = solutionCacheService.findByQuestionIdAndDeleteFlg(questionView.getId(),0);
@@ -95,10 +92,10 @@ public class QuestionNoAuthorityController {
             }
             questionView.setSolutionViewList(solutionViewList);
         }*/
-        result.setCode("200");
-        result.setMessage("OK");
-        result.setData(questionView);
-        return result;
+        restResult.setCode("200");
+        restResult.setMessage("OK");
+        restResult.setData(questionView);
+        return restResult;
     }
 
     @RequestMapping(value="/upload",method= RequestMethod.POST)
