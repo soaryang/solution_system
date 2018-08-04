@@ -1,6 +1,6 @@
 package cn.yangtengfei.api.front.view.article;
 
-import cn.yangtengfei.model.baseModel.BaseModel;
+import cn.yangtengfei.model.common.BaseModel;
 import lombok.Data;
 
 @Data

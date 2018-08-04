@@ -1,6 +1,6 @@
 package cn.yangtengfei.model.question;
 
-import cn.yangtengfei.model.baseModel.BaseModel;
+import cn.yangtengfei.model.common.BaseModel;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 

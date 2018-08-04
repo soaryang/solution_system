@@ -1,24 +1,21 @@
 package cn.yangtengfei.model.sourceCode;
 
-
+import cn.yangtengfei.model.common.BaseModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 @Document(collection = "sourceCode")
-public class SourceCodeModel implements Serializable{
+public class SourceCodeModel extends BaseModel implements Serializable{
 
     private String id;
 
-    private String link;
-
     private String name;
 
-    private int age;
+    private String url;
 
-    private Date date;
+    private String describe;
 
 
     public String getId() {
@@ -29,14 +26,6 @@ public class SourceCodeModel implements Serializable{
         this.id = id;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getName() {
         return name;
     }
@@ -45,20 +34,20 @@ public class SourceCodeModel implements Serializable{
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getUrl() {
+        return url;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
 }

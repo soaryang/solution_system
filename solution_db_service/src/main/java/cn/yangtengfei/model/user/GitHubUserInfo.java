@@ -1,7 +1,7 @@
 package cn.yangtengfei.model.user;
 
 
-import cn.yangtengfei.model.baseModel.BaseModel;
+import cn.yangtengfei.model.common.BaseModel;
 import lombok.Data;
 
 import java.util.Date;

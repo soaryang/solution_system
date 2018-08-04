@@ -1,4 +1,4 @@
-package cn.yangtengfei.model.baseModel;
+package cn.yangtengfei.model.common;
 
 import lombok.Data;
 
