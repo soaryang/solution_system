@@ -83,4 +83,13 @@ public class ArticleController extends BaseController {
         return restResult;
     }
 
+
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
+    public RestResult del(@PathVariable("id") String id){
+        articleService.delete(id);
+        RestResult restResult = new RestResult();
+        restResult.setCode("200");
+        return restResult;
+    }
+
 }

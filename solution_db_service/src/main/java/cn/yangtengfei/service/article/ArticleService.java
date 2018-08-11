@@ -45,5 +45,9 @@ public class ArticleService {
         return articleRespository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
     }
 
+    public void delete(String id){
+        articleRespository.delete(id);
+    }
+
 
 }
