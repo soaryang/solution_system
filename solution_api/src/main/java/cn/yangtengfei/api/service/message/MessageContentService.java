@@ -1,4 +1,4 @@
-package cn.yangtengfei.api.service.dataService.common;
+package cn.yangtengfei.api.service.message;
 
 import cn.yangtengfei.api.wechat.message.Article;
 import cn.yangtengfei.api.wechat.message.NewsMessage;
@@ -24,4 +24,5 @@ public class MessageContentService {
 		newsMessage.setArticles(articleList);
 		return FormatXmlProcess.newsMessageToXml(newsMessage);
 	}
+	
 }
