@@ -10,6 +10,8 @@ import java.util.Date;
  */
 public class DateUtils {
 
+    public static final String PATTERN_YYYY_MM_DD = "yyyy-MM-dd";
+
     /**
      * 获取当前时间
      * @return 当前时间
@@ -96,6 +98,12 @@ public class DateUtils {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static String converDateToStr(Date date, String pattern) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern); //使用了默认的格式创建了一个日期格式化对象。
+        String time = dateFormat.format(date); //可以把日期转换转指定格式的字符串
+        return time;
     }
 
 
