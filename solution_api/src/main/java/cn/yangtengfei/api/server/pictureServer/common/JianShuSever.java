@@ -156,7 +156,7 @@ public class JianShuSever extends PictureService{
 		}
 
 		String value = new String(res, "UTF-8");
-		System.out.println("uploadFile value ===================="+value);
+		log.info("uploadFile value ===================="+value);
 		return res;
 	}
 
