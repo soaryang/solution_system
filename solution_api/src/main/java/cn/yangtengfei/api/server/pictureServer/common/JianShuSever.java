@@ -7,6 +7,7 @@ import cn.yangtengfei.api.util.http.HttpObjectResponse;
 import cn.yangtengfei.api.util.http.HttpUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,10 +38,7 @@ public class JianShuSever extends PictureService{
 		String path = "D:\\tmp\\download.jpg";
 		String fileName = file.getOriginalFilename();
 		PictureToken pictureToken = HttpObjectResponse.getObject(PictureToken.class, String.format(GET_PICTURE_TOKEN, fileName),"GET",COOKIE);
-		System.out.println(pictureToken);
-
-
-
+		log.info("MultipartFile============:{}",JSON.toJSONString(file));
 		log.info("pictureTokenxxxxxxxxxxxxxxxxxxxx:"+pictureToken);
 		String suffix = FileUtils.stringSuffix(path);
 		String[] fileArray1 = {"file", fileName, "image/" + suffix, path};
@@ -56,9 +54,29 @@ public class JianShuSever extends PictureService{
 		log.info("pitureUploadResponsexxxxxxxxxxxxxxxxxxxx:"+JSON.toJSONString(pitureUploadResponse));
 		//System.out.println(pitureUploadResponse);
 		String insertUrl = pitureUploadResponse.getUrl();
-
 		log.info("insertUrl:{}",insertUrl   );
 	}
+
+	/*public static void main(String[] args) throws Exception {
+		//获取image 长传token
+		String path = "D:\\tmp\\download.jpg";
+		String fileName = FileUtils.getFileName(path);
+		PictureToken pictureToken = HttpObjectResponse.getObject(PictureToken.class, String.format(GET_PICTURE_TOKEN, fileName),"GET",COOKIE);
+		System.out.println(pictureToken);
+		String suffix = FileUtils.stringSuffix(path);
+		String[] fileArray1 = {"file", fileName, "image/" + suffix, path};
+		List<String[]> fileParams = new ArrayList<>();
+		fileParams.add(fileArray1);
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("token", pictureToken.getToken());
+		paramMap.put("key", pictureToken.getKey());
+		paramMap.put("name", "x:protocol");
+		String pictureUploadResult = savePictureToServer(paramMap, fileParams, new FileInputStream(new File(path)),COOKIE);
+		PitureUploadResponse pitureUploadResponse = JSON.parseObject(pictureUploadResult, PitureUploadResponse.class);
+		//System.out.println(pitureUploadResponse);
+		String insertUrl = pitureUploadResponse.getUrl();
+		System.out.println("insertUrl:"+insertUrl);
+	}*/
 	public static String savePictureToServer(Map<String, String> paramMap, List<String[]> fileParams, FileInputStream fileInputStream,String cookie) throws Exception {
 		HttpURLConnection httpURLConnection = HttpUtils.initHttpURLConnection(SAVE_PICTURE_TO_SERVER,"POST",cookie);
 		httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
