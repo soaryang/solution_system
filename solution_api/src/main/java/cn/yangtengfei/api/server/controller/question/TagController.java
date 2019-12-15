@@ -287,8 +287,6 @@ public class TagController extends BaseController {
             String fileName = file.getOriginalFilename();
             TagView tagView = apiTagService.save(tagName);
 
-            jianShuSever.savePictureToServer(file);
-
             tagView.setDescribe(describe);
             File targetFile = new File(imageFilePath);
             if(!targetFile.exists()){
@@ -304,6 +302,8 @@ public class TagController extends BaseController {
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
+                jianShuSever.savePictureToServer(filePath);
+
                 tagView.setImagePath(filePath);
             }else{
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";

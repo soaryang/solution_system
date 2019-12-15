@@ -7,9 +7,7 @@ import cn.yangtengfei.api.util.http.HttpObjectResponse;
 import cn.yangtengfei.api.util.http.HttpUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.HttpURLConnection;

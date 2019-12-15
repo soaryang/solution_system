@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public abstract class PictureService {
 
-	public abstract void savePictureToServer(MultipartFile file) throws Exception;
+	public abstract void savePictureToServer(String path) throws Exception;
 
 }
