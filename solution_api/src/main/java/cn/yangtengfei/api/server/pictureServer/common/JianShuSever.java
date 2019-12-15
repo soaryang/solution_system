@@ -84,6 +84,14 @@ public class JianShuSever extends PictureService{
 	}
 
 	public static byte[] saveFile(HttpURLConnection httpURLConnection, Map<String, String> paramMap, List<String[]> fileParams, FileInputStream fileInputStream) throws Exception {
+
+
+		log.info("save file:httpURLConnection:{}",JSON.toJSONString(httpURLConnection));
+
+		log.info("save file:paramMap:{}",JSON.toJSONString(paramMap));
+
+		log.info("save file:fileParams:{}",JSON.toJSONString(fileParams));
+
 		ByteArrayOutputStream bos = null;//byte输出流，用来读取服务器返回的信息
 		InputStream is = null;//输入流，用来读取服务器返回的信息
 		byte[] res = null;//保存服务器返回的信息的byte数组
