@@ -6,6 +6,7 @@ import cn.yangtengfei.api.server.pictureServer.jianshu.util.FileUtils;
 import cn.yangtengfei.api.util.http.HttpObjectResponse;
 import cn.yangtengfei.api.util.http.HttpUtils;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service("JianshuServer")
 public class JianShuSever extends PictureService{
 
@@ -48,6 +50,7 @@ public class JianShuSever extends PictureService{
 		//System.out.println(pitureUploadResponse);
 		String insertUrl = pitureUploadResponse.getUrl();
 
+		log.info("insertUrl:{}",insertUrl);
 	}
 	public static String savePictureToServer(Map<String, String> paramMap, List<String[]> fileParams, FileInputStream fileInputStream,String cookie) throws Exception {
 		HttpURLConnection httpURLConnection = HttpUtils.initHttpURLConnection(SAVE_PICTURE_TO_SERVER,"POST",cookie);
