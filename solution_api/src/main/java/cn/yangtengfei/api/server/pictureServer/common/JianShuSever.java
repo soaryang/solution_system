@@ -38,6 +38,9 @@ public class JianShuSever extends PictureService{
 		String fileName = file.getOriginalFilename();
 		PictureToken pictureToken = HttpObjectResponse.getObject(PictureToken.class, String.format(GET_PICTURE_TOKEN, fileName),"GET",COOKIE);
 		System.out.println(pictureToken);
+
+
+
 		log.info("pictureTokenxxxxxxxxxxxxxxxxxxxx:"+pictureToken);
 		String suffix = FileUtils.stringSuffix(path);
 		String[] fileArray1 = {"file", fileName, "image/" + suffix, path};
@@ -50,6 +53,7 @@ public class JianShuSever extends PictureService{
 
 		String pictureUploadResult = savePictureToServer(paramMap, fileParams, new FileInputStream(new File(path)),COOKIE);
 		PitureUploadResponse pitureUploadResponse = JSON.parseObject(pictureUploadResult, PitureUploadResponse.class);
+		log.info("pitureUploadResponsexxxxxxxxxxxxxxxxxxxx:"+JSON.toJSONString(pitureUploadResponse));
 		//System.out.println(pitureUploadResponse);
 		String insertUrl = pitureUploadResponse.getUrl();
 
