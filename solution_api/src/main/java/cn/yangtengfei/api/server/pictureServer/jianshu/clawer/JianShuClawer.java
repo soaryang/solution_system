@@ -13,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -20,6 +21,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.*;
 
+@Service
 public class JianShuClawer {
 
 	public static final String NOTE_BOOK_LIST_URL = "https://www.jianshu.com/author/notebooks";

@@ -4,6 +4,8 @@ import cn.yangtengfei.api.config.PageResultModel;
 import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
+import cn.yangtengfei.api.server.pictureServer.common.JianShuSever;
+import cn.yangtengfei.api.server.pictureServer.common.PictureService;
 import cn.yangtengfei.api.server.view.question.TagTitleView;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
 import cn.yangtengfei.api.server.view.question.TagView;
@@ -25,6 +27,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
@@ -59,6 +62,9 @@ public class TagController extends BaseController {
 
     @Autowired
     private TagService tagService;
+
+    @Resource
+    private JianShuSever jianShuSever;
 
 
     @RequestMapping(value = "/selectTag", method = RequestMethod.GET)
@@ -204,7 +210,6 @@ public class TagController extends BaseController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public RestResult update(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) throws CommonException {
 
-
         log.info("============================================================================");
         RestResult restResult = new RestResult();
         String tagName = request.getParameter("tagName");
@@ -282,8 +287,9 @@ public class TagController extends BaseController {
             String fileName = file.getOriginalFilename();
             TagView tagView = apiTagService.save(tagName);
 
-            tagView.setDescribe(describe);
+            jianShuSever.savePictureToServer(file);
 
+            tagView.setDescribe(describe);
             File targetFile = new File(imageFilePath);
             if(!targetFile.exists()){
                 targetFile.mkdirs();
@@ -296,11 +302,8 @@ public class TagController extends BaseController {
             if(!StringUtils.isBlank(fileName)){
                 String suffix = fileName.substring(fileName.lastIndexOf("."));
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
-
-
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
-
                 tagView.setImagePath(filePath);
             }else{
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+".jpg";
@@ -312,6 +315,8 @@ public class TagController extends BaseController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if(out!=null){

@@ -13,8 +13,6 @@ public class TagView implements Serializable {
 
     private static final long serialVersionUID = -6827908880400309748L;
 
-
-
     private String id;
 
     private String name;
@@ -27,4 +25,9 @@ public class TagView implements Serializable {
     private Integer useStatus;
 
     private int questionCount;
+
+    //图片来源
+    private int pictureSource;
+    //图片的地址
+    private String path;
 }
