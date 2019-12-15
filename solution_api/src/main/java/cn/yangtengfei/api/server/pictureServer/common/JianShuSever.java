@@ -47,8 +47,10 @@ public class JianShuSever extends PictureService{
 		paramMap.put("token", pictureToken.getToken());
 		paramMap.put("key", pictureToken.getKey());
 		paramMap.put("name", "x:protocol");
-
+		log.info("00000000000000000000000000000000:"+JSON.toJSONString(paramMap));
 		String pictureUploadResult = savePictureToServer(paramMap, fileParams, (FileInputStream) file.getInputStream(),COOKIE);
+
+		log.info("0000000000pictureUploadResult0000000000000000000000:"+JSON.toJSONString(pictureUploadResult));
 		PitureUploadResponse pitureUploadResponse = JSON.parseObject(pictureUploadResult, PitureUploadResponse.class);
 		log.info("pitureUploadResponsexxxxxxxxxxxxxxxxxxxx:"+JSON.toJSONString(pitureUploadResponse));
 		//System.out.println(pitureUploadResponse);
