@@ -31,6 +31,8 @@ public class JianShuSever extends PictureService{
 
 	@Override
 	public void savePictureToServer(MultipartFile file) throws Exception {
+
+		log.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		//获取image 长传token
 		String path = "D:\\tmp\\download.jpg";
 		String fileName = file.getOriginalFilename();
