@@ -50,7 +50,7 @@ public class JianShuSever extends PictureService{
 		//System.out.println(pitureUploadResponse);
 		String insertUrl = pitureUploadResponse.getUrl();
 
-		log.info("insertUrl:{}",insertUrl);
+		log.info("insertUrl:{}",insertUrl   );
 	}
 	public static String savePictureToServer(Map<String, String> paramMap, List<String[]> fileParams, FileInputStream fileInputStream,String cookie) throws Exception {
 		HttpURLConnection httpURLConnection = HttpUtils.initHttpURLConnection(SAVE_PICTURE_TO_SERVER,"POST",cookie);
