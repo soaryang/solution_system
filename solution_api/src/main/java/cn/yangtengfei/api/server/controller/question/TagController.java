@@ -302,7 +302,7 @@ public class TagController extends BaseController {
                 String filePath = File.separator+"tag"+File.separator+tagView.getId()+suffix;
                 out = new FileOutputStream(imageFilePath+filePath);
                 out.write(file.getBytes());
-                jianShuSever.savePictureToServer(filePath);
+                jianShuSever.savePictureToServer(imageFilePath+filePath);
 
                 tagView.setImagePath(filePath);
             }else{
