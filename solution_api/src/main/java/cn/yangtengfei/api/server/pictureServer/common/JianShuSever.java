@@ -38,10 +38,9 @@ public class JianShuSever extends PictureService{
 		String path = "D:\\tmp\\download.jpg";
 		String fileName = file.getOriginalFilename();
 		PictureToken pictureToken = HttpObjectResponse.getObject(PictureToken.class, String.format(GET_PICTURE_TOKEN, fileName),"GET",COOKIE);
-		log.info("MultipartFile============:{}",JSON.toJSONString(file));
+		//log.info("MultipartFile============:{}",JSON.toJSONString(file));
 		log.info("pictureTokenxxxxxxxxxxxxxxxxxxxx:"+pictureToken);
-		String suffix = FileUtils.stringSuffix(path);
-		String[] fileArray1 = {"file", fileName, "image/" + suffix, path};
+		String[] fileArray1 = {"file", fileName, file.getContentType(), path};
 		List<String[]> fileParams = new ArrayList<>();
 		fileParams.add(fileArray1);
 		Map<String, String> paramMap = new HashMap<>();
@@ -49,7 +48,7 @@ public class JianShuSever extends PictureService{
 		paramMap.put("key", pictureToken.getKey());
 		paramMap.put("name", "x:protocol");
 
-		String pictureUploadResult = savePictureToServer(paramMap, fileParams, new FileInputStream(new File(path)),COOKIE);
+		String pictureUploadResult = savePictureToServer(paramMap, fileParams, (FileInputStream) file.getInputStream(),COOKIE);
 		PitureUploadResponse pitureUploadResponse = JSON.parseObject(pictureUploadResult, PitureUploadResponse.class);
 		log.info("pitureUploadResponsexxxxxxxxxxxxxxxxxxxx:"+JSON.toJSONString(pitureUploadResponse));
 		//System.out.println(pitureUploadResponse);
@@ -157,7 +156,7 @@ public class JianShuSever extends PictureService{
 		}
 
 		String value = new String(res, "UTF-8");
-		System.out.println(value);
+		System.out.println("uploadFile value ===================="+value);
 		return res;
 	}
 
