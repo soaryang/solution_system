@@ -38,6 +38,7 @@ public class JianShuSever extends PictureService{
 		String fileName = file.getOriginalFilename();
 		PictureToken pictureToken = HttpObjectResponse.getObject(PictureToken.class, String.format(GET_PICTURE_TOKEN, fileName),"GET",COOKIE);
 		System.out.println(pictureToken);
+		log.info("pictureTokenxxxxxxxxxxxxxxxxxxxx:"+pictureToken);
 		String suffix = FileUtils.stringSuffix(path);
 		String[] fileArray1 = {"file", fileName, "image/" + suffix, path};
 		List<String[]> fileParams = new ArrayList<>();
