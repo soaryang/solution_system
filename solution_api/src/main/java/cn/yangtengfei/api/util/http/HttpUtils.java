@@ -7,6 +7,13 @@ import java.net.URL;
 
 public class HttpUtils {
 
+	public static HttpURLConnection initHttpURLConnection(String url) throws IOException {
+		System.out.println("initHttpURLConnection url is: " + url);
+		URL notebooksUrl = new URL(url);
+		HttpURLConnection httpURLConnection = (HttpURLConnection) notebooksUrl.openConnection();
+		return httpURLConnection;
+	}
+
 	public static HttpURLConnection initHttpURLConnection(String url,String method,String cookie) throws IOException {
 		System.out.println("initHttpURLConnection url is: " + url);
 		URL notebooksUrl = new URL(url);
