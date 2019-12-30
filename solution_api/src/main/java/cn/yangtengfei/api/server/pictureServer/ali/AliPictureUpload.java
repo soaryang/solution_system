@@ -128,7 +128,7 @@ public class AliPictureUpload {
 		}
 
 		String value = new String(res, "UTF-8");
-		System.out.println(value);
+		log.info("result:{}",value);
 		Map maps = (Map) JSON.parse(res);
 		String url = StringUtils.EMPTY;
 		if (maps.get("imgurl") != null) {

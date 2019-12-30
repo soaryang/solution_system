@@ -239,21 +239,27 @@ public class TagController extends BaseController {
 			if (!dictoryFile.exists()) {
 				dictoryFile.mkdirs();
 			}
+			String filePath = StringUtils.EMPTY;
 			if (!StringUtils.isBlank(fileName)) {
 				String suffix = fileName.substring(fileName.lastIndexOf("."));
-				String filePath = File.separator + "tag" + File.separator + tagView.getId() + suffix;
+				 filePath = File.separator + "tag" + File.separator + tagView.getId() + suffix;
 				out = new FileOutputStream(imageFilePath + filePath);
 				out.write(file.getBytes());
 				tagView.setImagePath(filePath);
 			} else {
-				String filePath = File.separator + "tag" + File.separator + tagView.getId() + ".jpg";
+				 filePath = File.separator + "tag" + File.separator + tagView.getId() + ".jpg";
 				tagView.setImagePath(filePath);
 				ImageUtil.createTextImage(tagName, imageFilePath + filePath);
 			}
 			tagView.setName(tagName);
 			tagView.setDescribe(describe);
 
-			log.info("====================" + JSON.toJSONString(tagView));
+			String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
+			if(StringUtils.isNotBlank(url)){
+				tagView.setNetUrl(url);
+			}
+
+			//log.info("====================" + JSON.toJSONString(tagView));
 			apiTagService.update(tagView);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
