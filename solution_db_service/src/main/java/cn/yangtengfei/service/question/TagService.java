@@ -22,8 +22,8 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    public Tag save(Tag questionType){
-        return tagRepository.save(questionType);
+    public Tag save(Tag tag){
+        return tagRepository.save(tag);
     }
 
     public void del(String id){

@@ -315,7 +315,9 @@ public class TagController extends BaseController {
 			}
 
 			String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
-
+			if(StringUtils.isNotBlank(url)){
+				tagView.setNetUrl(url);
+			}
 			log.info("url=============={}",url);
 			tagView = apiTagService.update(tagView);
 

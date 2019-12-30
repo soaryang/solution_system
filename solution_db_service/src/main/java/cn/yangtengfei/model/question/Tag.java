@@ -29,4 +29,7 @@ public class Tag extends BaseModel {
     /**文章数量*/
     private long articleCount;
 
+    /**寄存的网络地址*/
+    private String netUrl;
+
 }

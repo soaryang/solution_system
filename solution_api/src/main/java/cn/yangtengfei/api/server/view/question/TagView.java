@@ -30,4 +30,6 @@ public class TagView implements Serializable {
     private int pictureSource;
     //图片的地址
     private String path;
+
+    private String netUrl;
 }
