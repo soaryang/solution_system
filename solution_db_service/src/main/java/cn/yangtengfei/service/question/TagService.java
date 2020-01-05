@@ -80,4 +80,8 @@ public class TagService {
     public List<Tag> findAll(){
         return  tagRepository.findAll();
     }
+
+    public List<Tag> findTagWithUseStatus(int status){
+        return tagRepository.findByUseStatus(status);
+    }
 }

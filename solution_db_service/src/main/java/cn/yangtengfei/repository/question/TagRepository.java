@@ -28,4 +28,7 @@ public interface TagRepository extends MongoRepository<Tag,String> {
     Page<Tag> findByNameLikeOrderByUpdateTimeDesc(String name, Pageable pageable);
 
     List<Tag> findByIdInOrderByUpdateTimeDesc(List<String> ids);
+
+    List<Tag> findByUseStatus(Integer useStatus);
+
 }

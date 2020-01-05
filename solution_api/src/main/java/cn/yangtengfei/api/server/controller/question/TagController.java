@@ -6,6 +6,7 @@ import cn.yangtengfei.api.exception.CommonException;
 import cn.yangtengfei.api.server.controller.base.BaseController;
 import cn.yangtengfei.api.server.pictureServer.ali.AliPictureUpload;
 import cn.yangtengfei.api.server.pictureServer.common.JianShuSever;
+import cn.yangtengfei.api.server.pictureServer.luguo.LuGuoImageService;
 import cn.yangtengfei.api.server.view.question.TagTitleView;
 import cn.yangtengfei.api.server.view.question.TagView;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
@@ -30,10 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +73,9 @@ public class TagController extends BaseController {
 
 	@Resource
 	private AliPictureUpload aliPictureUpload;
+
+	@Resource
+	private LuGuoImageService luGuoImageService;
 
 
 	@RequestMapping(value = "/selectTag", method = RequestMethod.GET)
@@ -272,6 +273,8 @@ public class TagController extends BaseController {
 			tagView.setDescribe(describe);
 
 			String url = StringUtils.EMPTY;
+			//url = luGuoImageService.getLuGuoImageUrlPath(fileName,file.getContentType(),StringUtils.EMPTY,file.getInputStream());
+
 			//String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
 			if (StringUtils.isNotBlank(url)) {
 				tagView.setNetUrl(url);
