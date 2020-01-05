@@ -24,6 +24,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,6 +55,9 @@ public class TagController extends BaseController {
 
 	@Value("${tag.imageFilePath}")
 	private String imageFilePath;
+
+	@Value("${imageUrlHost}")
+	private String imageUrlHost;
 
 	@Value("${file.tagFilecacheFath}")
 	private String tagFilecacheFath;
@@ -196,6 +200,19 @@ public class TagController extends BaseController {
 		} else {
 			questionTypes = apiTagService.findByUseStatusAndIdAndNameLike(useStatus, id, name, start, pageSize);
 		}
+		long count = questionTypes.getTotalElements();
+		if (count != 0) {
+			List<Tag> tagList = questionTypes.getContent();
+			if (!CollectionUtils.isEmpty(tagList)) {
+				for(Tag tag:tagList){
+					TagView tagView = new TagView();
+					BeanUtils.copyProperties(tag,tagView);
+					if(StringUtils.isBlank(tag.getNetUrl())){
+						tag.setNetUrl(imageUrlHost+tag.getImagePath());
+					}
+				}
+			}
+		}
 		pageResultModel.setTotal(questionTypes.getTotalElements());
 		pageResultModel.setRows(questionTypes.getContent());
 		return pageResultModel;
@@ -242,21 +259,24 @@ public class TagController extends BaseController {
 			String filePath = StringUtils.EMPTY;
 			if (!StringUtils.isBlank(fileName)) {
 				String suffix = fileName.substring(fileName.lastIndexOf("."));
-				 filePath = File.separator + "tag" + File.separator + tagView.getId() + suffix;
+				filePath = File.separator + "tag" + File.separator + tagView.getId() + suffix;
 				out = new FileOutputStream(imageFilePath + filePath);
 				out.write(file.getBytes());
 				tagView.setImagePath(filePath);
 			} else {
-				 filePath = File.separator + "tag" + File.separator + tagView.getId() + ".jpg";
+				filePath = File.separator + "tag" + File.separator + tagView.getId() + ".jpg";
 				tagView.setImagePath(filePath);
 				ImageUtil.createTextImage(tagName, imageFilePath + filePath);
 			}
 			tagView.setName(tagName);
 			tagView.setDescribe(describe);
 
-			String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
-			if(StringUtils.isNotBlank(url)){
+			String url = StringUtils.EMPTY;
+			//String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
+			if (StringUtils.isNotBlank(url)) {
 				tagView.setNetUrl(url);
+			} else {
+				tagView.setNetUrl(imageUrlHost + filePath);
 			}
 
 			//log.info("====================" + JSON.toJSONString(tagView));
@@ -321,10 +341,12 @@ public class TagController extends BaseController {
 			}
 
 			String url = aliPictureUpload.uploadPictureToAliServer(imageFilePath + filePath);
-			if(StringUtils.isNotBlank(url)){
+			if (StringUtils.isNotBlank(url)) {
 				tagView.setNetUrl(url);
+			} else {
+				tagView.setNetUrl(imageUrlHost + filePath);
 			}
-			log.info("url=============={}",url);
+			log.info("url=============={}", url);
 			tagView = apiTagService.update(tagView);
 
 		} catch (FileNotFoundException e) {

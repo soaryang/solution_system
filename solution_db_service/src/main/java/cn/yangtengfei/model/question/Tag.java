@@ -35,9 +35,9 @@ public class Tag extends BaseModel {
 
 
     public String getNetUrl() {
-        if(StringUtils.isEmpty(netUrl)){
-            netUrl = "http://cms.51jieguo.com/images"+imagePath;
-        }
+//        if(StringUtils.isEmpty(netUrl)){
+//            netUrl = "http://cms.51jieguo.com/images"+imagePath;
+//        }
         return netUrl;
     }
 

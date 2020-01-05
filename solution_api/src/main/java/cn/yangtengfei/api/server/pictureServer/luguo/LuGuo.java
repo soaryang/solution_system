@@ -21,7 +21,6 @@ public class LuGuo {
 
 	public static void main(String[] args) {
 		try {
-
 			Map<String,String> userMap = LuGuoDengLu.session();
 			String session = "";
 			String token = userMap.get("token");
@@ -53,10 +52,7 @@ public class LuGuo {
 			paramMap.put("timestamp", (new Date()).getTime()+"");
 			paramMap.put("auth_token",token);
 			paramMap.put("nsfw", "0");
-
-
 			String urlPath = saveFile(httpURLConnection, paramMap, fileParams, new FileInputStream(new File(path)));
-
 			System.out.println(urlPath);
 		} catch (Exception e) {
 			log.error("uploadPictureToAliServer error", e);
