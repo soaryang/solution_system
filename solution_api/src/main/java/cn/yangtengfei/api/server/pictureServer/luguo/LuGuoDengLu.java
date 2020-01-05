@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 public class LuGuoDengLu {
 
-	public static void main(String[] args) throws IOException {
-	//public static Map<String,String> session() throws IOException {
+	//public static void main(String[] args) throws IOException {
+	public static Map<String,String> session() throws IOException {
 		HttpURLConnection httpURLConnection = HttpUtils.initHttpURLConnection("https://imgchr.com/");
 		httpURLConnection.setDoInput(true);
 		httpURLConnection.setDoOutput(true);
@@ -119,7 +119,7 @@ public class LuGuoDengLu {
 		Map<String,String> resultMap = Maps.newHashMap();
 		resultMap.put("token",token);
 		resultMap.put("session",cookieVal);
-		//return resultMap;
+		return resultMap;
 
 	}
 }

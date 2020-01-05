@@ -22,9 +22,9 @@ public class LuGuo {
 	public static void main(String[] args) {
 		try {
 
-			//Map<String,String> userMap = LuGuoDengLu.session();
+			Map<String,String> userMap = LuGuoDengLu.session();
 			String session = "";
-			String token = "";
+			String token = userMap.get("token");
 			HttpURLConnection httpURLConnection = HttpUtils.initHttpURLConnection(SAVE_PICTURE_TO_SERVER);
 			httpURLConnection.setDoInput(true);
 			httpURLConnection.setDoOutput(true);
@@ -51,7 +51,7 @@ public class LuGuo {
 			paramMap.put("type", "file");
 			paramMap.put("action", "upload");
 			paramMap.put("timestamp", (new Date()).getTime()+"");
-			paramMap.put("auth_token", "cdd6cc77ccd96bf24ce8aafe926c857f437c9830");
+			paramMap.put("auth_token",token);
 			paramMap.put("nsfw", "0");
 
 
