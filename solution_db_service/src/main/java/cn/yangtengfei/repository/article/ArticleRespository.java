@@ -12,7 +12,7 @@ import java.util.List;
 @EnableMongoRepositories(mongoTemplateRef = "articleMongoTemplate")
 public interface ArticleRespository  extends MongoRepository<Article,String> {
 
-    List<Article> findByTagId(String courseId);
+    List<Article> findByTagId(String tagId);
 
     Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String tagId,Integer deleteFlg, Pageable pageable);
 
@@ -21,9 +21,6 @@ public interface ArticleRespository  extends MongoRepository<Article,String> {
 
 
     long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg);
-
-
-
 
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Web层日志切面
@@ -30,6 +31,8 @@ public class WebLogAspect {
     private Logger logger = Logger.getLogger(getClass());
 
     ThreadLocal<Long> startTime = new ThreadLocal<>();
+    ThreadLocal<String> url = new ThreadLocal<>();
+    ThreadLocal<UUID> uuidThreadLocal = new ThreadLocal<>();
 
     @Pointcut("execution(public * cn.yangtengfei.api.server.controller..*.*(..))")
     public void webLog(){}
@@ -37,6 +40,8 @@ public class WebLogAspect {
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         startTime.set(System.currentTimeMillis());
+        UUID uuid = UUID.randomUUID();
+        uuidThreadLocal.set(uuid);
 
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -44,6 +49,9 @@ public class WebLogAspect {
 
         // 记录下请求内容
         logger.info("URL : " + request.getRequestURL().toString());
+        logger.info("uuid : " + uuid);
+
+        url.set(request.getRequestURL().toString());
         logger.info("HTTP_METHOD : " + request.getMethod());
         logger.info("IP : " + request.getRemoteAddr());
         logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
@@ -56,6 +64,10 @@ public class WebLogAspect {
         // 处理完请求，返回内容
         logger.info("RESPONSE : " + ret);
         logger.info("SPEND TIME : " + (System.currentTimeMillis() - startTime.get()));
+        logger.info("URL value: " + url.get());
+        logger.info("uuid value: " + uuidThreadLocal.get());
+        startTime.remove();
+        url.remove();
     }
 
 

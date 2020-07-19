@@ -15,7 +15,7 @@ public class RestResult implements Serializable {
 
     private static final long serialVersionUID = -332320156501537998L;
 
-    private String code;
+    private String code = "200";
 
     private String message;
 

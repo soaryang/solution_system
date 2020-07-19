@@ -2,6 +2,7 @@ package cn.yangtengfei.api.front.controller.index;
 
 import cn.yangtengfei.api.config.RestResult;
 import cn.yangtengfei.api.service.dataService.question.ApiTagService;
+import cn.yangtengfei.api.util.file.CreateHtmlByFreemarker;
 import cn.yangtengfei.model.question.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class IndexController {
     @Autowired
     private ApiTagService apiTagService;
 
+    @RequestMapping(value = "/free", method = RequestMethod.GET)
+    public RestResult test(){
+        CreateHtmlByFreemarker.createFreemarker();
+        return null;
+    }
     @RequestMapping(value = "/findTags", method = RequestMethod.GET)
     public RestResult findTags(){
         RestResult restResult = new RestResult();
