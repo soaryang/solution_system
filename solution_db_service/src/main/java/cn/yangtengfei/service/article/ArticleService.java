@@ -16,36 +16,41 @@ public class ArticleService {
     @Autowired
     private ArticleRespository articleRespository;
 
-    public void save(Article Article){
-        articleRespository.save(Article);
+    public Article save(Article Article) {
+        Article article = articleRespository.save(Article);
+        return article;
     }
 
-    public void Article(String id){
-        articleRespository.findOne(id);
+    public List<Article> findAll() {
+        return articleRespository.findAll();
     }
 
-    public List<Article> findArticleByTagId(String courseId){
-        return articleRespository.findByTagId(courseId);
-    }
-
-    public Article findById(String id){
+    public Article findOne(String id) {
         return articleRespository.findOne(id);
     }
 
-    public Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String tagId,Integer deleteFlg, int page, int pageSize){
+    public List<Article> findArticleByTagId(String courseId) {
+        return articleRespository.findByTagId(courseId);
+    }
+
+    public Article findById(String id) {
+        return articleRespository.findOne(id);
+    }
+
+    public Page<Article> findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(String tagId, Integer deleteFlg, int page, int pageSize) {
         PageRequest pageRequest = new PageRequest(page, pageSize);
-        if(!StringUtils.isEmpty(tagId)){
-            return articleRespository.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(tagId,deleteFlg,pageRequest);
-        }else{
-            return articleRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
+        if (!StringUtils.isEmpty(tagId)) {
+            return articleRespository.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(tagId, deleteFlg, pageRequest);
+        } else {
+            return articleRespository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg, pageRequest);
         }
     }
 
-    public long countByTagIdAndDeleteFlg(String tagId,Integer deleteFlg){
-        return articleRespository.countByTagIdAndDeleteFlg(tagId,deleteFlg);
+    public long countByTagIdAndDeleteFlg(String tagId, Integer deleteFlg) {
+        return articleRespository.countByTagIdAndDeleteFlg(tagId, deleteFlg);
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         articleRespository.delete(id);
     }
 

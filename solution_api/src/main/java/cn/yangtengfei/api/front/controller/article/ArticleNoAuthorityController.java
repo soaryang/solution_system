@@ -9,6 +9,8 @@ import cn.yangtengfei.model.course.Article;
 import cn.yangtengfei.model.question.Tag;
 import cn.yangtengfei.service.article.ArticleService;
 import cn.yangtengfei.service.question.TagService;
+import cn.yangtengfei.util.DateUtils;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -32,34 +36,51 @@ public class ArticleNoAuthorityController {
     private ArticleService articleService;
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public RestResult findAll(HttpServletRequest request, Integer pageNumber , Integer pageSize) throws CommonException {
+    public RestResult findAll(HttpServletRequest request, Integer pageNumber, Integer pageSize) throws CommonException {
 
         RestResult restResult = new RestResult();
         String tagId = request.getParameter("tagId");
 
         Tag tag = tagService.findById(tagId);
-        if(tag==null){
-            throw new CommonException("error","标签不存在");
+        if (tag == null) {
+            throw new CommonException("error", "标签不存在");
         }
-        int start = pageNumber-1;
+        int start = pageNumber - 1;
         PageResultModel pageResultModel = new PageResultModel();
-        Page<Article> articlesPage = articleService.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(tagId,0,start,pageSize);
+        Page<Article> articlesPage = articleService.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(tagId, 0, start, pageSize);
+
         pageResultModel.setTotal(articlesPage.getTotalElements());
-        pageResultModel.setRows(articlesPage.getContent());
+
+        List<Article> articleList = articlesPage.getContent();
+
+        List<ArticleView> articleViewList = Lists.newArrayList();
+
+        //BeanUtils.copyProperties(articleList,articleViewList);
+        articleList.stream().forEach(e -> {
+            ArticleView  articleView = new ArticleView();
+            BeanUtils.copyProperties(e,articleView);
+            String updateTime = DateUtils.transferLongToDate(DateUtils.PATTERN_MM_DD,e.getUpdateTime().getTime());
+            articleView.setUpdateTimeStr(updateTime);
+            articleViewList.add(articleView);
+        });
+
+        pageResultModel.setRows(articleViewList);
         pageResultModel.setOtherData(tag);
+
+
         restResult.setCode("200");
         restResult.setData(pageResultModel);
         return restResult;
     }
 
-    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    public RestResult findById(@PathVariable("id") String id){
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    public RestResult findById(@PathVariable("id") String id) {
         RestResult restResult = new RestResult();
-        Article article =  articleService.findById(id);
+        Article article = articleService.findById(id);
         String tagId = article.getTagId();
         Tag tag = tagService.findById(tagId);
         ArticleView articleView = new ArticleView();
-        BeanUtils.copyProperties(article,articleView);
+        BeanUtils.copyProperties(article, articleView);
         articleView.setTagName(tag.getName());
         restResult.setCode("200");
         restResult.setData(articleView);

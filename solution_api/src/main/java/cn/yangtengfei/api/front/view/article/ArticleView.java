@@ -16,4 +16,8 @@ public class ArticleView extends BaseModel {
 
     private String tagName;
 
+    private String updateTimeStr;
+
+
+
 }

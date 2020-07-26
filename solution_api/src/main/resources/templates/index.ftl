@@ -30,10 +30,10 @@
 <#list modelList as model>
            <section>
                <div class="news" style='min-height: 230px;'>
-                   <h2 class="newstitle"><span><a href="/front/more">更多</a></span><b>${model.tagName}</b></h2>
+                   <h2 class="newstitle"><span><a href="/front/more/${model.tagId}">更多</a></span><b>${model.tagName}</b></h2>
                    <ul>
                        <#list model.articleList as article>
-                       <li><a href="/front/index3/${article.id}"><span>${article.updateTime?string('yyyy-MM-dd')} </span>${article.articleName}</a></li>
+                       <li><a href="${article.id}.html"><span>${article.updateTime?string('yyyy-MM-dd')} </span>${article.articleName}</a></li>
                        </#list>
                    </ul>
                </div>

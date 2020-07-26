@@ -27,6 +27,7 @@ public class FreemarkerUtil {
             try {
                 if (null != out) {
                     out.flush();
+                    out.close();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();

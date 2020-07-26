@@ -4,5 +4,6 @@ import java.util.Map;
 
 public interface FreemarkerService {
 
-    void createHtml(Map<String, Object> dataMap) ;
+    void createHtml(Map<String, Object> dataMap);
+
 }

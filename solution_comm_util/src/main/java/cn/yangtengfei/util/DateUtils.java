@@ -12,6 +12,9 @@ public class DateUtils {
 
     public static final String PATTERN_YYYY_MM_DD = "yyyy-MM-dd";
 
+
+    public static final String PATTERN_MM_DD = "MM-dd";
+
     /**
      * 获取当前时间
      * @return 当前时间
