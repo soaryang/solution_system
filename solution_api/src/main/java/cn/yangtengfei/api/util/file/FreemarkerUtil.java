@@ -2,11 +2,15 @@ package cn.yangtengfei.api.util.file;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import sun.rmi.runtime.Log;
 
 import java.io.*;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class FreemarkerUtil {
+
+
 
     public static void createFreemarker(Map<String, Object> dataMap, String freemarkerPath, String freemarkerName, String aimFilePath) {
         Configuration configuration = new Configuration();

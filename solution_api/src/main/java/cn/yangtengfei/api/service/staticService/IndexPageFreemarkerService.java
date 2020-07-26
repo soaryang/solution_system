@@ -2,6 +2,7 @@ package cn.yangtengfei.api.service.staticService;
 
 
 import cn.yangtengfei.api.util.file.FreemarkerUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -10,23 +11,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+@Slf4j
 @Service("indexPageFreemarkerService")
 public class IndexPageFreemarkerService implements FreemarkerService {
 
 
-    private static final String TEMPLATE_PATH = "templates";
+    @Value("${staticFreemarkerPath}")
+    private String staticFreemarkerPath;
     @Value("${staticPagePath}")
     private String staticPagePath;
 
     @Override
     public void createHtml(Map<String, Object> dataMap) {
-        try {
-            String freemarkerPath = ResourceUtils.getURL("classpath:").getPath() + File.separator + TEMPLATE_PATH;
-            //生成freemarker
-            FreemarkerUtil.createFreemarker(dataMap, freemarkerPath, "index.ftl", staticPagePath + File.separator + "index.html");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        log.info("------------------create index page");
+        String freemarkerPath = staticFreemarkerPath;
+        //生成freemarker
+        FreemarkerUtil.createFreemarker(dataMap, freemarkerPath, "index.ftl", staticPagePath + File.separator + "index.html");
     }
 
 }
