@@ -70,7 +70,7 @@ public class FreemarkerScheduler {
         }
 
         //String[] tagArray = tagArrayList.split(",");
-        Page<Tag> page = tagService.findByUseStatus(1, 1, 100);
+        Page<Tag> page = tagService.findByUseStatus(1, 0, 100);
 
         List<Tag> tagList = page.getContent();
         log.info("tagList:{}",tagList);
