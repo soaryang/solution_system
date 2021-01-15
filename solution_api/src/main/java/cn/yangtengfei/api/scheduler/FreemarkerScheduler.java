@@ -8,6 +8,7 @@ import cn.yangtengfei.service.article.ArticleService;
 import cn.yangtengfei.service.question.TagService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 @Configuration
 @EnableScheduling
@@ -58,7 +60,7 @@ public class FreemarkerScheduler {
 
     @Scheduled(cron = "0/30 * * * * ?")
     public void createIndexPage() {
-
+        log.info("createIndexPagecreateIndexPagecreateIndexPagecreateIndexPage");
         FreemarkerService freemarkerService = freemarkerServiceMap.get("indexPageFreemarkerService");
 
 
