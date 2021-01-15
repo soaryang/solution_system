@@ -44,13 +44,13 @@ public class FreemarkerScheduler {
 
 
     @Scheduled(cron = "0/30 * * * * ?")
-    public void createArticleFile(){
-        List<Article> articleList =  articleService.findAll();
+    public void createArticleFile() {
+        List<Article> articleList = articleService.findAll();
         FreemarkerService freemarkerArticleService = freemarkerServiceMap.get("articleDetailFreemarkService");
-        articleList.stream().forEach(article->{
+        articleList.stream().forEach(article -> {
             Map<String, Object> dataMap = Maps.newHashMap();
-            dataMap.put("id",article.getId());
-            dataMap.put("content",article.getContent());
+            dataMap.put("id", article.getId());
+            dataMap.put("content", article.getContent());
             freemarkerArticleService.createHtml(dataMap);
         });
 
@@ -67,8 +67,10 @@ public class FreemarkerScheduler {
             return;
         }
 
-        String[] tagArray = tagArrayList.split(",");
+        //String[] tagArray = tagArrayList.split(",");
+        Page<Tag> page = tagService.findByUseStatus(1, 1, 100);
 
+        List<Tag> tagList = page.getContent();
         /*String[] tagArray = {
                 "5b8e1c1c7d50eb103d27fd7c"//设计模式
                 , "591e5c4654815a0ea114fe43"//spring
@@ -79,11 +81,11 @@ public class FreemarkerScheduler {
                 , "5f141eca7d50eb04b9ab0a85"//架构设计
         };*/
 
-        List<Tag> tagList = tagService.findByIdIn(Arrays.asList(tagArray));
+        //List<Tag> tagList = tagService.findByIdIn(Arrays.asList(tagArray));
         List<Object> list = Lists.newArrayList();
         tagList.stream().forEach(e -> {
             Map<String, Object> tempMap = Maps.newHashMap();
-            tempMap.put("tagId",e.getId());
+            tempMap.put("tagId", e.getId());
             tempMap.put("tagName", e.getName());
             Page<Article> articlesPage = articleService.findByTagIdAndDeleteFlgOrderByUpdateTimeDesc(e.getId(), 0, 0, 5);
             if (!CollectionUtils.isEmpty(articlesPage.getContent())) {
