@@ -73,6 +73,7 @@ public class FreemarkerScheduler {
         Page<Tag> page = tagService.findByUseStatus(1, 1, 100);
 
         List<Tag> tagList = page.getContent();
+        log.info("tagList:{}",tagList);
         /*String[] tagArray = {
                 "5b8e1c1c7d50eb103d27fd7c"//设计模式
                 , "591e5c4654815a0ea114fe43"//spring
